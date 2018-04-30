@@ -6,7 +6,7 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import { reducer as reduxFormReducer } from 'redux-form'
 import layoutReducer from './containers/Layout/reducer';
-import loginReducer from './containers/Login/reducer';
+
 
 
 
@@ -43,7 +43,7 @@ export default function createReducer(injectedReducers: {}) {
     route: routeReducer,
     layout: layoutReducer,
     form: reduxFormReducer,
-    login: loginReducer,
+    // login: loginReducer,
     ...injectedReducers
   });
 }

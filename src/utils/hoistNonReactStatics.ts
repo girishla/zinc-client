@@ -28,7 +28,7 @@ const getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
 const getPrototypeOf = Object.getPrototypeOf;
 const objectPrototype = getPrototypeOf && getPrototypeOf(Object);
 
-export default function hoistNonReactStatics(targetComponent: any, sourceComponent: any, blacklist?: any) {
+export function hoistNonReactStatics(targetComponent: any, sourceComponent: any, blacklist?: any) {
     if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
 
         if (objectPrototype) {

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import hoistNonReactStatics from './hoistNonReactStatics'
+import * as PropTypes from 'prop-types'
+import * as hnrs from './hoistNonReactStatics'
 
 import getInjectors from './reducerInjectors';
 
@@ -14,15 +15,17 @@ import getInjectors from './reducerInjectors';
 export default ({ key, reducer }: { key: string, reducer: any }) => (WrappedComponent: any) => {
   class ReducerInjector extends React.Component {
     public static WrappedComponent = WrappedComponent;
-    // static contextTypes = {
-    //   store: PropTypes.object.isRequired,
-    // };
+    public static contextTypes = {
+      store: PropTypes.object.isRequired,
+    };
     public static displayName = `withReducer(${(WrappedComponent.displayName || WrappedComponent.name || 'Component')})`;
 
     public injectors = getInjectors(this.context.store);
     public componentWillMount() {
-      const { injectReducer } = this.injectors;
 
+      console.log("this.context.store", this.context.store);
+
+      const { injectReducer } = this.injectors;
       injectReducer(key, reducer);
     }
 
@@ -33,5 +36,5 @@ export default ({ key, reducer }: { key: string, reducer: any }) => (WrappedComp
     }
   }
 
-  return hoistNonReactStatics(ReducerInjector, WrappedComponent);
+  return hnrs.hoistNonReactStatics(ReducerInjector, WrappedComponent);
 };

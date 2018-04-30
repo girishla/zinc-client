@@ -139,7 +139,7 @@ export function* registerFlow() {
       yield put({ type: SET_AUTH, newAuthState: true }) // User is logged in (authorized) after being registered
       yield put({ type: CHANGE_FORM, newFormState: { username: '', password: '' } }) // Clear form
       yield put(push('/dashboard'));
-      // forwardTo('/dashboard') // Go to dashboard page
+
     }
   }
 }

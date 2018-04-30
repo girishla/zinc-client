@@ -4,8 +4,7 @@ import LoadingButton from './LoadingButton'
 
 
 interface ILoginFormProps {
-    username: string;
-    password: string;
+    formState: any;
     error: string;
     currentlySending: boolean;
     btnText: string;
@@ -25,6 +24,8 @@ class LoginForm extends React.Component<ILoginFormProps> {
     public render() {
         const { error } = this.props
 
+        const { username, password } = this.props.formState;
+
         return (
             <form className='form' onSubmit={this._onSubmit}>
                 {error ? <ErrorMessage error={error} /> : null}
@@ -32,9 +33,9 @@ class LoginForm extends React.Component<ILoginFormProps> {
                     <input
                         className='form__field-input'
                         type='text'
-                        id='username'
-                        value={this.props.username}
-                        placeholder='frank.underwood'
+                        id='zincusername'
+                        value={username}
+                        placeholder=''
                         onChange={this._changeUsername}
                         autoCorrect='off'
                         autoCapitalize='off'
@@ -46,10 +47,10 @@ class LoginForm extends React.Component<ILoginFormProps> {
                 <div className='form__field-wrapper'>
                     <input
                         className='form__field-input'
-                        id='password'
+                        id='zincpassword'
                         type='password'
-                        value={this.props.password}
-                        placeholder='••••••••••'
+                        value={password}
+                        placeholder=''
                         onChange={this._changePassword} />
                     <label className='form__field-label' htmlFor='password'>
                         Password
@@ -69,11 +70,11 @@ class LoginForm extends React.Component<ILoginFormProps> {
     }
 
     public _changeUsername(event: any) {
-        this._emitChange({ ...this.props, username: event.target.value })
+        this._emitChange({ ...this.props.formState, username: event.target.value })
     }
 
     public _changePassword(event: any) {
-        this._emitChange({ ...this.props, password: event.target.value })
+        this._emitChange({ ...this.props.formState, password: event.target.value })
     }
 
     public _emitChange(newFormState: any) {
@@ -82,7 +83,7 @@ class LoginForm extends React.Component<ILoginFormProps> {
 
     public _onSubmit(event: any) {
         event.preventDefault()
-        this.props.onSubmit(this.props.username, this.props.password)
+        this.props.onSubmit(this.props.formState.username, this.props.formState.password)
     }
 }
 

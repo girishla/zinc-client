@@ -124,8 +124,7 @@ function appReducer(state = initialState, action: any) {
     }
     case getType(layoutActions.selectMenuItem): {
 
-      // tslint:disable-next-line no-console
-      console.log("state", state);
+
       const menusArr = state.menus;
       const openViews = state.openViews;
 

@@ -5,12 +5,21 @@ import Form from './form'
 import { loginActions } from './actions'
 import { createStructuredSelector } from 'reselect';
 import { IRootState } from '../../IRootState';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
+import reducer from './reducer';
+import saga from './saga';
+import injectReducer from '../../utils/injectReducer';
+import injectSaga from '../../utils/injectSaga';
+// import './styles/_form-page.css'
+// import './styles/_form.css'
+// import './styles/_buttons.css'
+
+
+
 interface ILoginProps extends RouteComponentProps<any> {
-    username: string;
-    password: string;
+    formState: any;
     error: string;
     currentlySending: boolean;
     actions: typeof loginActions;
@@ -25,7 +34,11 @@ class Login extends React.Component<ILoginProps> {
     }
 
     public render() {
-        const { username, password, currentlySending, error, actions } = this.props;
+        const { currentlySending, error, actions } = this.props;
+        let { formState } = this.props;
+        if (!formState) {
+            formState = { username: '', password: '' };
+        }
 
         return (
             <div className='form-page__wrapper'>
@@ -33,7 +46,7 @@ class Login extends React.Component<ILoginProps> {
                     <div className='form-page__form-header'>
                         <h2 className='form-page__form-heading'>Login</h2>
                     </div>
-                    <Form username={username} password={password} changeForm={actions.changeForm} onSubmit={this._login} btnText={'Login'} error={error} currentlySending={currentlySending} />
+                    <Form formState={formState} changeForm={actions.changeForm} onSubmit={this._login} btnText={'Login'} error={error} currentlySending={currentlySending} />
                 </div>
             </div>
         )
@@ -53,10 +66,9 @@ class Login extends React.Component<ILoginProps> {
 
 
 const mapStateToProps = createStructuredSelector({
-    username: (store: IRootState) => store.login.username,
-    password: (store: IRootState) => store.login.password,
-    error: (store: IRootState) => store.login.error,
-    currentlySending: (store: IRootState) => store.login.currentlySending,
+    formState: (store: IRootState) => store.login && store.login.formState,
+    error: (store: IRootState) => store.login && store.login.error,
+    currentlySending: (store: IRootState) => store.login && store.login.currentlySending,
 
 });
 
@@ -66,7 +78,14 @@ function mapDispatchToProps(dispatch: any) {
     };
 }
 
+const withReducer = injectReducer({ key: 'login', reducer });
+const withSaga = injectSaga({ key: 'login', saga });
 
-export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(Login)
-);
+
+
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withReducer,
+    withSaga,
+    withRouter,
+)(Login);
