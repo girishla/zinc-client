@@ -18,6 +18,8 @@ import {
   REQUEST_ERROR
 } from './actions'
 
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
+
 /**
  * Effect to handle authorization
  * @param  {string} username               The username of the user
@@ -28,6 +30,7 @@ import {
 export function* authorize({ username, password, isRegistering }: any) {
   // We send an action that tells Redux we're sending a request
   yield put({ type: SENDING_REQUEST, sending: true })
+  yield delay(5000)
 
   // We then try to register or log in the user, depending on the request
   try {

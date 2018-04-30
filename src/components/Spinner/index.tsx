@@ -1,24 +1,19 @@
-import * as React from 'react'; // eslint-disable-line import/no-extraneous-dependencies
+import * as React from 'react';
 import cx from '../../utils/classnames';
-import allSpinners from './spinners';
+import { allSpinners } from './spinners';
+import './base.css'
+import './three-bounce.css';
+
 
 
 interface ISpinnerProps {
-  style: any;
+  style?: any;
   name: string;
   color: string;
   noFadeIn?: boolean;
   fadeIn?: string;
   overrideSpinnerClassName?: string;
   className?: string;
-
-}
-
-if (!process.env.REACT_SPINKIT_NO_STYLES) {
-  // tslint:disable-next-line no-var-requires
-  require('./base.css');
-  // tslint:disable-next-line no-var-requires
-  require('./three-bounce.css');
 
 }
 
@@ -70,9 +65,12 @@ class Spinner extends React.Component<ISpinnerProps> {
         : { color: this.props.color };
     }
 
+
     return (
-      <div {...props} className={classes}>
-        {[...Array(spinnerInfo.divCount)].map((_, idx) => <div key={idx} />)}
+      <div>
+        <div {...props} className={classes}>
+          {[1, 2, 3, 4].map((_, idx) => <div key={idx} />)}
+        </div>
       </div>
     );
   }

@@ -1,7 +1,9 @@
 import * as React from 'react'
 import ErrorMessage from './ErrorMessage'
-import LoadingButton from './LoadingButton'
-
+import TextField from 'material-ui/TextField';
+import Paper from 'material-ui/Paper';
+import styles from './styles';
+import ProgressButton from '../../components/ProgressButton';
 
 interface ILoginFormProps {
     formState: any;
@@ -27,45 +29,57 @@ class LoginForm extends React.Component<ILoginFormProps> {
         const { username, password } = this.props.formState;
 
         return (
-            <form className='form' onSubmit={this._onSubmit}>
-                {error ? <ErrorMessage error={error} /> : null}
-                <div className='form__field-wrapper'>
-                    <input
-                        className='form__field-input'
-                        type='text'
-                        id='zincusername'
-                        value={username}
-                        placeholder=''
-                        onChange={this._changeUsername}
-                        autoCorrect='off'
-                        autoCapitalize='off'
-                        spellCheck={false} />
-                    <label className='form__field-label' htmlFor='username'>
-                        Username
-          </label>
-                </div>
-                <div className='form__field-wrapper'>
-                    <input
-                        className='form__field-input'
-                        id='zincpassword'
-                        type='password'
-                        value={password}
-                        placeholder=''
-                        onChange={this._changePassword} />
-                    <label className='form__field-label' htmlFor='password'>
-                        Password
-          </label>
-                </div>
-                <div className='form__submit-btn-wrapper'>
-                    {this.props.currentlySending ? (
-                        <LoadingButton />
-                    ) : (
-                            <button className='form__submit-btn' type='submit'>
-                                {this.props.btnText}
-                            </button>
-                        )}
-                </div>
-            </form>
+            <div style={styles.boxContainer}>
+                <Paper style={styles.paper}>
+                    <div className="title" style={styles.title}>
+                        Login
+                    </div>
+                    <form className='form' onSubmit={this._onSubmit}>
+                        {error ? <ErrorMessage error={error} /> : null}
+                        <TextField
+                            style={styles.textField}
+                            hintText="User Name"
+                            floatingLabelText="User Name"
+                            fullWidth={true}
+                            name="username"
+                            value={username}
+                            onChange={this._changeUsername}
+                            autoComplete="on"
+                        />
+                        <TextField
+                            style={styles.textField}
+                            name="password"
+                            hintText="Password"
+                            floatingLabelText="Password"
+                            fullWidth={true}
+                            type="password"
+                            value={password}
+                            onChange={this._changePassword}
+                            autoComplete="on"
+                        />
+
+                        <div style={styles.buttonsContainer}>
+                            {/* <Checkbox
+                  label="Remember me"
+                  style={styles.checkRemember.style}
+                  labelStyle={styles.checkRemember.labelStyle}
+                  iconStyle={styles.checkRemember.iconStyle}
+                  checked={this.props.rememberMe}
+                  onCheck={this.props.onRememberMeChange}
+                /> */}
+
+                            <ProgressButton
+                                style={Object.assign(styles.boxBtnSignin, styles.flatButton)}
+                                label="Login"
+                                onSignIn={this._onSubmit}
+                                success={true}
+                                loading={this.props.currentlySending}
+                            />
+                        </div>
+
+                    </form>
+                </Paper>
+            </div>
         )
     }
 

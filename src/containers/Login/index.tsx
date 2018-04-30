@@ -12,6 +12,8 @@ import reducer from './reducer';
 import saga from './saga';
 import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import themeLight from '../../theming/themes/theme-light';
 // import './styles/_form-page.css'
 // import './styles/_form.css'
 // import './styles/_buttons.css'
@@ -41,14 +43,10 @@ class Login extends React.Component<ILoginProps> {
         }
 
         return (
-            <div className='form-page__wrapper'>
-                <div className='form-page__form-wrapper'>
-                    <div className='form-page__form-header'>
-                        <h2 className='form-page__form-heading'>Login</h2>
-                    </div>
-                    <Form formState={formState} changeForm={actions.changeForm} onSubmit={this._login} btnText={'Login'} error={error} currentlySending={currentlySending} />
-                </div>
-            </div>
+            <MuiThemeProvider muiTheme={themeLight}>
+                <Form formState={formState} changeForm={actions.changeForm} onSubmit={this._login} btnText={'Login'} error={error} currentlySending={currentlySending} />
+            </MuiThemeProvider>
+
         )
     }
 

@@ -65,21 +65,18 @@ class ProgressButton extends React.Component<IProgressButtonProps> {
             disabled={loading}
             onClick={this.props.onSignIn}
             style={style}
-            label={this.props.label}
-          />
-          {
-            loading && (
-              <Spinner
-                style={
-                  {
-                    display: 'inline-block'
-                  }
-                }
-                name="circle"
-                color="darkgrey"
-              />
-            )
-          }
+            label={loading || this.props.label}
+          >
+            {
+              loading && (
+                <Spinner
+                  name="three-bounce"
+                  color="darkgrey"
+                />
+              )
+            }
+          </RaisedButton>
+
         </div>
       </div>
     );

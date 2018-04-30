@@ -3,10 +3,6 @@ const spinkitSpinners = {
 };
 
 const allSpinners = {
-
-  allSpinners: {
-    ...spinkitSpinners,
-  },
-  spinkitSpinners,
+  ...spinkitSpinners,
 };
-export default allSpinners;
+export { allSpinners, spinkitSpinners };
