@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import PageBase from '../../components/PageBase';
-import Layout from '../Layout';
+import { RouteComponentProps, withRouter, Route } from 'react-router-dom';
+import Login from '../Login'
+
 // import Dashboard from '../../containers/DashboardPage';
 import './App.css';
+import { Dashboard } from '../Dashboard';
+
 
 
 interface IAppProps extends RouteComponentProps<any> {
@@ -16,14 +18,10 @@ export class App extends React.Component<IAppProps> {
     return (
       <div>
         {' '}
-        {/* <Route exact path="/" component={Home} /> */}
-        {/* <Route exact path="/dashboard" component={Dashboard} /> */}
-        {/* <Route exact path="/login" component={Auth} /> */}
-        <Layout>
-          <PageBase navigation="Zinc / Dashboard" noWrapContent={true} loading={false}>
-            <h1>Welcome to Zinc</h1>
-          </PageBase>
-        </Layout>
+        <Route exact={true} path="/" component={Dashboard} />
+        <Route exact={true} path="/dashboard" component={Dashboard} />
+        <Route exact={true} path="/login" component={Login} />
+
 
       </div>
 

@@ -18,4 +18,6 @@ export interface IRootState {
     }
     route: any;
     form: FormStateMap;
+    dashboard: any;
+    login: any;
 }

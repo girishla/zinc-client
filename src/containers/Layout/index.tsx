@@ -1,11 +1,10 @@
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import withWidth, { LARGE } from 'material-ui/utils/withWidth';
-import { LARGE } from 'material-ui/utils/withWidth';
+import withWidth, { LARGE } from 'material-ui/utils/withWidth';
 import * as React from 'react';
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import Header from '../../components/Header';
 import { IRootState } from '../../IRootState';
@@ -22,12 +21,11 @@ const theme = new Theme();
 
 export interface ILayoutProps extends RouteComponentProps<any> {
   children: any,
-  width: number,
+  width: any,
   currentTheme: string,
   isBoxedLayout: boolean,
   actions: typeof layoutActions,
 }
-
 
 
 interface ILayoutState {
@@ -168,13 +166,8 @@ function mapDispatchToProps(dispatch: any) {
   };
 }
 
-// export default compose(
-//   withWidth(),
-//   connect(mapStateToProps, mapDispatchToProps),
-// )(withRouter(Layout));
-
-
-export default (withRouter(
-  connect(mapStateToProps, mapDispatchToProps)((Layout)))
-);
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withWidth(),
+)(withRouter(Layout));
 

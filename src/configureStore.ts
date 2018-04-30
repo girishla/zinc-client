@@ -10,12 +10,9 @@ import { routerMiddleware } from 'react-router-redux';
 
 
 import { History } from 'history';
-import { initialState as defaultState } from './containers/Layout/reducer'
+import { initialState as defaultLayoutState } from './containers/Layout/reducer'
 
 const sagaMiddleware = createSagaMiddleware();
-
-
-
 
 
 export default function configureStore(initialState = {}, history: History) {
@@ -39,7 +36,7 @@ export default function configureStore(initialState = {}, history: History) {
   /* eslint-enable */
 
   const store: any = createStore(createReducer({}),
-    defaultState,
+    { layout: defaultLayoutState },
     composeEnhancers(...enhancers));
 
   // Extensions
