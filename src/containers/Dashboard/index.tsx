@@ -37,7 +37,7 @@ export class Dashboard extends React.Component<IDashboardProps> {
 
 const mapStateToProps = createStructuredSelector({
     dashboardstate: (state: IRootState) => state.dashboard,
-
+    auth: (state: IRootState) => state.login,
 });
 
 function mapDispatchToProps(dispatch: any) {
@@ -45,6 +45,9 @@ function mapDispatchToProps(dispatch: any) {
         actions: bindActionCreators(dashboardActions, dispatch)
     };
 }
+
+
+
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),

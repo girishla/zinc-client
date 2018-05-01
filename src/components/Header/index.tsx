@@ -13,10 +13,12 @@ import { IRootState } from '../../IRootState';
 import Theme, { ITheme } from '../../theming/theme';
 import Styles from './styles';
 import TabNav from './TabsNav';
+import { loginActions } from '../../containers/Login/actions';
 
 interface IHeaderProps extends RouteComponentProps<any> {
   styles: any;
   actions: typeof layoutActions;
+  loginActions: typeof loginActions;
   currentTheme: string;
   isBoxedLayout: boolean;
   handleChangeRequestNavDrawer: React.MouseEventHandler<{}>
@@ -51,18 +53,13 @@ class Header extends React.Component<IHeaderProps, IHeaderState> {
   }
 
   public signOut() {
-    // this.props.actions.signOut();
-    // this.props.firebase.logout().then(() => {
-    //   console.log('from signout promise.....');
-    //   this.props.history.push('/');
-    // });
+    this.props.loginActions.logout();
   }
 
 
   public render() {
     const { styles, handleChangeRequestNavDrawer, isBoxedLayout } = this.props;
     const style = Styles(isBoxedLayout, this.state.currentTheme);
-
 
 
     let authButton = null;
@@ -72,7 +69,7 @@ class Header extends React.Component<IHeaderProps, IHeaderState> {
     //   authButton = <MenuItem primaryText="Sign out" onClick={this.signOut} />;
     // }
 
-    authButton = <MenuItem primaryText="Signin/Signup" onClick={handleChangeRequestNavDrawer} />;
+    authButton = <MenuItem primaryText="Sign out" onClick={this.signOut} />;
 
 
     return (
@@ -133,7 +130,8 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch: any) {
   return {
-    actions: bindActionCreators(layoutActions, dispatch)
+    actions: bindActionCreators(layoutActions, dispatch),
+    loginActions: bindActionCreators(loginActions, dispatch)
   };
 }
 

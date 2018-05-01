@@ -14,6 +14,10 @@ import Theme, { ITheme } from '../../theming/theme';
 import { layoutActions } from './actions';
 import { getCurrentTheme, updateContentDimensions } from './layout-utils';
 import Styles from './styles';
+import injectReducer from '../../utils/injectReducer';
+import reducer from '../Login/reducer';
+import saga from '../Login/saga';
+import injectSaga from '../../utils/injectSaga';
 
 
 
@@ -166,8 +170,14 @@ function mapDispatchToProps(dispatch: any) {
   };
 }
 
+
+const withReducer = injectReducer({ key: 'login', reducer });
+const withSaga = injectSaga({ key: 'login', saga });
+
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withWidth(),
+  withReducer,
+  withSaga,
 )(withRouter(Layout));
 

@@ -14,9 +14,6 @@ import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import themeLight from '../../theming/themes/theme-light';
-// import './styles/_form-page.css'
-// import './styles/_form.css'
-// import './styles/_buttons.css'
 
 
 

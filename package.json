@@ -34,6 +34,7 @@
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
+    "@types/http-status-codes": "^1.2.0",
     "@types/immutable": "^3.8.7",
     "@types/invariant": "^2.2.29",
     "@types/jest": "^22.2.3",

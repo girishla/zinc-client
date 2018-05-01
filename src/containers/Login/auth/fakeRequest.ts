@@ -14,7 +14,7 @@ const fakeRequest = {
   */
   post(endpoint: any, data?: any) {
     switch (endpoint) {
-      case '/login':
+      case '/auth':
         return server.login(data.username, data.password)
       case '/register':
         return server.register(data.username, data.password)

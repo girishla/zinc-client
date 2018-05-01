@@ -23,8 +23,6 @@ export default ({ key, reducer }: { key: string, reducer: any }) => (WrappedComp
     public injectors = getInjectors(this.context.store);
     public componentWillMount() {
 
-      console.log("this.context.store", this.context.store);
-
       const { injectReducer } = this.injectors;
       injectReducer(key, reducer);
     }

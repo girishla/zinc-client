@@ -1,4 +1,5 @@
 import request from './fakeRequest'
+import { HTTPStatusCodes } from '../../../utils/httpstatus';
 
 let localStorage: typeof window.localStorage
 
@@ -24,18 +25,37 @@ const auth = {
     }
 
     // Post a fake request
-    return request.post('/login', { username, password })!
-      .then((response: any) => {
-        // Save token to local storage
-        localStorage.token = response.token
-        return Promise.resolve(true)
+    return request.post('/auth', { username, password })!
+      .then((response: Response) => {
+
+        if (response.status === HTTPStatusCodes.OK) {
+          return response.json();
+        } else {
+
+          if ((response.status === HTTPStatusCodes.UNAUTHORIZED) || (response.status === HTTPStatusCodes.BAD_REQUEST)) {
+            return Promise.reject({ message: 'Invalid credentials. Please try again.' });
+
+          } else {
+            return Promise.reject({ message: 'The server is unable to authenticate your request. Please try again later.' });
+          }
+
+        }
+
       })
+      .then((responseData: any) => {
+        // Save token to local storage
+        localStorage.token = responseData.token
+        console.log('responseData', responseData)
+        return Promise.resolve(true);
+
+      }).catch((error: any) => Promise.reject(error))
   },
   /**
   * Logs the current user out
   */
   logout() {
-    return request.post('/logout')
+    localStorage.removeItem('token')
+    return Promise.resolve(true);
   },
   /**
   * Checks if a user is logged in

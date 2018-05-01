@@ -17,8 +17,7 @@ export default function checkStore(store: any) {
     injectedReducers: isObject,
     injectedSagas: isObject,
   };
-  // tslint:disable-next-line no-console
-  console.log("checkStore", store);
+
   invariant(
     conformsTo(store, shape),
     '(app/utils...) injectors: Expected a valid redux store'

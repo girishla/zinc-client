@@ -30,30 +30,39 @@ const server = {
   * @param  {string} username The username of the user
   * @param  {string} password The password of the user
   */
-  login(username: string, password: string) {
-    const userExists = this.doesUserExist(username)
+  async login(username: string, password: string) {
 
-    return new Promise((resolve, reject) => {
-      // If the user exists and the password fits log the user in and resolve
-      if (userExists && (password === users[username])) {
-        resolve({
-          authenticated: true,
-          // Fake a random token
-          token: Math.random().toString(36).substring(7)
-        })
-      } else {
-        // Set the appropiate error and reject
-        let error
-
-        if (userExists) {
-          error = new Error('Wrong password')
-        } else {
-          error = new Error('User doesn\'t exist')
-        }
-
-        reject(error)
-      }
+    return await fetch('http://localhost:8090/auth', {
+      body: JSON.stringify({ username, password }),
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
     })
+
+    // const userExists = this.doesUserExist(username)
+
+    // return new Promise((resolve, reject) => {
+    //   // If the user exists and the password fits log the user in and resolve
+    //   if (userExists && (password === users[username])) {
+    //     resolve({
+    //       authenticated: true,
+    //       // Fake a random token
+    //       token: Math.random().toString(36).substring(7)
+    //     })
+    //   } else {
+    //     // Set the appropiate error and reject
+    //     let error
+
+    //     if (userExists) {
+    //       error = new Error('Wrong password')
+    //     } else {
+    //       error = new Error('User doesn\'t exist')
+    //     }
+
+    //     reject(error)
+    //   }
+    // })
   },
   /**
   * Pretends to register a user
