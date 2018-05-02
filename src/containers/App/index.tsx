@@ -4,16 +4,9 @@ import Login from '../Login'
 
 import './App.css';
 import { Dashboard } from '../Dashboard';
-import { authActions } from '../Login/actions';
-import { bindActionCreators, compose } from 'redux';
-import { connect } from 'react-redux';
-import injectReducer from '../../utils/injectReducer';
-import injectSaga from '../../utils/injectSaga';
-import reducer from '../Login/reducer';
-import saga from '../Login/saga';
 
 interface IAppProps extends RouteComponentProps<any> {
-  authActions: typeof authActions
+
 }
 
 export class App extends React.Component<IAppProps> {
@@ -34,30 +27,20 @@ export class App extends React.Component<IAppProps> {
     return <Redirect to="/dashboard" />
   }
 
-  public componentDidMount() {
-    this.props.authActions.getProfile();
-  }
-
 
 }
 
 
 
+// const mapStateToProps = createStructuredSelector({
+//   appStore: makeSelectGlobal(),
+//   auth: makeSelectFirebaseAuth()
+// });
 
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     actions: bindActionCreators(appActions, dispatch)
+//   };
+// }
 
-function mapDispatchToProps(dispatch: any) {
-  return {
-    authActions: bindActionCreators(authActions, dispatch)
-  };
-}
-
-const withReducer = injectReducer({ key: 'auth', reducer });
-const withSaga = injectSaga({ key: 'auth', saga });
-
-
-export default compose(
-  connect(null, mapDispatchToProps),
-  withReducer,
-  withSaga,
-  withRouter)
-  (App);
+export default withRouter((App));

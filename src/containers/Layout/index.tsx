@@ -82,7 +82,7 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
 
   public componentDidMount() {
     window.addEventListener('resize', updateContentDimensions);
-
+    this.props.authActions.getProfile();
   }
 
   public componentWillReceiveProps(nextProps: ILayoutProps) {
