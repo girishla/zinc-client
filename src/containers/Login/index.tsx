@@ -54,14 +54,6 @@ class Login extends React.Component<ILoginProps> {
     }
 }
 
-// Login.propTypes = {
-//     data: React.PropTypes.object,
-//     history: React.PropTypes.object,
-//     dispatch: React.PropTypes.func
-// }
-
-
-
 const mapStateToProps = createStructuredSelector({
     formState: (store: IRootState) => store.auth && store.auth.formState,
     error: (store: IRootState) => store.auth && store.auth.error,

@@ -16,8 +16,12 @@ import {
   SET_AUTH,
   LOGOUT,
   CHANGE_FORM,
-  REQUEST_ERROR
+  REQUEST_ERROR,
+  CLEAR_ERROR,
+  SET_PROFILE,
+  GET_PROFILE
 } from './actions'
+import { IAuthResponse } from './IAuthResponse';
 
 // const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
 
@@ -30,7 +34,7 @@ import {
  */
 export function* authorize({ username, password, isRegistering }: any) {
 
-  yield put({ type: REQUEST_ERROR, error: "" }) // Clear ERROR
+  yield put({ type: CLEAR_ERROR, error: "" }) // Clear ERROR
 
 
   // We send an action that tells Redux we're sending a request
@@ -40,7 +44,7 @@ export function* authorize({ username, password, isRegistering }: any) {
   // We then try to register or log in the user, depending on the request
   try {
 
-    let response
+    let response: IAuthResponse
 
     // For either log in or registering, we call the proper function in the `auth`
     // module, which is asynchronous. Because we're using generators, we can work
@@ -52,6 +56,7 @@ export function* authorize({ username, password, isRegistering }: any) {
       response = yield call(auth.login, username, password)
     }
 
+    yield put({ type: SET_PROFILE, profile: response.user })
 
     return response
   } catch (error) {
@@ -151,20 +156,38 @@ export function* registerFlow() {
 
   }
 
+
 }
 
-// The root saga is what we actually send to Redux's middleware. In here we fork
-// each saga so that they are all "active" and listening.
-// Sagas are fired once at the start of an app and can be thought of as processes running
-// in the background, watching actions dispatched to the store.
-// export default function* root() {
-//   yield fork(loginFlow)
-//   yield fork(logoutFlow)
-//   yield fork(registerFlow)
-// }
+/**
+ * Effect to handle logging out
+ */
+export function* getProfileTask() {
+  // We tell Redux we're in the middle of a request
+  yield put({ type: SENDING_REQUEST, sending: true })
+
+  try {
+
+    const response: IAuthResponse = yield call(auth.getprofile)
+    yield put({ type: SENDING_REQUEST, sending: false })
+
+    yield put({ type: SET_PROFILE, profile: response.user })
+
+  } catch (error) {
+    // if there is a problem getting the profile, kick the user out
+    yield put({ type: LOGOUT })
+  }
+}
+
+export function* getProfile() {
+
+  yield takeLatest(GET_PROFILE, getProfileTask)
+
+
+}
 
 export default function* rootSaga() {
   yield all([
-    loginFlow(), logoutFlow(), registerFlow()
+    loginFlow(), logoutFlow(), registerFlow(), getProfile()
   ])
 }

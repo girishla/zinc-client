@@ -7,7 +7,8 @@ import {
   SET_AUTH,
   SENDING_REQUEST,
   REQUEST_ERROR,
-  CLEAR_ERROR
+  CLEAR_ERROR,
+  SET_PROFILE
 } from './actions'
 import auth from './auth'
 
@@ -29,6 +30,8 @@ function reducer(state = initialState, action: any) {
       return { ...state, formState: action.newFormState }
     case SET_AUTH:
       return { ...state, loggedIn: action.newAuthState }
+    case SET_PROFILE:
+      return { ...state, profile: action.profile }
     case SENDING_REQUEST:
       return { ...state, currentlySending: action.sending }
     case REQUEST_ERROR:

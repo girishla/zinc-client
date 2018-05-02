@@ -16,6 +16,7 @@ import OpenViewsItems from './OpenViewItems';
 import Styles from './styles';
 import Logo from '../../components/Logo'
 
+
 const theme = new Theme();
 
 
@@ -28,6 +29,7 @@ interface ILeftDrawerProps extends RouteComponentProps<any> {
   showOpenViews: boolean;
   actions: typeof layoutActions;
   navDrawerToggle: () => void;
+  profile: IUserProfile;
 }
 
 interface ILeftDrawerState {
@@ -145,7 +147,8 @@ class LeftDrawer extends React.Component<ILeftDrawerProps, ILeftDrawerState> {
     const currentTheme = this.state.currentTheme;
     const styles = Styles(currentTheme);
     const { navDrawerOpen } = this.props;
-    const { email, displayName } = { email: '', displayName: 'Guest User' };
+
+    const { email, username } = this.props.profile || { username: 'Guest', email: 'guest@zinc.com' };
 
     return (
       <Drawer
@@ -163,7 +166,7 @@ class LeftDrawer extends React.Component<ILeftDrawerProps, ILeftDrawerState> {
             style={styles.avatar.icon}
           />
           <span style={styles.avatar.span}>
-            {displayName ||
+            {username ||
               email.substring(
                 0,
                 email.indexOf('@')
@@ -194,6 +197,7 @@ const mapStateToProps = createStructuredSelector({
   currentTheme: (store: IRootState) => store.layout.currentTheme,
   menus: (store: IRootState) => store.layout.menus,
   openViews: (store: IRootState) => store.layout.openViews,
+  profile: (store: IRootState) => store.auth.profile,
 });
 
 function mapDispatchToProps(dispatch: any) {

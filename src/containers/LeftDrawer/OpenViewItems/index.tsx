@@ -22,6 +22,7 @@ interface IOpenViewItemsProps {
   animateRootMenu: any;
   selectedOpenedMenuItem: IMenu;
   actions: typeof layoutActions;
+
 }
 
 interface IOpenViewItemsState {
@@ -179,6 +180,7 @@ const mapStateToProps = createStructuredSelector({
   selectedOpenedMenuIndex: (store: IRootState) => store.layout.selectedOpenedMenuIndex,
   selectedOpenedMenuItem: (store: IRootState) => store.layout.selectedOpenedMenuItem,
   showOpenViews: (store: IRootState) => store.layout.showOpenViews,
+
 
 });
 

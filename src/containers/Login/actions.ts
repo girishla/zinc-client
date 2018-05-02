@@ -5,14 +5,16 @@ import { createAction } from "typesafe-actions";
  * Actions describe changes of state in your application
  */
 
-export const CHANGE_FORM = 'CHANGE_FORM'
-export const SET_AUTH = 'SET_AUTH'
-export const SENDING_REQUEST = 'SENDING_REQUEST'
-export const LOGIN_REQUEST = 'LOGIN_REQUEST'
-export const REGISTER_REQUEST = 'REGISTER_REQUEST'
+export const CHANGE_FORM = 'zinc/auth/CHANGE_FORM'
+export const SET_AUTH = 'zinc/auth/SET_AUTH'
+export const SENDING_REQUEST = 'zinc/auth/SENDING_REQUEST'
+export const LOGIN_REQUEST = 'zinc/auth/LOGIN_REQUEST'
+export const REGISTER_REQUEST = 'zinc/auth/REGISTER_REQUEST'
 export const LOGOUT = 'zinc/auth/LOGOUT'
-export const REQUEST_ERROR = 'REQUEST_ERROR'
+export const REQUEST_ERROR = 'zinc/auth/REQUEST_ERROR'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
+export const SET_PROFILE = "zinc/auth/SET_PROFILE"
+export const GET_PROFILE = "zinc/auth/GET_PROFILE"
 
 export const authActions = {
   /**
@@ -78,4 +80,15 @@ export const authActions = {
    * Sets the `error` state as empty
    */
   clearError: createAction(CLEAR_ERROR),
+
+  setProfile: createAction(SET_PROFILE, (profile: IUserProfile) => ({
+    profile,
+    type: SET_PROFILE,
+  })),
+
+  getProfile: createAction(GET_PROFILE),
+
+
 }
+
+

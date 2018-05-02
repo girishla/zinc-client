@@ -7,6 +7,41 @@ let localStorage: typeof window.localStorage
 localStorage = window.localStorage
 
 const auth = {
+
+
+  getprofile() {
+
+    return request.post('/user', { token: localStorage.getItem("token") })!
+      .then((response: Response) => {
+
+        if (response.status === HTTPStatusCodes.OK) {
+          return Promise.resolve(response.json());
+        } else {
+
+          if ((response.status === HTTPStatusCodes.UNAUTHORIZED) || (response.status === HTTPStatusCodes.BAD_REQUEST)) {
+            return Promise.reject({ message: 'Invalid credentials, you need to login.' });
+
+          } else {
+            return Promise.reject({ message: 'The server is unable to authenticate your request. Please try again later.' });
+          }
+
+        }
+
+      })
+      .catch((error: any) => {
+
+        if (error.message === "Failed to fetch") {
+          return Promise.reject({ message: 'The server appears to be down. Please contact your administrator' })
+        }
+        return Promise.reject(error)
+      }
+      )
+
+  },
+
+
+
+
   /**
   * Logs a user in, returning a promise with `true` when done
   * @param  {string} username The username of the user
@@ -37,7 +72,7 @@ const auth = {
       .then((responseData: any) => {
         // Save token to local storage
         localStorage.token = responseData.token
-        return Promise.resolve(true);
+        return Promise.resolve(responseData);
 
       }).catch((error: any) => {
 

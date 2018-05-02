@@ -19,6 +19,7 @@ import reducer from '../Login/reducer';
 import saga from '../Login/saga';
 import injectSaga from '../../utils/injectSaga';
 import { userIsNotAuthenticatedRedir } from '../Login/auth-routing';
+import { authActions } from '../Login/actions';
 
 
 
@@ -30,6 +31,7 @@ export interface ILayoutProps extends RouteComponentProps<any> {
   currentTheme: string,
   isBoxedLayout: boolean,
   actions: typeof layoutActions,
+  authActions: typeof authActions;
 }
 
 
@@ -51,6 +53,8 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
     isMobileBrowser: false,
     width: LARGE
   };
+
+
 
   constructor(props: ILayoutProps) {
 
@@ -78,6 +82,7 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
 
   public componentDidMount() {
     window.addEventListener('resize', updateContentDimensions);
+    this.props.authActions.getProfile();
   }
 
   public componentWillReceiveProps(nextProps: ILayoutProps) {
@@ -168,7 +173,8 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch: any) {
   return {
-    actions: bindActionCreators(layoutActions, dispatch)
+    actions: bindActionCreators(layoutActions, dispatch),
+    authActions: bindActionCreators(authActions, dispatch)
   };
 }
 

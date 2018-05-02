@@ -52,6 +52,18 @@ const server = {
     })
   },
 
+  async getProfile(token: string) {
+
+    return await fetch('http://localhost:8090/user', {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+        'X-Auth-Token': token
+      },
+    })
+
+  },
+
 }
 
 server.init()

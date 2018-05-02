@@ -20,6 +20,8 @@ const fakeRequest = {
         return api.register(data.username, data.password)
       case '/logout':
         return api.logout()
+      case '/user':
+        return api.getProfile(data.token)
       default:
         return null;
     }
