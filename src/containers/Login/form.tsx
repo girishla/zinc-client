@@ -95,6 +95,7 @@ class LoginForm extends React.Component<ILoginFormProps, IFormState> {
                                 style={{ ...styles.boxBtnSignin, ...styles.flatButton }}
                                 label="Login"
                                 onSignIn={this._onSubmit}
+                                type="submit"
                                 success={true}
                                 loading={this.props.currentlySending}
                             />

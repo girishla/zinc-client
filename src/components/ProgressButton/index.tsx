@@ -45,6 +45,7 @@ interface IProgressButtonProps {
   style: any;
   onSignIn: any;
   label: any;
+  type: string;
 }
 
 class ProgressButton extends React.Component<IProgressButtonProps> {
@@ -63,6 +64,7 @@ class ProgressButton extends React.Component<IProgressButtonProps> {
             primary={true}
             className={buttonClassname}
             disabled={loading}
+            type={this.props.type}
             onClick={this.props.onSignIn}
             style={style}
             label={loading || this.props.label}
