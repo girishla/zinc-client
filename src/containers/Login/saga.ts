@@ -7,7 +7,7 @@
 import { take, call, put, all } from 'redux-saga/effects'
 import auth from './auth'
 import { push } from 'react-router-redux';
-import { takeLatest } from 'redux-saga'
+import { takeLatest } from 'redux-saga/effects'
 
 import {
   SENDING_REQUEST,
@@ -29,6 +29,10 @@ import {
  * @param  {boolean} options.isRegistering Is this a register request?
  */
 export function* authorize({ username, password, isRegistering }: any) {
+
+  yield put({ type: REQUEST_ERROR, error: "" }) // Clear ERROR
+
+
   // We send an action that tells Redux we're sending a request
   yield put({ type: SENDING_REQUEST, sending: true })
   // yield delay(5000)

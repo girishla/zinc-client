@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { takeLatest } from 'redux-saga';
+import { takeLatest } from 'redux-saga/effects';
 import { call, put } from 'redux-saga/effects';
 import { getType } from 'typesafe-actions';
 import menuapi from '../../components/LeftDrawer/MenuItems/menuapi';

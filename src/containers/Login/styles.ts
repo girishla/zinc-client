@@ -78,8 +78,21 @@ const styles: any = {
   buttonsContainer: {
     marginTop: 50
   },
+
+  errorMessageWrapper: {
+    animation: 'shake 1500ms ease-in-out',
+    justifyContent: 'center',
+    maxWidth: '80%',
+    margin: '0 auto',
+
+  },
   errorMessage: {
-    color: red500
+    backgroundColor: red500,
+    color: white,
+    margin: 0,
+    padding: '0.5em 1em',
+    fontSize: '0.8em',
+    userSelect: 'none'
   },
   instructions: {
     textAlign: 'center',
@@ -99,7 +112,10 @@ const styles: any = {
     position: 'absolute',
     right: 20,
     top: 20
-  }
+  },
+
 };
 
 export default styles;
+
+
