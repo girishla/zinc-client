@@ -18,6 +18,7 @@ import injectReducer from '../../utils/injectReducer';
 import reducer from '../Login/reducer';
 import saga from '../Login/saga';
 import injectSaga from '../../utils/injectSaga';
+import { userIsNotAuthenticatedRedir } from '../Login/auth-routing';
 
 
 
@@ -30,6 +31,7 @@ export interface ILayoutProps extends RouteComponentProps<any> {
   isBoxedLayout: boolean,
   actions: typeof layoutActions,
 }
+
 
 
 interface ILayoutState {
@@ -171,13 +173,15 @@ function mapDispatchToProps(dispatch: any) {
 }
 
 
-const withReducer = injectReducer({ key: 'login', reducer });
-const withSaga = injectSaga({ key: 'login', saga });
+const withReducer = injectReducer({ key: 'auth', reducer });
+const withSaga = injectSaga({ key: 'auth', saga });
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withWidth(),
   withReducer,
   withSaga,
-)(withRouter(Layout));
+  withRouter,
+  userIsNotAuthenticatedRedir,
+)((Layout));
 

@@ -14,7 +14,7 @@ export default function Loading() {
           transform: 'translate(-50%, -50%)',
 
         }}
-        name="circle"
+        name="three-bounce"
         color="#7144b7"
       />
     </div>

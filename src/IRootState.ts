@@ -1,7 +1,6 @@
 import { FormStateMap } from "redux-form";
 import { IMenu } from "./containers/Layout/menu";
 
-
 export interface IRootState {
     layout: {
         menus: IMenu[];
@@ -19,5 +18,5 @@ export interface IRootState {
     route: any;
     form: FormStateMap;
     dashboard: any;
-    login: any;
+    auth: any;
 }

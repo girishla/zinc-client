@@ -2,7 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import Form from './form'
 
-import { loginActions } from './actions'
+import { authActions } from './actions'
 import { createStructuredSelector } from 'reselect';
 import { IRootState } from '../../IRootState';
 import { bindActionCreators, compose } from 'redux';
@@ -14,6 +14,7 @@ import injectReducer from '../../utils/injectReducer';
 import injectSaga from '../../utils/injectSaga';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import themeLight from '../../theming/themes/theme-light';
+import { userIsAuthenticatedRedir } from './auth-routing';
 
 
 
@@ -21,7 +22,7 @@ interface ILoginProps extends RouteComponentProps<any> {
     formState: any;
     error: string;
     currentlySending: boolean;
-    actions: typeof loginActions;
+    actions: typeof authActions;
 }
 
 class Login extends React.Component<ILoginProps> {
@@ -61,26 +62,26 @@ class Login extends React.Component<ILoginProps> {
 
 
 const mapStateToProps = createStructuredSelector({
-    formState: (store: IRootState) => store.login && store.login.formState,
-    error: (store: IRootState) => store.login && store.login.error,
-    currentlySending: (store: IRootState) => store.login && store.login.currentlySending,
+    formState: (store: IRootState) => store.auth && store.auth.formState,
+    error: (store: IRootState) => store.auth && store.auth.error,
+    currentlySending: (store: IRootState) => store.auth && store.auth.currentlySending,
 
 });
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        actions: bindActionCreators(loginActions, dispatch)
+        actions: bindActionCreators(authActions, dispatch)
     };
 }
 
-const withReducer = injectReducer({ key: 'login', reducer });
-const withSaga = injectSaga({ key: 'login', saga });
-
+const withReducer = injectReducer({ key: 'auth', reducer });
+const withSaga = injectSaga({ key: 'auth', saga });
 
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     withReducer,
     withSaga,
+    userIsAuthenticatedRedir,
     withRouter,
 )(Login);

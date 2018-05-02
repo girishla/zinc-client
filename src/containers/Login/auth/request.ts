@@ -2,9 +2,9 @@
 * Fake XMLHttpRequest wrapper
 */
 
-import server from './fakeServer'
+import api from './api'
 
-server.init()
+api.init()
 
 const fakeRequest = {
   /**
@@ -15,11 +15,11 @@ const fakeRequest = {
   post(endpoint: any, data?: any) {
     switch (endpoint) {
       case '/auth':
-        return server.login(data.username, data.password)
+        return api.login(data.username, data.password)
       case '/register':
-        return server.register(data.username, data.password)
+        return api.register(data.username, data.password)
       case '/logout':
-        return server.logout()
+        return api.logout()
       default:
         return null;
     }

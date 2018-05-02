@@ -14,7 +14,7 @@ export const LOGOUT = 'zinc/auth/LOGOUT'
 export const REQUEST_ERROR = 'REQUEST_ERROR'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
 
-export const loginActions = {
+export const authActions = {
   /**
  * Sets the form state
  * @param  {object} newFormState          The new state of the form

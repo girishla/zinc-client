@@ -1,15 +1,8 @@
-import request from './fakeRequest'
+import request from './request'
 import { HTTPStatusCodes } from '../../../utils/httpstatus';
 
 let localStorage: typeof window.localStorage
 
-// // If we're testing, use a local storage polyfill
-// if (global.process && process.env.NODE_ENV === 'test') {
-//   localStorage = require('localStorage')
-// } else {
-//   // If not, use the browser one
-//   localStorage = window.localStorage
-// }
 
 localStorage = window.localStorage
 
@@ -24,7 +17,6 @@ const auth = {
       return Promise.resolve(true)
     }
 
-    // Post a fake request
     return request.post('/auth', { username, password })!
       .then((response: Response) => {
 
@@ -45,10 +37,17 @@ const auth = {
       .then((responseData: any) => {
         // Save token to local storage
         localStorage.token = responseData.token
-        console.log('responseData', responseData)
         return Promise.resolve(true);
 
-      }).catch((error: any) => Promise.reject(error))
+      }).catch((error: any) => {
+
+        if (error.message === "Failed to fetch") {
+          return Promise.reject({ message: 'The server appears to be down. Please contact your administrator' })
+        }
+        return Promise.reject(error)
+      }
+      )
+
   },
   /**
   * Logs the current user out

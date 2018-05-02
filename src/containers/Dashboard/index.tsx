@@ -4,21 +4,20 @@ import PageBase from '../../components/PageBase'
 import { createStructuredSelector } from 'reselect';
 import { IRootState } from '../../IRootState';
 import { bindActionCreators, compose } from 'redux';
-import withWidth from 'material-ui/utils/withWidth';
 import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { dashboardActions } from './actions';
 
 
-interface IDashboardProps extends RouteComponentProps<any> {
+interface IDashboardProps {
 
     dummy?: string;
+    dashboardstate: any;
+    auth: any;
+    actions: any;
 
 }
 
 export class Dashboard extends React.Component<IDashboardProps> {
-
-
 
     public render() {
         return (
@@ -37,7 +36,7 @@ export class Dashboard extends React.Component<IDashboardProps> {
 
 const mapStateToProps = createStructuredSelector({
     dashboardstate: (state: IRootState) => state.dashboard,
-    auth: (state: IRootState) => state.login,
+    auth: (state: IRootState) => state.auth,
 });
 
 function mapDispatchToProps(dispatch: any) {
@@ -48,9 +47,8 @@ function mapDispatchToProps(dispatch: any) {
 
 
 
-
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
-    withWidth(),
-)(withRouter(Dashboard));
+    // withRouter,
+)(Dashboard);
 

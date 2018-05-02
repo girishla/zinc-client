@@ -13,12 +13,12 @@ import { IRootState } from '../../IRootState';
 import Theme, { ITheme } from '../../theming/theme';
 import Styles from './styles';
 import TabNav from './TabsNav';
-import { loginActions } from '../../containers/Login/actions';
+import { authActions } from '../../containers/Login/actions';
 
 interface IHeaderProps extends RouteComponentProps<any> {
   styles: any;
   actions: typeof layoutActions;
-  loginActions: typeof loginActions;
+  authActions: typeof authActions;
   currentTheme: string;
   isBoxedLayout: boolean;
   handleChangeRequestNavDrawer: React.MouseEventHandler<{}>
@@ -53,7 +53,7 @@ class Header extends React.Component<IHeaderProps, IHeaderState> {
   }
 
   public signOut() {
-    this.props.loginActions.logout();
+    this.props.authActions.logout();
   }
 
 
@@ -131,7 +131,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch: any) {
   return {
     actions: bindActionCreators(layoutActions, dispatch),
-    loginActions: bindActionCreators(loginActions, dispatch)
+    authActions: bindActionCreators(authActions, dispatch)
   };
 }
 
