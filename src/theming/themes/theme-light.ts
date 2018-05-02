@@ -15,7 +15,7 @@ const themeLight = getMuiTheme({
     color: '#f3f3f3',
   },
   raisedButton: {
-    primaryColor: '#1E88E5',
+    primaryColor: '#7144b7',
   },
   tabs: {
     backgroundColor: '#ececec',

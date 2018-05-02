@@ -10,7 +10,6 @@ import { dashboardActions } from './actions';
 
 interface IDashboardProps {
 
-    dummy?: string;
     dashboardstate: any;
     auth: any;
     actions: any;

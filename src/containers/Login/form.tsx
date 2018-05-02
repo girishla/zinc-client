@@ -92,7 +92,7 @@ class LoginForm extends React.Component<ILoginFormProps, IFormState> {
                 /> */}
 
                             <ProgressButton
-                                style={Object.assign(styles.boxBtnSignin, styles.flatButton)}
+                                style={{ ...styles.boxBtnSignin, ...styles.flatButton }}
                                 label="Login"
                                 onSignIn={this._onSubmit}
                                 success={true}
