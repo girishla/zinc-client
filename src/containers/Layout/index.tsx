@@ -9,7 +9,7 @@ import { createStructuredSelector } from 'reselect';
 import Header from '../../components/Header';
 import { IRootState } from '../../IRootState';
 
-import LeftDrawer from '../../components/LeftDrawer';
+import LeftDrawer from '../LeftDrawer';
 import Theme, { ITheme } from '../../theming/theme';
 import { layoutActions } from './actions';
 import { getCurrentTheme, updateContentDimensions } from './layout-utils';

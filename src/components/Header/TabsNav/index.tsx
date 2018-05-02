@@ -8,7 +8,7 @@ import { createStructuredSelector } from 'reselect';
 import { layoutActions } from '../../../containers/Layout/actions';
 import { IMenu } from '../../../containers/Layout/menu';
 import { IRootState } from '../../../IRootState';
-import { scrollToMenuItemAndOpenViews } from '../../LeftDrawer/menuUtils';
+import { scrollToMenuItemAndOpenViews } from '../../../containers/LeftDrawer/menuUtils';
 
 
 interface ITabsNavHeaderProps extends RouteComponentProps<any> {

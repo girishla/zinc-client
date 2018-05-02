@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps, withRouter, Route } from 'react-router-dom';
+import { RouteComponentProps, withRouter, Route, Redirect } from 'react-router-dom';
 import Login from '../Login'
 
 // import Dashboard from '../../containers/DashboardPage';
@@ -18,15 +18,21 @@ export class App extends React.Component<IAppProps> {
     return (
       <div>
         {' '}
-        <Route exact={true} path="/" component={Dashboard} />
+        // tslint:disable-next-line jsx-no-lambda
+        <Route exact={true} path="/" render={this.redirectToDashboard} />
         <Route exact={true} path="/dashboard" component={Dashboard} />
         <Route exact={true} path="/login" component={Login} />
-
 
       </div>
 
     );
   };
+
+  public redirectToDashboard() {
+    return <Redirect to="/dashboard" />
+  }
+
+
 }
 
 

@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { layoutActions } from '../../../containers/Layout/actions';
 import { IMenu } from '../../../containers/Layout/menu';
 import { IRootState } from '../../../IRootState';
-import SelectableList from '../../SelectableList';
+import SelectableList from '../../../components/SelectableList';
 import { findParentMenuItem } from '../menuUtils';
 
 

@@ -2,7 +2,7 @@ import { Action } from 'redux';
 import { takeLatest } from 'redux-saga/effects';
 import { call, put } from 'redux-saga/effects';
 import { getType } from 'typesafe-actions';
-import menuapi from '../../components/LeftDrawer/MenuItems/menuapi';
+import menuapi from '../LeftDrawer/MenuItems/menuapi';
 import { layoutActions, LOAD_MENU_FAILED } from './actions';
 
 
