@@ -4,6 +4,9 @@ import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 import styles from './styles';
 import ProgressButton from '../../components/ProgressButton';
+import Logo from '../../components/Logo'
+import Theme, { ITheme } from '../../theming/theme';
+
 
 interface ILoginFormProps {
     formState: any;
@@ -12,17 +15,36 @@ interface ILoginFormProps {
     btnText: string;
     changeForm: any;
     onSubmit: any;
+    currentTheme: string;
 }
 
-class LoginForm extends React.Component<ILoginFormProps> {
+interface IFormState {
+    currentTheme: ITheme;
+}
+
+const theme = new Theme();
+class LoginForm extends React.Component<ILoginFormProps, IFormState> {
     public props: ILoginFormProps;
+    public state: IFormState;
+
     constructor(props: ILoginFormProps) {
         super(props)
-
+        this.state = {
+            currentTheme: theme.get(props.currentTheme)
+        };
         this._onSubmit = this._onSubmit.bind(this)
         this._changeUsername = this._changeUsername.bind(this)
         this._changePassword = this._changePassword.bind(this)
     }
+
+    public componentWillReceiveProps(newProps: ILoginFormProps) {
+        if (newProps.currentTheme !== this.props.currentTheme) {
+            this.setState({
+                currentTheme: theme.get(newProps.currentTheme)
+            });
+        }
+    }
+
     public render() {
         const { error } = this.props
 
@@ -31,6 +53,7 @@ class LoginForm extends React.Component<ILoginFormProps> {
         return (
             <div style={styles.boxContainer}>
                 <Paper style={styles.paper}>
+                    <Logo colour={this.state.currentTheme.logoBackgroundColor} width="150pt" height="75pt" />
                     <div className="title" style={styles.title}>
                         Login
                     </div>

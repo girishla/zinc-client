@@ -14,6 +14,7 @@ import MenuItems from './MenuItems';
 import { findMenuItem, scrollToMenuItem, scrollToOpenViewsItem } from './menuUtils';
 import OpenViewsItems from './OpenViewItems';
 import Styles from './styles';
+import Logo from '../../components/Logo'
 
 const theme = new Theme();
 
@@ -144,7 +145,7 @@ class LeftDrawer extends React.Component<ILeftDrawerProps, ILeftDrawerState> {
     const currentTheme = this.state.currentTheme;
     const styles = Styles(currentTheme);
     const { navDrawerOpen } = this.props;
-    const { email, displayName } = { email: '', displayName: '' };
+    const { email, displayName } = { email: '', displayName: 'Guest User' };
 
     return (
       <Drawer
@@ -153,7 +154,8 @@ class LeftDrawer extends React.Component<ILeftDrawerProps, ILeftDrawerState> {
         open={navDrawerOpen}
         onRequestChange={this.props.navDrawerToggle}
       >
-        <div style={styles.logo}>Zinc</div>
+
+        <div style={styles.logo}>Zinc &nbsp;<Logo colour={this.state.currentTheme.logoColor} width="40pt" height="20pt" /> </div>
         <div style={styles.avatar.div}>
           <Avatar
             src={PlaceHolder}

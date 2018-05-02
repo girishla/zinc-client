@@ -23,6 +23,7 @@ interface ILoginProps extends RouteComponentProps<any> {
     error: string;
     currentlySending: boolean;
     actions: typeof authActions;
+    currentTheme: string;
 }
 
 class Login extends React.Component<ILoginProps> {
@@ -34,7 +35,7 @@ class Login extends React.Component<ILoginProps> {
     }
 
     public render() {
-        const { currentlySending, error, actions } = this.props;
+        const { currentlySending, error, actions, currentTheme } = this.props;
         let { formState } = this.props;
         if (!formState) {
             formState = { username: '', password: '' };
@@ -42,7 +43,7 @@ class Login extends React.Component<ILoginProps> {
 
         return (
             <MuiThemeProvider muiTheme={themeLight}>
-                <Form formState={formState} changeForm={actions.changeForm} onSubmit={this._login} btnText={'Login'} error={error} currentlySending={currentlySending} />
+                <Form currentTheme={currentTheme} formState={formState} changeForm={actions.changeForm} onSubmit={this._login} btnText={'Login'} error={error} currentlySending={currentlySending} />
             </MuiThemeProvider>
 
         )
@@ -65,7 +66,7 @@ const mapStateToProps = createStructuredSelector({
     formState: (store: IRootState) => store.auth && store.auth.formState,
     error: (store: IRootState) => store.auth && store.auth.error,
     currentlySending: (store: IRootState) => store.auth && store.auth.currentlySending,
-
+    currentTheme: (store: IRootState) => store.layout && store.layout.currentTheme,
 });
 
 function mapDispatchToProps(dispatch: any) {

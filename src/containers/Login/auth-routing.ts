@@ -9,7 +9,6 @@ const locationHelper = locationHelperBuilder({});
 
 const userIsAuthenticatedDefaults = {
   authenticatedSelector: (state: IRootState) => {
-    console.log('auth state', state)
     return state.auth && state.auth.loggedIn === true
   },
   authenticatingSelector: (state: IRootState) => state.auth && state.auth.currentlySending === true,

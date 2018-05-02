@@ -46,7 +46,8 @@ const styles: any = (currentTheme: ITheme) => ({
     fontWeight: typography.fontWeightMedium,
     height: 56,
     lineHeight: `${spacing.desktopKeylineIncrement}px`,
-    paddingLeft: 35,
+    textAlign: 'center'
+    // paddingLeft: 35,
   },
   selectedListItem: {
     background: currentTheme.selectedListItemBackgroundColor,
