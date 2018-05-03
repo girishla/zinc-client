@@ -10,7 +10,7 @@ import {
   CLEAR_ERROR,
   SET_PROFILE
 } from './actions'
-import auth from './auth'
+import auth from './Api'
 
 // The initial login state
 const initialState = {

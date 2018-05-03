@@ -1,11 +1,6 @@
-// This file contains the sagas used for login async actions in our app. It's divided into
-// "effects" that the sagas call (`authorize` and `logout`) and the actual sagas themselves,
-// which listen for actions.
-
-// Sagas help us gather all our side effects (network requests in this case) in one place
 
 import { take, call, put, all } from 'redux-saga/effects'
-import auth from './auth'
+import api from './Api'
 import { push } from 'react-router-redux';
 import { takeLatest } from 'redux-saga/effects'
 
@@ -51,9 +46,9 @@ export function* authorize({ username, password, isRegistering }: any) {
     // as if it's synchronous because we pause execution until the call is done
     // with `yield`!
     if (isRegistering) {
-      response = yield call(auth.register, username, password)
+      response = yield call(api.register, username, password)
     } else {
-      response = yield call(auth.login, username, password)
+      response = yield call(api.login, username, password)
     }
 
     yield put({ type: SET_PROFILE, profile: response.user })
@@ -82,7 +77,7 @@ export function* logoutTask() {
 
     yield put({ type: SET_AUTH, newAuthState: false })
 
-    yield call(auth.logout)
+    yield call(api.logout)
     yield put({ type: SENDING_REQUEST, sending: false })
 
     yield put(push('/login'));
@@ -104,9 +99,8 @@ export function* loginTask(loginAction: any) {
   if (authorised) {
     yield put({ type: SET_AUTH, newAuthState: true }) // User is logged in (authorized)
     // yield put({ type: CHANGE_FORM, newFormState: { username: '', password: '' } }) // Clear form
-    yield put({ type: REQUEST_ERROR, error: "" }) // Clear ERROR
+    yield put({ type: CLEAR_ERROR, error: "" }) // Clear ERROR
 
-    yield put(push('/dashboard'));
   }
 
 
@@ -168,7 +162,7 @@ export function* getProfileTask() {
 
   try {
 
-    const response: IAuthResponse = yield call(auth.getprofile)
+    const response: IAuthResponse = yield call(api.getprofile)
     yield put({ type: SENDING_REQUEST, sending: false })
 
     yield put({ type: SET_PROFILE, profile: response.user })
@@ -186,8 +180,11 @@ export function* getProfile() {
 
 }
 
-export default function* rootSaga() {
+
+
+export function* rootSaga() {
   yield all([
     loginFlow(), logoutFlow(), registerFlow(), getProfile()
   ])
 }
+export default [rootSaga]

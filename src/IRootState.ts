@@ -1,5 +1,6 @@
 import { FormStateMap } from "redux-form";
 import { IMenu } from "./containers/Layout/menu";
+import { IJobsState } from "./containers/Jobs/IJobsState";
 
 export interface IRootState {
     layout: {
@@ -19,4 +20,5 @@ export interface IRootState {
     form: FormStateMap;
     dashboard: any;
     auth: any;
+    jobs: IJobsState;
 }

@@ -12,7 +12,8 @@ export const LOGIN_REQUEST = 'zinc/auth/LOGIN_REQUEST'
 export const REGISTER_REQUEST = 'zinc/auth/REGISTER_REQUEST'
 export const LOGOUT = 'zinc/auth/LOGOUT'
 export const REQUEST_ERROR = 'zinc/auth/REQUEST_ERROR'
-export const CLEAR_ERROR = 'CLEAR_ERROR'
+
+export const CLEAR_ERROR = 'zinc/auth/CLEAR_ERROR'
 export const SET_PROFILE = "zinc/auth/SET_PROFILE"
 export const GET_PROFILE = "zinc/auth/GET_PROFILE"
 

@@ -6,7 +6,8 @@ import { ConnectedRouter } from 'react-router-redux';
 import 'sanitize.css/sanitize.css';
 import configureStore from './configureStore';
 import App from './containers/App';
-import sagas from './containers/Layout/sagas';
+import layoutSagas from './containers/Layout/sagas';
+import authSagas from './containers/Login/saga';
 // Import CSS reset and Global Styles
 import './global-styles';
 import registerServiceWorker from './registerServiceWorker';
@@ -18,9 +19,9 @@ const history = createHistory();
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('root');
 
-// Inject default app sagas
-sagas.map(store.runSaga);
-
+// Inject sagas
+layoutSagas.map(store.runSaga);
+authSagas.map(store.runSaga);
 
 ReactDOM.render(
   <Provider store={store}>

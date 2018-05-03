@@ -116,7 +116,7 @@ function appReducer(state = initialState, action: any) {
       return Object.assign({}, state, {
         openViews,
         selectedMenuIndex: menuIndex,
-        selectedMenuItem: openedIndex,
+        selectedMenuItem: itemFound,
         selectedOpenedMenuIndex: openedIndex,
         selectedOpenedMenuItem: itemOpenedFound
       });

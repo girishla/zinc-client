@@ -1,5 +1,6 @@
-import request from './request'
+
 import { HTTPStatusCodes } from '../../../utils/httpstatus';
+import api from './api';
 
 let localStorage: typeof window.localStorage
 
@@ -8,10 +9,9 @@ localStorage = window.localStorage
 
 const auth = {
 
-
   getprofile() {
 
-    return request.post('/user', { token: localStorage.getItem("token") })!
+    return api.getProfile(localStorage.getItem("token")!)
       .then((response: Response) => {
 
         if (response.status === HTTPStatusCodes.OK) {
@@ -52,7 +52,7 @@ const auth = {
       return Promise.resolve(true)
     }
 
-    return request.post('/auth', { username, password })!
+    return api.login(username, password)
       .then((response: Response) => {
 
         if (response.status === HTTPStatusCodes.OK) {
@@ -104,7 +104,7 @@ const auth = {
   */
   register(username: string, password: string) {
     // Post a fake request
-    return request.post('/register', { username, password })!
+    return api.register(username, password)
       // Log user in after registering
       .then(() => auth.login(username, password))
   },

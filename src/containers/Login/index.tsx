@@ -8,10 +8,10 @@ import { IRootState } from '../../IRootState';
 import { bindActionCreators, compose } from 'redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import reducer from './reducer';
-import saga from './saga';
-import injectReducer from '../../utils/injectReducer';
-import injectSaga from '../../utils/injectSaga';
+// import reducer from './reducer';
+// import saga from './saga';
+// import injectReducer from '../../utils/injectReducer';
+// import injectSaga from '../../utils/injectSaga';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import themeLight from '../../theming/themes/theme-light';
 import { userIsAuthenticatedRedir } from './auth-routing';
@@ -67,14 +67,12 @@ function mapDispatchToProps(dispatch: any) {
     };
 }
 
-const withReducer = injectReducer({ key: 'auth', reducer });
-const withSaga = injectSaga({ key: 'auth', saga });
 
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
-    withReducer,
-    withSaga,
+    // withReducer,
+    // withSaga,
     userIsAuthenticatedRedir,
     withRouter,
 )(Login);

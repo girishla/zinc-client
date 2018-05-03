@@ -14,11 +14,11 @@ import Theme, { ITheme } from '../../theming/theme';
 import { layoutActions } from './actions';
 import { getCurrentTheme, updateContentDimensions } from './layout-utils';
 import Styles from './styles';
-import injectReducer from '../../utils/injectReducer';
-import reducer from '../Login/reducer';
-import saga from '../Login/saga';
-import injectSaga from '../../utils/injectSaga';
-import { userIsNotAuthenticatedRedir } from '../Login/auth-routing';
+// import injectReducer from '../../utils/injectReducer';
+// import reducer from '../Login/reducer';
+// import saga from '../Login/saga';
+// import injectSaga from '../../utils/injectSaga';
+// import { userIsNotAuthenticatedRedir } from '../Login/auth-routing';
 import { authActions } from '../Login/actions';
 
 
@@ -26,12 +26,13 @@ import { authActions } from '../Login/actions';
 const theme = new Theme();
 
 export interface ILayoutProps extends RouteComponentProps<any> {
-  children: any,
+  // children: any,
   width: any,
   currentTheme: string,
   isBoxedLayout: boolean,
   actions: typeof layoutActions,
   authActions: typeof authActions;
+  dispatch?: (action: any) => void;
 }
 
 
@@ -179,15 +180,10 @@ function mapDispatchToProps(dispatch: any) {
 }
 
 
-const withReducer = injectReducer({ key: 'auth', reducer });
-const withSaga = injectSaga({ key: 'auth', saga });
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  withWidth(),
-  withReducer,
-  withSaga,
   withRouter,
-  userIsNotAuthenticatedRedir,
-)((Layout));
+  withWidth(),
+)(Layout);
 

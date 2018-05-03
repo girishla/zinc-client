@@ -6,6 +6,8 @@ import { IRootState } from '../../IRootState';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import { dashboardActions } from './actions';
+// import { withRouter } from 'react-router-dom';
+import { userIsNotAuthenticatedRedir } from '../Login/auth-routing';
 
 
 interface IDashboardProps {
@@ -18,8 +20,6 @@ interface IDashboardProps {
 
 export class Dashboard extends React.Component<IDashboardProps> {
 
-
-
     public render() {
         return (
             <Layout>
@@ -29,10 +29,6 @@ export class Dashboard extends React.Component<IDashboardProps> {
             </Layout>
         )
     }
-
-
-
-
 
 }
 
@@ -49,9 +45,8 @@ function mapDispatchToProps(dispatch: any) {
 }
 
 
-
 export default compose(
+    userIsNotAuthenticatedRedir,
     connect(mapStateToProps, mapDispatchToProps),
-    // withRouter,
 )(Dashboard);
 
