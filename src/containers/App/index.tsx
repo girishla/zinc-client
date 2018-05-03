@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { RouteComponentProps, withRouter, Route, Redirect, Switch, Router } from 'react-router-dom';
 import Login from '../Login'
-
+import '@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.min.css';
+import './sldsOverrides.css'
 import './App.css';
 import Dashboard from '../Dashboard';
 import ZincJobs from '../Jobs';
@@ -12,6 +13,7 @@ import { IRootState } from '../../IRootState';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
+
 interface IAppProps extends RouteComponentProps<any> {
 
 }
@@ -20,7 +22,7 @@ interface IAppProps extends RouteComponentProps<any> {
 const RouteWithLayout = ({ component, ...rest }: any) => {
   return (
     <Layout>
-      <PageBase navigation={'Zinc'} noWrapContent={true} loading={false} >
+      <PageBase noWrapContent={true} loading={false} >
         <Route {...rest} component={component} />
       </PageBase>
     </Layout>

@@ -3,10 +3,11 @@ import Paper from 'material-ui/Paper';
 import * as React from 'react';
 import styles from '../../styles';
 import Spinner from '../Spinner';
+import BreadCrumbs from '../BreadCrumbs';
 
 
 interface IPageBaseProps {
-  navigation: any;
+  // navigation: any;
   noWrapContent: any;
   loading: boolean;
   title?: any;
@@ -38,7 +39,7 @@ class PageBase extends React.Component<IPageBaseProps, IPageBaseState> {
   }
 
   public render() {
-    const { title, navigation, noWrapContent, children } = this.props;
+    const { title, noWrapContent, children } = this.props;
 
     const content = (
       <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -51,15 +52,14 @@ class PageBase extends React.Component<IPageBaseProps, IPageBaseState> {
             />
           </div>
         ) : (
-            <div>{children}</div>
+            <div style={{ flex: 1 }}>{children}</div>
           )}
       </div>
     );
 
     return (
       <div>
-        <span style={styles.navigation}>{navigation}</span>
-
+        <BreadCrumbs />
         {noWrapContent ? (
           <div>{content}</div>
         ) : (
