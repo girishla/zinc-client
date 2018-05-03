@@ -51,7 +51,7 @@ export function* authorize({ username, password, isRegistering }: any) {
       response = yield call(api.login, username, password)
     }
 
-    yield put({ type: SET_PROFILE, profile: response.user })
+    // yield put({ type: SET_PROFILE, profile: response.user })
 
     return response
   } catch (error) {
@@ -80,7 +80,7 @@ export function* logoutTask() {
     yield call(api.logout)
     yield put({ type: SENDING_REQUEST, sending: false })
 
-    yield put(push('/login'));
+    // yield put(push('/login'));
 
 
   } catch (error) {

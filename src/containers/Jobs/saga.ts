@@ -10,8 +10,6 @@ import jobsApi from "./jobsApi";
 export function* getJobsTask(action: Action) {
     try {
         const jobs: IJobCollection = yield call(jobsApi.getJobs, window.localStorage.getItem('token'));
-
-        console.log('jobs', jobs);
         yield put({ type: getType(jobsActions.loadJobsSuccess), jobs });
     } catch (e) {
         yield put({ type: getType(jobsActions.loadJobsFailure), errorStr: e.message });
