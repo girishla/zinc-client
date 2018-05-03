@@ -8,6 +8,8 @@ import { Dropdown } from '@salesforce/design-system-react';
 import { DropdownTrigger } from '@salesforce/design-system-react';
 import utilitySprite from '@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg';
 import customSprite from '@salesforce-ux/design-system/assets/icons/custom-sprite/svg/symbols.svg';
+import standardSprite from '@salesforce-ux/design-system/assets/icons/standard-sprite/svg/symbols.svg';
+import { blue300 } from 'material-ui/styles/colors';
 
 
 class JobsListView extends React.Component {
@@ -116,12 +118,14 @@ class JobsListView extends React.Component {
         return (
             <div style={{ flex: 1 }}>
                 <section className="slds-clearfix" />
-                <IconSettings utilitySprite={utilitySprite} customSprite={customSprite}>
+                <IconSettings utilitySprite={utilitySprite} customSprite={customSprite} standardSprite={standardSprite}>
                     <PageHeader
                         contentRight={contentRight}
                         iconAssistiveText="Jobs"
                         iconCategory="standard"
-                        iconName="lead"
+                        iconName="lead_list"
+                        iconStyle={{ fill: blue300 }}
+                        iconVariant="border-filled"
                         info="10 items • sorted by name"
                         label="Jobs"
                         navRight={navRight}
