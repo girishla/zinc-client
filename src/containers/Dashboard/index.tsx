@@ -1,6 +1,6 @@
 import * as React from 'react'
-import Layout from '../Layout'
-import PageBase from '../../components/PageBase'
+// import Layout from '../Layout'
+// import PageBase from '../../components/PageBase'
 import { createStructuredSelector } from 'reselect';
 import { IRootState } from '../../IRootState';
 import { bindActionCreators, compose } from 'redux';
@@ -8,25 +8,20 @@ import { connect } from 'react-redux';
 import { dashboardActions } from './actions';
 // import { withRouter } from 'react-router-dom';
 import { userIsNotAuthenticatedRedir } from '../Login/auth-routing';
+import { withRouter } from 'react-router';
 
 
 interface IDashboardProps {
-
-    dashboardstate: any;
-    auth: any;
-    actions: any;
-
+    dashboardstate?: any;
+    auth?: any;
+    actions?: any;
 }
 
 export class Dashboard extends React.Component<IDashboardProps> {
 
     public render() {
         return (
-            <Layout>
-                <PageBase navigation="Zinc / Dashboard" noWrapContent={true} loading={false}>
-                    <h1>Welcome to Zinc</h1>
-                </PageBase>
-            </Layout>
+            <h1>Welcome to Zinc</h1>
         )
     }
 
@@ -46,7 +41,8 @@ function mapDispatchToProps(dispatch: any) {
 
 
 export default compose(
-    userIsNotAuthenticatedRedir,
     connect(mapStateToProps, mapDispatchToProps),
+    userIsNotAuthenticatedRedir,
+    withRouter,
 )(Dashboard);
 

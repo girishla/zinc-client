@@ -1,6 +1,5 @@
 import * as React from 'react'
-import Layout from '../Layout'
-import PageBase from '../../components/PageBase'
+
 import { createStructuredSelector } from 'reselect';
 import { IRootState } from '../../IRootState';
 import { jobsActions } from './actions';
@@ -37,11 +36,7 @@ class ZincJobs extends React.Component<IJobsProps> {
 
     public render() {
         return (
-            <Layout>
-                <PageBase navigation="Zinc / Jobs" noWrapContent={true} loading={false}>
-                    <h1>List Of Jobs</h1>
-                </PageBase>
-            </Layout>
+            <h1>List Of Jobs</h1>
         )
     }
 }
