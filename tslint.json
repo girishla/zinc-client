@@ -10,7 +10,8 @@
     "no-empty": false,
     "jsdoc-format": false,
     "no-console": false,
-    "no-unused-variable": false
+    "no-unused-variable": false,
+    "jsx-no-lambda": false
   },
   "linterOptions": {
     "exclude": [

@@ -10,16 +10,32 @@ import utilitySprite from '@salesforce-ux/design-system/assets/icons/utility-spr
 import customSprite from '@salesforce-ux/design-system/assets/icons/custom-sprite/svg/symbols.svg';
 import standardSprite from '@salesforce-ux/design-system/assets/icons/standard-sprite/svg/symbols.svg';
 import { blue300 } from 'material-ui/styles/colors';
+import JobsTable from './JobsTable';
+import { IDetailedJobInfoResource } from './IJobCollection';
 
 
-class JobsListView extends React.Component {
+
+interface IJobsListViewProps {
+
+    jobs: IDetailedJobInfoResource[];
+
+}
+
+class JobsListView extends React.Component<IJobsListViewProps> {
+
+
+    public jobsTableSelectionsChange() {
+
+    }
+
+
 
     public render() {
         const navRight = (
             <div>
                 <ButtonGroup>
-                    <Button label="New Lead" />
-                    <Button label="Import Leads" />
+                    <Button label="New Job" disabled={true} />
+                    <Button label="Import Jobs" disabled={true} />
                     <Dropdown
                         align="right"
                         assistiveText="More Options"
@@ -126,7 +142,7 @@ class JobsListView extends React.Component {
                         iconName="lead_list"
                         iconStyle={{ fill: blue300 }}
                         iconVariant="border-filled"
-                        info="10 items • sorted by name"
+                        info="Jobs that have been configured by your administrator"
                         label="Jobs"
                         navRight={navRight}
                         title={
@@ -158,6 +174,7 @@ class JobsListView extends React.Component {
                         truncate={true}
                         variant="objectHome"
                     />
+                    <JobsTable items={this.props.jobs} onChange={this.jobsTableSelectionsChange} />
                 </IconSettings>
             </div>
         );

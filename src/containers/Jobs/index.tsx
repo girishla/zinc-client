@@ -12,11 +12,12 @@ import injectSaga from '../../utils/injectSaga';
 import reducer from './reducer';
 import saga from './saga';
 import JobsListView from './JobsListView'
+import { IJobCollection } from './IJobCollection';
 
 
 interface IJobsProps {
 
-    jobs: any;
+    jobs: { data: IJobCollection };
     jobsActions: typeof jobsActions;
 
 }
@@ -36,7 +37,7 @@ class ZincJobs extends React.Component<IJobsProps> {
 
     public render() {
         return (
-            <JobsListView />
+            <JobsListView jobs={this.props.jobs && this.props.jobs.data && this.props.jobs.data._embedded && this.props.jobs.data._embedded.detailedJobInfoResources} />
         )
     }
 }

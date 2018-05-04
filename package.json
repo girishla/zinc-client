@@ -8,7 +8,7 @@
     "@types/react-router-redux": "^5.0.13",
     "@types/redux-form": "^7.2.4",
     "@types/redux-saga": "^0.10.5",
-    "design-system-react": "git+https://github.com/salesforce/design-system-react.git#v0.8.7",
+    "date-fns": "^1.29.0",
     "hoist-non-react-statics": "^2.3.1",
     "invariant": "^2.2.4",
     "lodash": "^4.17.10",
