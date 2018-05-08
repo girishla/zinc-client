@@ -1,71 +1,88 @@
-import * as React from 'react';
-import { RouteComponentProps, withRouter, Route, Redirect, Switch, Router } from 'react-router-dom';
-import Login from '../Login'
-import '@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.min.css';
-import './sldsOverrides.css'
-import './App.css';
-import Dashboard from '../Dashboard';
-import ZincJobs from '../Jobs';
-import Layout from '../Layout'
-import PageBase from '../../components/PageBase'
-import { connect } from 'react-redux';
-import { IRootState } from '../../IRootState';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
+import "@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.min.css";
+import * as React from "react";
+import { connect } from "react-redux";
+import {
+  Redirect,
+  Route,
+  RouteComponentProps,
+  Router,
+  Switch,
+  withRouter
+} from "react-router-dom";
+import { compose } from "redux";
+import { createStructuredSelector } from "reselect";
+import { IRootState } from "../../IRootState";
+import PageBase from "../../components/PageBase";
+import Dashboard from "../Dashboard";
+import ZincJobs from "../Job";
+import ZincJobExecutions from "../JobExecution";
+import Layout from "../Layout";
+import Login from "../Login";
+import "./App.css";
+import "./sldsOverrides.css";
 
-
-interface IAppProps extends RouteComponentProps<any> {
-
-}
-
+interface IAppProps extends RouteComponentProps<any> {}
 
 const RouteWithLayout = ({ component, ...rest }: any) => {
   return (
     <Layout>
-      <PageBase noWrapContent={true} loading={false} >
+      <PageBase noWrapContent={true} loading={false}>
         <Route {...rest} component={component} />
       </PageBase>
     </Layout>
   );
 };
 
-
 export class App extends React.Component<IAppProps> {
-
   public render() {
-
     return (
       <Router {...this.props}>
         <div>
           <Switch>
-            <Route {...this.props} exact={true} path="/login" component={Login} />
+            <Route
+              {...this.props}
+              exact={true}
+              path="/login"
+              component={Login}
+            />
             <Route exact={true} path="/" render={this.redirectToDashboard} />
-            <RouteWithLayout {...this.props} exact={true} path="/dashboard" component={Dashboard} />
+            <RouteWithLayout
+              {...this.props}
+              exact={true}
+              path="/dashboard"
+              component={Dashboard}
+            />
             <RouteWithLayout exact={true} path="/jobs" component={ZincJobs} />
+            <RouteWithLayout
+              exact={true}
+              path="/jobexecutions"
+              component={ZincJobExecutions}
+            />
+            <RouteWithLayout
+              exact={true}
+              path="/jobs/:jobName/executions"
+              component={ZincJobExecutions}
+            />
+            <RouteWithLayout
+              exact={true}
+              path="/jobs/:jobName/:jobInstanceId/executions"
+              component={ZincJobExecutions}
+            />
+
             {/* <Route path="*" component={PageNotFound} /> */}
           </Switch>
         </div>
       </Router>
     );
-
   }
-
-
 
   public redirectToDashboard() {
-    return <Redirect to="/dashboard" />
+    return <Redirect to="/dashboard" />;
   }
-
-
 }
 
 const mapStateToProps = createStructuredSelector({
   auth: (store: IRootState) => store.auth
 });
 
-
-
-export default compose(
-  connect(mapStateToProps, null),
-  withRouter
-)(App);
+export default compose(connect(mapStateToProps, null), withRouter)(App);

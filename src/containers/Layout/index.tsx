@@ -1,64 +1,50 @@
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import withWidth, { LARGE } from 'material-ui/utils/withWidth';
-import * as React from 'react';
-import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { bindActionCreators, compose } from 'redux';
-import { createStructuredSelector } from 'reselect';
-import Header from '../../components/Header';
-import { IRootState } from '../../IRootState';
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import withWidth, { LARGE } from "material-ui/utils/withWidth";
+import * as React from "react";
+import * as ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import { connect } from "react-redux";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import { bindActionCreators, compose } from "redux";
+import { createStructuredSelector } from "reselect";
+import Header from "../../components/Header";
+import { IRootState } from "../../IRootState";
 
-import LeftDrawer from '../LeftDrawer';
-import Theme, { ITheme } from '../../theming/theme';
-import { layoutActions } from './actions';
-import { getCurrentTheme, updateContentDimensions } from './layout-utils';
-import Styles from './styles';
-// import injectReducer from '../../utils/injectReducer';
-// import reducer from '../Login/reducer';
-// import saga from '../Login/saga';
-// import injectSaga from '../../utils/injectSaga';
-// import { userIsNotAuthenticatedRedir } from '../Login/auth-routing';
-import { authActions } from '../Login/actions';
+import LeftDrawer from "../LeftDrawer";
+import Theme, { ITheme } from "../../theming/theme";
+import { layoutActions } from "./actions";
+import { getCurrentTheme, updateContentDimensions } from "./layout-utils";
+import Styles from "./styles";
 
-
+import { authActions } from "../Login/actions";
 
 const theme = new Theme();
 
 export interface ILayoutProps extends RouteComponentProps<any> {
   // children: any,
-  width: any,
-  currentTheme: string,
-  isBoxedLayout: boolean,
-  actions: typeof layoutActions,
+  width: any;
+  currentTheme: string;
+  isBoxedLayout: boolean;
+  actions: typeof layoutActions;
   authActions: typeof authActions;
   dispatch?: (action: any) => void;
 }
 
-
-
 interface ILayoutState {
-  navDrawerOpen: boolean,
-  currentTheme: ITheme,
-  isMobileBrowser: boolean
-  width: number
-};
-
+  navDrawerOpen: boolean;
+  currentTheme: ITheme;
+  isMobileBrowser: boolean;
+  width: number;
+}
 
 class Layout extends React.Component<ILayoutProps, ILayoutState> {
-
-
   public state: ILayoutState = {
     navDrawerOpen: false,
-    currentTheme: theme.get('lightTheme'),
+    currentTheme: theme.get("lightTheme"),
     isMobileBrowser: false,
     width: LARGE
   };
 
-
-
   constructor(props: ILayoutProps) {
-
     super(props);
 
     if (
@@ -66,10 +52,12 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
         navigator.userAgent
       )
     ) {
-      this.state.currentTheme = theme.get(props.currentTheme!)
+      this.state.currentTheme = theme.get(props.currentTheme!);
     }
 
-    this.handleChangeRequestNavDrawer = this.handleChangeRequestNavDrawer.bind(this);
+    this.handleChangeRequestNavDrawer = this.handleChangeRequestNavDrawer.bind(
+      this
+    );
     this.renderPages = this.renderPages.bind(this);
   }
 
@@ -82,12 +70,11 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
   }
 
   public componentDidMount() {
-    window.addEventListener('resize', updateContentDimensions);
+    window.addEventListener("resize", updateContentDimensions);
     this.props.authActions.getProfile();
   }
 
   public componentWillReceiveProps(nextProps: ILayoutProps) {
-
     if (this.props.width !== nextProps.width) {
       this.setState({ navDrawerOpen: nextProps.width === LARGE });
     }
@@ -104,7 +91,7 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
   }
 
   public componentWillUnmount() {
-    window.removeEventListener('resize', updateContentDimensions);
+    window.removeEventListener("resize", updateContentDimensions);
   }
 
   public handleChangeRequestNavDrawer() {
@@ -124,7 +111,7 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
       <div
         className={
           this.props.currentTheme +
-          (this.props.isBoxedLayout ? ' layout-boxed' : ' layout-fluid')
+          (this.props.isBoxedLayout ? " layout-boxed" : " layout-fluid")
         }
       >
         <Header
@@ -150,7 +137,6 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
           >
             {this.props.children}
           </ReactCSSTransitionGroup>
-
         </div>
       </div>
     );
@@ -165,11 +151,9 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
   }
 }
 
-
 const mapStateToProps = createStructuredSelector({
   currentTheme: (state: IRootState) => state.layout.currentTheme,
-  isBoxedLayout: (state: IRootState) => state.layout.isBoxedLayout,
-
+  isBoxedLayout: (state: IRootState) => state.layout.isBoxedLayout
 });
 
 function mapDispatchToProps(dispatch: any) {
@@ -179,11 +163,8 @@ function mapDispatchToProps(dispatch: any) {
   };
 }
 
-
-
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withRouter,
-  withWidth(),
+  withWidth()
 )(Layout);
-

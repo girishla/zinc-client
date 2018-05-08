@@ -1,7 +1,6 @@
-
-import FontIcon from 'material-ui/FontIcon';
-import * as React from 'react';
-import { IMenu } from '../../../containers/Layout/menu';
+import FontIcon from "material-ui/FontIcon";
+import * as React from "react";
+import { IMenu } from "../../../containers/Layout/menu";
 
 const data: { menus: IMenu[] } = {
   menus: [
@@ -10,80 +9,80 @@ const data: { menus: IMenu[] } = {
       animatingRootMenu: true,
       children: [],
       icon: <FontIcon className="material-icons"> assessment </FontIcon>,
-      id: 'dashboard',
+      id: "dashboard",
       index: 0,
       open: false,
-      text: 'DashBoard',
-      url: '/dashboard',
+      text: "DashBoard",
+      url: "/dashboard",
       willCloseMenu: false,
-      willCloseRootMenu: false,
+      willCloseRootMenu: false
     },
     {
       animating: true,
       animatingRootMenu: true,
       children: [],
       icon: <FontIcon className="material-icons"> toc </FontIcon>,
-      id: 'jobs',
+      id: "jobs",
       index: 1,
       open: false,
-      text: 'Jobs',
-      url: '/jobs',
+      text: "Jobs",
+      url: "/jobs",
       willCloseMenu: false,
-      willCloseRootMenu: false,
-    },
-    {
-      animating: true,
-      animatingRootMenu: true,
-      children: [],
-      icon: <FontIcon className="material-icons"> schedule </FontIcon>,
-      id: 'schedule',
-      index: 2,
-      open: false,
-      text: 'Schedule',
-      url: '/schedule',
-      willCloseMenu: false,
-      willCloseRootMenu: false,
+      willCloseRootMenu: false
     },
     {
       animating: true,
       animatingRootMenu: true,
       children: [],
       icon: <FontIcon className="material-icons"> transform </FontIcon>,
-      id: 'executions',
+      id: "executions",
       index: 3,
       open: false,
-      text: 'Job Executions',
-      url: '/executions',
+      text: "Job Executions",
+      url: "/jobexecutions",
       willCloseMenu: false,
-      willCloseRootMenu: false,
+      willCloseRootMenu: false
     },
     {
       animating: true,
       animatingRootMenu: true,
       children: [],
+      icon: <FontIcon className="material-icons"> schedule </FontIcon>,
+      id: "schedule",
+      index: 2,
+      open: false,
+      text: "Schedule",
+      url: "/schedule",
+      willCloseMenu: false,
+      willCloseRootMenu: false
+    },
+
+    {
+      animating: true,
+      animatingRootMenu: true,
+      children: [],
       icon: <FontIcon className="material-icons"> settings </FontIcon>,
-      id: 'settings',
+      id: "settings",
       index: 4,
       open: false,
-      text: 'Settings',
-      url: '/settings',
+      text: "Settings",
+      url: "/settings",
       willCloseMenu: false,
-      willCloseRootMenu: false,
+      willCloseRootMenu: false
     },
     {
       animating: true,
       animatingRootMenu: true,
       children: [],
       icon: <FontIcon className="material-icons"> account_circle </FontIcon>,
-      id: 'profile',
+      id: "profile",
       index: 5,
       open: false,
-      text: 'Profile',
-      url: '/profile',
+      text: "Profile",
+      url: "/profile",
       willCloseMenu: false,
-      willCloseRootMenu: false,
+      willCloseRootMenu: false
     }
-
   ]
 };
 
