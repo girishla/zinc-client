@@ -1,5 +1,4 @@
-import { injectGlobal } from 'styled-components';
-
+import { injectGlobal } from "styled-components";
 
 // tslint:disable-next-line no-unused-expression
 injectGlobal`
@@ -45,8 +44,7 @@ injectGlobal`
   }
 
   a {
-    color: #ff4081;
-    text-decoration: none;
+
   }
 
   a:hover {

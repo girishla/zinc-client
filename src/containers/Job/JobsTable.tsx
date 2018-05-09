@@ -3,6 +3,7 @@ import standardSprite from "@salesforce-ux/design-system/assets/icons/standard-s
 import utilitySprite from "@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg";
 import {
   DataTable,
+  DataTableCell,
   DataTableColumn,
   DataTableRowActions,
   IconSettings
@@ -12,6 +13,14 @@ import * as React from "react";
 import { IDetailedJobInfoResource } from "./IJobCollection";
 import ZincMessage from "./message";
 import TableWrappedCell from "../../components/TableWrappedCell";
+import { Link } from "react-router-dom";
+
+const DrillToExecutionListViewCell: any = ({ children, ...props }: any) => (
+  <DataTableCell title={children} {...props}>
+    <Link to={`/jobs/${props.item.name}/executions`}>{children}</Link>
+  </DataTableCell>
+);
+DrillToExecutionListViewCell.displayName = DataTableCell.displayName;
 
 interface IJobsTableProps {
   items: IDetailedJobInfoResource[];
@@ -158,7 +167,10 @@ class JobsTable extends React.Component<IJobsTableProps, IJobsTableState> {
               label="Execution Count"
               width="6rem"
               property="executionCount"
-            />
+            >
+              <DrillToExecutionListViewCell title={""} />
+            </DataTableColumn>
+
             <DataTableColumn
               label="Last Job Start"
               width="8rem"

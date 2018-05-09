@@ -15,21 +15,14 @@ import * as React from "react";
 import { IJobExecutionInfoResource } from "./IJobExecutionCollection";
 import ZincMessage from "./message";
 import { IJobExecutionTableRowAction } from "./IJobExecutionTableRowAction";
+import { Link } from "react-router-dom";
 
-const CustomDataTableCell: any = ({ children, ...props }: any) => (
+const DrillToStepListViewCell: any = ({ children, ...props }: any) => (
   <DataTableCell title={children} {...props}>
-    <a
-      href="javascript:void(0);"
-      // tslint:disable-next-line jsx-no-lambda
-      onClick={event => {
-        event.preventDefault();
-      }}
-    >
-      {children}
-    </a>
+    <Link to={`/jobs/${props.item.name}/executions`}>{children}</Link>
   </DataTableCell>
 );
-CustomDataTableCell.displayName = DataTableCell.displayName;
+DrillToStepListViewCell.displayName = DataTableCell.displayName;
 
 interface IJobExecutionsTableProps {
   items: IJobExecutionInfoResource[];
@@ -62,7 +55,7 @@ class JobExecutionsTable extends React.Component<
       messageTitle: "",
       sortColumn: "executionId",
       sortColumnDirection: {
-        name: "desc"
+        executionId: "desc"
       },
       items: [],
       selection: []
@@ -180,20 +173,26 @@ class JobExecutionsTable extends React.Component<
             <DataTableColumn
               isSorted={false}
               label="Job Name"
-              primaryColumn={true}
               property="name"
               sortable={false}
               width="8rem"
             />
-
             <DataTableColumn
-              isSorted={false}
+              isSorted={true}
               label="Execution Id"
               width="5rem"
+              primaryColumn={true}
               property="executionId"
               sortable={true}
-              sortDirection={"desc"}
+              sortDirection={this.state.sortColumnDirection.executionId}
             />
+            <DataTableColumn
+              label="Step Count"
+              width="5rem"
+              property="stepExecutionCount"
+            >
+              <DrillToStepListViewCell title={""} />
+            </DataTableColumn>
             <DataTableColumn
               label="Start Time"
               width="6rem"
