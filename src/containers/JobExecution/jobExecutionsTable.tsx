@@ -60,9 +60,9 @@ class JobExecutionsTable extends React.Component<
       messageOpen: false,
       messageText: "",
       messageTitle: "",
-      sortColumn: "name",
+      sortColumn: "executionId",
       sortColumnDirection: {
-        name: "asc"
+        name: "desc"
       },
       items: [],
       selection: []
@@ -78,8 +78,6 @@ class JobExecutionsTable extends React.Component<
   }
 
   public handleChanged = (selection: any) => {
-    console.log("selection", selection);
-
     this.setState({ selection });
   };
 
@@ -172,7 +170,7 @@ class JobExecutionsTable extends React.Component<
         >
           <DataTable
             fixedLayout={true}
-            items={this.state.items || [{}]}
+            items={this.state.items || []}
             id="JobExecutionsDataTable"
             onChange={this.handleChanged}
             onSort={this.handleSort}
@@ -180,19 +178,21 @@ class JobExecutionsTable extends React.Component<
             selectRows={true}
           >
             <DataTableColumn
-              isSorted={this.state.sortColumn === "name"}
+              isSorted={false}
               label="Job Name"
               primaryColumn={true}
               property="name"
-              sortable={true}
-              sortDirection={this.state.sortColumnDirection.name}
+              sortable={false}
               width="8rem"
             />
 
             <DataTableColumn
+              isSorted={false}
               label="Execution Id"
               width="5rem"
               property="executionId"
+              sortable={true}
+              sortDirection={"desc"}
             />
             <DataTableColumn
               label="Start Time"
@@ -247,7 +247,7 @@ class JobExecutionsTable extends React.Component<
               ? "N/A"
               : format(
                   parse(item.endTime, "YYYY-MM-DDTHH:mm", new Date()),
-                  "MM/DD/YY HH:MI"
+                  "MM/DD/YY HH:mm"
                 ),
           status: item.exitStatus.exitCode,
           id: item.executionId

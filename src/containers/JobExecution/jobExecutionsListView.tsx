@@ -12,6 +12,7 @@ import { blue300 } from "material-ui/styles/colors";
 import { IJobExecutionInfoResource } from "./IJobExecutionCollection";
 import JobExecutionsTable from "./jobExecutionsTable";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+// import { Card, CardEmpty } from "@salesforce/design-system-react";
 
 interface IJobExecutionsListViewProps extends RouteComponentProps<any> {
   jobExecutions: IJobExecutionInfoResource[];
@@ -129,13 +130,17 @@ class JobExecutionsListView extends React.Component<
         >
           <PageHeader
             contentRight={contentRight}
-            iconAssistiveText="JobExecutions"
+            iconAssistiveText="Job Executions"
             iconCategory="standard"
             iconName="lead_list"
             iconStyle={{ fill: blue300 }}
             iconVariant="border-filled"
-            info="JobExecutions that have been configured by your administrator"
-            label="JobExecutions"
+            info={
+              this.props.jobExecutions &&
+              this.props.jobExecutions.length +
+                " execution(s) sorted by execution Id"
+            }
+            label="Job Executions"
             navRight={navRight}
             title={
               <h1 className="slds-page-header__title slds-p-right--x-small">
@@ -153,7 +158,7 @@ class JobExecutionsListView extends React.Component<
                       className="slds-button--reset slds-type-focus"
                       iconName="down"
                       iconPosition="right"
-                      label="All JobExecutions"
+                      label="All Job Executions"
                       responsive={true}
                       variant="base"
                     />

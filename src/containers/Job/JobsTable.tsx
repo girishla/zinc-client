@@ -3,7 +3,6 @@ import standardSprite from "@salesforce-ux/design-system/assets/icons/standard-s
 import utilitySprite from "@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg";
 import {
   DataTable,
-  DataTableCell,
   DataTableColumn,
   DataTableRowActions,
   IconSettings
@@ -12,21 +11,7 @@ import { format, parse } from "date-fns";
 import * as React from "react";
 import { IDetailedJobInfoResource } from "./IJobCollection";
 import ZincMessage from "./message";
-
-const CustomDataTableCell: any = ({ children, ...props }: any) => (
-  <DataTableCell title={children} {...props}>
-    <a
-      href="javascript:void(0);"
-      // tslint:disable-next-line jsx-no-lambda
-      onClick={event => {
-        event.preventDefault();
-      }}
-    >
-      {children}
-    </a>
-  </DataTableCell>
-);
-CustomDataTableCell.displayName = DataTableCell.displayName;
+import TableWrappedCell from "../../components/TableWrappedCell";
 
 interface IJobsTableProps {
   items: IDetailedJobInfoResource[];
@@ -144,7 +129,7 @@ class JobsTable extends React.Component<IJobsTableProps, IJobsTableState> {
         >
           <DataTable
             fixedLayout={true}
-            items={this.state.items || [{}]}
+            items={this.state.items || []}
             id="JobsDataTable"
             onChange={this.handleChanged}
             onSort={this.handleSort}
@@ -158,19 +143,21 @@ class JobsTable extends React.Component<IJobsTableProps, IJobsTableState> {
               property="name"
               sortable={true}
               sortDirection={this.state.sortColumnDirection.name}
-              width="8rem"
+              width="6rem"
             >
-              <CustomDataTableCell />
+              <TableWrappedCell />
+            </DataTableColumn>
+            <DataTableColumn
+              label="Description"
+              property="description"
+              width="20rem"
+            >
+              <TableWrappedCell />
             </DataTableColumn>
             <DataTableColumn
               label="Execution Count"
+              width="6rem"
               property="executionCount"
-              width="8rem"
-            />
-            <DataTableColumn
-              label="Last Job Instance"
-              width="8rem"
-              property="jobInstanceId"
             />
             <DataTableColumn
               label="Last Job Start"
@@ -212,21 +199,21 @@ class JobsTable extends React.Component<IJobsTableProps, IJobsTableState> {
         return {
           ...item,
           startTimeDisplay:
-            item.startTime === "N/A" || item.startTime === ""
-              ? "N/A"
+            item.startTime === "N/A" || !item.startTime
+              ? ""
               : format(
                   parse(item.startTime, "YYYY-MM-DDTHH:mm", new Date()),
                   "MM/DD/YY HH:mm"
                 ),
           endTimeDisplay:
-            item.endTime === "N/A" || item.endTime === ""
-              ? "N/A"
+            item.endTime === "N/A" || !item.endTime
+              ? ""
               : format(
                   parse(item.endTime, "YYYY-MM-DDTHH:mm", new Date()),
-                  "MM/DD/YY HH:MI"
+                  "MM/DD/YY HH:mm"
                 ),
 
-          status: item.exitStatus.exitCode
+          status: item.exitStatus && item.exitStatus.exitCode
         };
       });
 
