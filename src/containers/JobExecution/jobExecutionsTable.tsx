@@ -13,9 +13,9 @@ import { format, parse } from "date-fns";
 import * as React from "react";
 
 import { IJobExecutionInfoResource } from "./IJobExecutionCollection";
-import ZincMessage from "./message";
 import { IJobExecutionTableRowAction } from "./IJobExecutionTableRowAction";
 import { Link } from "react-router-dom";
+import ZincMessage from "../../components/Message";
 
 const DrillToStepListViewCell: any = ({ children, ...props }: any) => (
   <DataTableCell title={children} {...props}>

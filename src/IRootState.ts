@@ -2,6 +2,7 @@ import { FormStateMap } from "redux-form";
 import { IJobsState } from "./containers/Job/IJobsState";
 import { IJobExecutionState } from "./containers/JobExecution/IJobExecutionsState";
 import { IMenu } from "./containers/Layout/menu";
+import { IJobStepExecutionsState } from "./containers/JobExecution/JobStepExecution/IJobStepExecutionsState";
 
 export interface IRootState {
   layout: {
@@ -23,4 +24,5 @@ export interface IRootState {
   auth: any;
   jobs: IJobsState;
   jobExecutions: IJobExecutionState;
+  jobStepExecutions: IJobStepExecutionsState;
 }
