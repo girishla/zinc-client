@@ -16,6 +16,7 @@ import PageBase from "../../components/PageBase";
 import Dashboard from "../Dashboard";
 import ZincJobs from "../Job";
 import ZincJobExecutions from "../JobExecution";
+import ZincJobStepExecutions from "../JobStepExecution";
 import Layout from "../Layout";
 import Login from "../Login";
 import "./App.css";
@@ -55,7 +56,7 @@ export class App extends React.Component<IAppProps> {
             <RouteWithLayout exact={true} path="/jobs" component={ZincJobs} />
             <RouteWithLayout
               exact={true}
-              path="/jobexecutions"
+              path="/jobs/executions"
               component={ZincJobExecutions}
             />
             <RouteWithLayout
@@ -67,6 +68,11 @@ export class App extends React.Component<IAppProps> {
               exact={true}
               path="/jobs/:jobName/:jobInstanceId/executions"
               component={ZincJobExecutions}
+            />
+            <RouteWithLayout
+              exact={true}
+              path="/jobs/executions/:executionId/steps"
+              component={ZincJobStepExecutions}
             />
 
             {/* <Route path="*" component={PageNotFound} /> */}

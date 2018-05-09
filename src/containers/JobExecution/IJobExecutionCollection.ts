@@ -67,7 +67,7 @@ export interface IStepExecution {
   readSkipCount: number;
   processSkipCount: number;
   writeSkipCount: number;
-  startTime: Date;
+  startTime: string;
   endTime: string;
   lastUpdated: Date;
   executionContext: {};

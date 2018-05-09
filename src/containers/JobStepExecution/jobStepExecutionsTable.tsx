@@ -12,22 +12,20 @@ import { format, parse } from "date-fns";
 
 import * as React from "react";
 
-import { IJobExecutionInfoResource } from "./IJobExecutionCollection";
+import { IStepExecution } from "../JobExecution/IJobExecutionCollection";
 import { IJobExecutionTableRowAction } from "./IJobExecutionTableRowAction";
 import { Link } from "react-router-dom";
 import ZincMessage from "../../components/Message";
 
 const DrillToStepListViewCell: any = ({ children, ...props }: any) => (
   <DataTableCell title={children} {...props}>
-    <Link to={`/jobs/executions/${props.item.executionId}/steps`}>
-      {children}
-    </Link>
+    <Link to={`/jobs/${props.item.name}/executions`}>{children}</Link>
   </DataTableCell>
 );
 DrillToStepListViewCell.displayName = DataTableCell.displayName;
 
 interface IJobExecutionsTableProps {
-  items: IJobExecutionInfoResource[];
+  items: IStepExecution[];
   onChange: (selection: any) => void;
 }
 
@@ -35,7 +33,7 @@ interface IJobExecutionsTableState {
   messageOpen: boolean;
   sortColumn: string;
   sortColumnDirection: any;
-  items: IJobExecutionInfoResource[];
+  items: IStepExecution[];
   selection: any[];
   messageText: string;
   messageTitle: string;
@@ -57,7 +55,7 @@ class JobExecutionsTable extends React.Component<
       messageTitle: "",
       sortColumn: "executionId",
       sortColumnDirection: {
-        executionId: "desc"
+        executionId: "asc"
       },
       items: [],
       selection: []
@@ -77,35 +75,11 @@ class JobExecutionsTable extends React.Component<
   };
 
   public handleRowAction = (
-    item: IJobExecutionInfoResource,
+    item: IStepExecution,
     action: IJobExecutionTableRowAction
   ) => {
     switch (action.value) {
-      case "Restart":
-        if (item.restartable === false) {
-          this.setState({
-            messageOpen: true,
-            messageText:
-              "This job cannot be restarted. Only failed executions for jobs that have been configured to be restartable can be restarted.",
-            messageTitle: "Cannot restart Job Execution"
-          });
-          return;
-        } else {
-          // Submit Restart Request
-        }
-        break;
-      case "Stop":
-        if (item.stoppable === false) {
-          this.setState({
-            messageOpen: true,
-            messageText:
-              "This job cannot be stopped. It may not currently be in a Stoppable status",
-            messageTitle: "Cannot stop Job Execution"
-          });
-          return;
-        } else {
-          // Submit Stop Job request
-        }
+      default:
         break;
     }
   };
@@ -170,39 +144,42 @@ class JobExecutionsTable extends React.Component<
             onChange={this.handleChanged}
             onSort={this.handleSort}
             selection={this.state.selection}
-            selectRows={true}
+            selectRows={false}
           >
             <DataTableColumn
               isSorted={false}
-              label="Job Name"
-              property="name"
+              label="Step Name"
+              property="stepName"
               sortable={false}
-              width="8rem"
+              width="12rem"
             />
             <DataTableColumn
               isSorted={true}
-              label="Execution Id"
-              width="5rem"
+              label="Step Id"
+              width="4rem"
               primaryColumn={true}
               property="executionId"
               sortable={true}
               sortDirection={this.state.sortColumnDirection.executionId}
             />
             <DataTableColumn
-              label="Step Count"
-              width="5rem"
-              property="stepExecutionCount"
-            >
-              <DrillToStepListViewCell title={""} />
-            </DataTableColumn>
+              label="Read Count"
+              width="4rem"
+              property="readCount"
+            />
+            <DataTableColumn
+              label="Commits"
+              width="4rem"
+              property="commitCount"
+            />
             <DataTableColumn
               label="Start Time"
-              width="6rem"
+              width="5rem"
               property="startTimeDisplay"
             />
             <DataTableColumn
               label="End Time"
-              width="6rem"
+              width="5rem"
               property="endTimeDisplay"
             />
             <DataTableColumn label="Status" width="5rem" property="status" />
@@ -231,9 +208,11 @@ class JobExecutionsTable extends React.Component<
   }
 
   private formatItems = (previousState: any, currentProps: any) => {
+    console.log(currentProps.items);
+
     const mutatedItems =
       currentProps.items &&
-      currentProps.items.map((item: IJobExecutionInfoResource) => {
+      currentProps.items.map((item: IStepExecution) => {
         return {
           ...item,
           startTimeDisplay:
@@ -250,7 +229,7 @@ class JobExecutionsTable extends React.Component<
                   parse(item.endTime, "YYYY-MM-DDTHH:mm", new Date()),
                   "MM/DD/YY HH:mm"
                 ),
-          status: item.exitStatus.exitCode,
+          status: item.exitStatus && item.exitStatus.exitCode,
           id: item.executionId
         };
       });

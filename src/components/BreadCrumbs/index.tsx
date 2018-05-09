@@ -10,7 +10,11 @@ import { NavLink } from "react-router-dom";
 const routes = [
   //   { path: '/users/:userId', breadcrumb: UserBreadcrumb },
   { path: "/jobs", breadcrumb: "Jobs" },
-  { path: "/jobexecutions", breadcrumb: "Job Executions" },
+  { path: "/jobs/executions", breadcrumb: "Job Executions" },
+  {
+    path: "/jobs/executions/:executionId/steps",
+    breadcrumb: "Step Executions"
+  },
   { path: "/dashboard", breadcrumb: "Dashboard" }
 ];
 

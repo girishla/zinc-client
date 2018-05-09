@@ -39,7 +39,7 @@ const data: { menus: IMenu[] } = {
       index: 3,
       open: false,
       text: "Job Executions",
-      url: "/jobexecutions",
+      url: "/jobs/executions",
       willCloseMenu: false,
       willCloseRootMenu: false
     },
