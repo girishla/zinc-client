@@ -32,8 +32,6 @@ class ZincJobStepExecutions extends React.Component<IJobStepExecutionsProps> {
   }
 
   public componentDidMount() {
-    console.log("this.props", this.props);
-
     if (this.props.match.params && this.props.match.params.executionId) {
       this.props.jobStepExecutionsActions.loadJobStepExecutions(
         this.props.match.params.executionId

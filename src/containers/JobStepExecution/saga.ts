@@ -12,8 +12,6 @@ export function* getJobStepExecutionsTask(action: any) {
       window.localStorage.getItem("token")
     );
 
-    console.log("jobStepExecutions", jobStepExecutions);
-
     yield put({
       type: getType(jobExecutionActions.loadJobStepExecutionsSuccess),
       jobStepExecutions

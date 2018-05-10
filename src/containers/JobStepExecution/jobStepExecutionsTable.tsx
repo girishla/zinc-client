@@ -208,8 +208,6 @@ class JobExecutionsTable extends React.Component<
   }
 
   private formatItems = (previousState: any, currentProps: any) => {
-    console.log(currentProps.items);
-
     const mutatedItems =
       currentProps.items &&
       currentProps.items.map((item: IStepExecution) => {

@@ -13,7 +13,7 @@ const routes = [
   { path: "/jobs/executions", breadcrumb: "Job Executions" },
   {
     path: "/jobs/executions/:executionId/steps",
-    breadcrumb: "Step Executions"
+    breadcrumb: "Steps"
   },
   { path: "/dashboard", breadcrumb: "Dashboard" }
 ];
