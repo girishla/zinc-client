@@ -3,43 +3,39 @@ import standardSprite from "@salesforce-ux/design-system/assets/icons/standard-s
 import utilitySprite from "@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg";
 import {
   DataTable,
-  DataTableCell,
   DataTableColumn,
   DataTableRowActions,
   IconSettings
 } from "@salesforce/design-system-react";
 import { format, parse } from "date-fns";
+
 import * as React from "react";
-import { IDetailedJobInfoResource } from "./IJobCollection";
-import TableWrappedCell from "../../components/TableWrappedCell";
-import { Link } from "react-router-dom";
+
+import { IJobSchedule } from "./IJobSchedule";
+import { IJobScheduleTableRowAction } from "./IJobScheduleTableRowAction";
 import ZincMessage from "../../components/Message";
 
-const DrillToExecutionListViewCell: any = ({ children, ...props }: any) => (
-  <DataTableCell title={children} {...props}>
-    <Link to={`/jobs/${props.item.name}/executions`}>{children}</Link>
-  </DataTableCell>
-);
-DrillToExecutionListViewCell.displayName = DataTableCell.displayName;
-
-interface IJobsTableProps {
-  items: IDetailedJobInfoResource[];
+interface IJobSchedulesTableProps {
+  items: IJobSchedule[];
   onChange: (selection: any) => void;
 }
 
-interface IJobsTableState {
+interface IJobSchedulesTableState {
   messageOpen: boolean;
   sortColumn: string;
   sortColumnDirection: any;
-  items: any[];
+  items: IJobSchedule[];
   selection: any[];
   messageText: string;
   messageTitle: string;
 }
 
-class JobsTable extends React.Component<IJobsTableProps, IJobsTableState> {
-  public displayName: string = "JobsDataTable";
-  public state: IJobsTableState;
+class JobSchedulesTable extends React.Component<
+  IJobSchedulesTableProps,
+  IJobSchedulesTableState
+> {
+  public displayName: string = "JobSchedulesDataTable";
+  public state: IJobSchedulesTableState;
 
   constructor(props: any) {
     super(props);
@@ -48,9 +44,9 @@ class JobsTable extends React.Component<IJobsTableProps, IJobsTableState> {
       messageOpen: false,
       messageText: "",
       messageTitle: "",
-      sortColumn: "name",
+      sortColumn: "scheduleName",
       sortColumnDirection: {
-        name: "asc"
+        scheduleName: "desc"
       },
       items: [],
       selection: []
@@ -61,7 +57,7 @@ class JobsTable extends React.Component<IJobsTableProps, IJobsTableState> {
     this.setState(this.formatItems);
   }
 
-  public componentWillReceiveProps(newProps: IJobsTableProps) {
+  public componentWillReceiveProps(newProps: IJobSchedulesTableProps) {
     this.setState(this.formatItems);
   }
 
@@ -69,17 +65,29 @@ class JobsTable extends React.Component<IJobsTableProps, IJobsTableState> {
     this.setState({ selection });
   };
 
-  public handleRowAction = (item: IDetailedJobInfoResource, action: any) => {
-    if (item.launchable === false) {
-      this.setState({
-        messageOpen: true,
-        messageText:
-          "This job cannot be executed at the moment. Some jobs are only allowed to have one executing instance. If that is the case, please wait for the current instance to finish",
-        messageTitle: "Cannot Execute Job"
-      });
-      return;
-    } else {
-      // launch and go to exectution detail view
+  public handleRowAction = (
+    item: IJobSchedule,
+    action: IJobScheduleTableRowAction
+  ) => {
+    switch (action.value) {
+      case "Pause":
+        if (item.active === false) {
+          this.setState({
+            messageOpen: true,
+            messageText: "This schedule is already paused.",
+            messageTitle: "Cannot pause Job Schedule"
+          });
+          return;
+        } else {
+          // Submit Pause Request
+        }
+        break;
+      case "Delete":
+        // Submit Delete schedule request
+        break;
+      case "Edit":
+        // go to Edit Route
+        break;
     }
   };
 
@@ -139,59 +147,52 @@ class JobsTable extends React.Component<IJobsTableProps, IJobsTableState> {
           <DataTable
             fixedLayout={true}
             items={this.state.items || []}
-            id="JobsDataTable"
+            id="JobSchedulesDataTable"
             onChange={this.handleChanged}
             onSort={this.handleSort}
             selection={this.state.selection}
             selectRows={true}
           >
             <DataTableColumn
-              isSorted={this.state.sortColumn === "name"}
+              isSorted={true}
               label="Name"
+              width="5rem"
               primaryColumn={true}
-              property="name"
+              property="scheduleName"
               sortable={true}
-              sortDirection={this.state.sortColumnDirection.name}
-              width="6rem"
-            >
-              <TableWrappedCell />
-            </DataTableColumn>
+              sortDirection={this.state.sortColumnDirection.scheduleName}
+            />
+            <DataTableColumn
+              isSorted={false}
+              label="Job Name"
+              property="jobName"
+              sortable={false}
+              width="5rem"
+            />
             <DataTableColumn
               label="Description"
-              property="description"
-              width="20rem"
-            >
-              <TableWrappedCell />
-            </DataTableColumn>
+              width="8rem"
+              property="cronDescription"
+            />
             <DataTableColumn
-              label="Executions"
+              label="Next Run time"
               width="6rem"
-              property="executionCount"
-            >
-              <DrillToExecutionListViewCell title={""} />
-            </DataTableColumn>
+              property="nextFireTimeDisplay"
+            />
 
-            <DataTableColumn
-              label="Last Job Start"
-              width="8rem"
-              property="startTimeDisplay"
-            />
-            <DataTableColumn
-              label="Last Job End"
-              width="8rem"
-              property="endTimeDisplay"
-            />
-            <DataTableColumn
-              label="Last Status"
-              width="8rem"
-              property="status"
-            />
+            <DataTableColumn label="Status" width="5rem" property="status" />
             <DataTableRowActions
               options={[
                 {
                   id: 0,
-                  label: "Execute Now",
-                  value: "1",
+                  label: "Pause",
+                  value: "Pause",
+                  disabled: "false"
+                },
+                {
+                  id: 1,
+                  label: "Delete",
+                  value: "Delete",
                   disabled: "false"
                 }
               ]}
@@ -199,7 +200,7 @@ class JobsTable extends React.Component<IJobsTableProps, IJobsTableState> {
             />
           </DataTable>
         </IconSettings>
-        {/* <pre>{JSON.stringify(this.state.items, null, 2)}</pre> */}
+        {/* <pre>{JSON.stringify(this.props, null, 2)}</pre> */}
       </div>
     );
   }
@@ -207,29 +208,20 @@ class JobsTable extends React.Component<IJobsTableProps, IJobsTableState> {
   private formatItems = (previousState: any, currentProps: any) => {
     const mutatedItems =
       currentProps.items &&
-      currentProps.items.map((item: IDetailedJobInfoResource) => {
+      currentProps.items.map((item: IJobSchedule) => {
         return {
           ...item,
-          startTimeDisplay:
-            item.startTime === "N/A" || !item.startTime
-              ? ""
-              : format(
-                  parse(item.startTime, "YYYY-MM-DDTHH:mm", new Date()),
-                  "MM/DD/YY HH:mm"
-                ),
-          endTimeDisplay:
-            item.endTime === "N/A" || !item.endTime
-              ? ""
-              : format(
-                  parse(item.endTime, "YYYY-MM-DDTHH:mm", new Date()),
-                  "MM/DD/YY HH:mm"
-                ),
+          nextFireTimeDisplay: format(
+            parse(item.nextFireTime, "YYYY-MM-DDTHH:mm", new Date()),
+            "MM/DD/YY HH:mm"
+          ),
+          status: item.active ? "Active" : "Paused",
 
-          status: item.exitStatus && item.exitStatus.exitCode
+          id: item.scheduleName
         };
       });
 
     return { ...previousState, items: mutatedItems };
   };
 }
-export default JobsTable;
+export default JobSchedulesTable;
