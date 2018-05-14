@@ -48,22 +48,32 @@ class ZincJobScheduleDetail extends React.Component<IJobScheduleDetailProps> {
   }
 
   public componentDidMount() {
-    if (this.props.match.params && this.props.match.params.scheduleName) {
+    if (
+      this.props.match.params &&
+      this.props.match.params.scheduleName &&
+      this.props.match.params.scheduleName !== "new"
+    ) {
       this.props.jobScheduleDetailActions.loadJobScheduleDetail(
         this.props.match.params.scheduleName
       );
     }
   }
 
+  public onJobDetailSave = (values: any) => {
+    this.props.jobScheduleDetailActions.saveJobScheduleDetail(values);
+  };
+
   public render() {
     const currentStyles = styles(this.state.currentTheme);
 
     if (
-      this.props.jobScheduleDetail &&
-      this.props.jobScheduleDetail.data &&
-      this.props.jobScheduleDetail.data.scheduleName
+      (this.props.jobScheduleDetail &&
+        this.props.jobScheduleDetail.data &&
+        this.props.jobScheduleDetail.data.scheduleName) ||
+      this.props.match.params.scheduleName === "new"
     ) {
       const {
+        jobName,
         scheduleName,
         active,
         cronExpression
@@ -73,8 +83,13 @@ class ZincJobScheduleDetail extends React.Component<IJobScheduleDetailProps> {
         <div>
           {/* <pre>{JSON.stringify(this.state.currentTheme, null, 2)}</pre> */}
           <JobScheduleDetailView
+            onSubmit={this.onJobDetailSave}
             styles={currentStyles}
+            mode={
+              this.props.match.params.scheduleName === "new" ? "new" : "edit"
+            }
             initialValues={{
+              jobName,
               scheduleName,
               active,
               cronExpression

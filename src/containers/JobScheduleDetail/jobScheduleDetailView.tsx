@@ -7,8 +7,13 @@ import { connect } from "react-redux";
 import RaisedButton from "material-ui/RaisedButton";
 
 interface IJobScheduleDetailViewProps {
+  mode: string;
+  jobName: string;
   scheduleName: string;
+  active: boolean;
+  cronExpression: string;
   styles: any;
+  handleSubmit: (values: any) => void;
 }
 
 class JobScheduleDetailView extends React.Component<
@@ -23,7 +28,7 @@ class JobScheduleDetailView extends React.Component<
           title="Schedule Details"
           subtitle="Changes will take effect immediately"
         />
-        <form onSubmit={e => console.log(e)}>
+        <form onSubmit={this.props.handleSubmit}>
           <div style={this.props.styles.container}>
             {/* <pre>{JSON.stringify(this.props, null, 2)}</pre> */}
             <FormField
@@ -33,6 +38,7 @@ class JobScheduleDetailView extends React.Component<
               hintText="Schedule Name"
               floatingLabelText="Schedule Name"
               validate={this.validate}
+              disabled={this.props.mode === "edit"}
               ref={(scheduleName: any) => scheduleName}
               withRef={true}
             />
@@ -69,7 +75,10 @@ const ConnectedJobScheduleDetailView: any = connect(state => ({
 const ConnectedJobScheduleDetailFormView: any = reduxForm({
   form: "jobScheduleDetailForm",
   initialValues: {
-    scheduleName: "defaultSchedule1"
+    scheduleName: "defaultSchedule1",
+    jobName: "",
+    active: true,
+    cronExpression: ""
   }
 })(ConnectedJobScheduleDetailView);
 

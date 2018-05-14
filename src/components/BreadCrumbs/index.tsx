@@ -9,11 +9,13 @@ import { NavLink } from "react-router-dom";
 // define some custom breadcrumbs for certain routes (optional)
 const routes = [
   //   { path: '/users/:userId', breadcrumb: UserBreadcrumb },
-  { path: "/jobs", breadcrumb: "Jobs" },
+  { path: "/jobs", breadcrumb: "Jobs List" },
   { path: "/jobs/executions", breadcrumb: "Job Executions" },
+  { path: "/schedule", breadcrumb: "Schedule List" },
+
   {
     path: "/jobs/executions/:executionId/steps",
-    breadcrumb: "Steps"
+    breadcrumb: "Steps List"
   },
   { path: "/dashboard", breadcrumb: "Dashboard" }
 ];

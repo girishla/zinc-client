@@ -18,6 +18,15 @@ function reducer(state = initialJobsState, action: any) {
     case getType(jobScheduleDetailActions.loadScheduleDetailFailure): {
       return { ...state, loading: false, error: action.errorStr };
     }
+    case getType(jobScheduleDetailActions.saveJobScheduleDetail): {
+      return { ...state, loading: true };
+    }
+    case getType(jobScheduleDetailActions.saveScheduleDetailSuccess): {
+      return { ...state, loading: false, data: action.jobScheduleDetail };
+    }
+    case getType(jobScheduleDetailActions.saveScheduleDetailFailure): {
+      return { ...state, loading: false, error: action.errorStr };
+    }
     default:
       return state;
   }

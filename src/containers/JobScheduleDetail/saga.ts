@@ -24,15 +24,39 @@ export function* getJobScheduleDetailTask(action: any) {
   }
 }
 
+export function* saveJobScheduleDetailTask(action: any) {
+  try {
+    const jobScheduleDetail: IJobSchedule = yield call(
+      jobScheduleDetailApi.postJobScheduleDetail,
+      window.localStorage.getItem("token"),
+      action.scheduleDetail
+    );
+    yield put({
+      type: getType(jobScheduleDetailActions.saveScheduleDetailSuccess),
+      jobScheduleDetail
+    });
+  } catch (e) {
+    yield put({
+      type: getType(jobScheduleDetailActions.saveScheduleDetailFailure),
+      errorStr: e.message
+    });
+  }
+}
+
 export function* getJobScheduleDetail() {
   yield takeLatest(
     getType(jobScheduleDetailActions.loadJobScheduleDetail),
     getJobScheduleDetailTask
   );
+}
 
-  yield 1;
+export function* saveJobScheduleDetail() {
+  yield takeLatest(
+    getType(jobScheduleDetailActions.saveJobScheduleDetail),
+    saveJobScheduleDetailTask
+  );
 }
 
 export default function* rootSaga() {
-  yield all([getJobScheduleDetail()]);
+  yield all([getJobScheduleDetail(), saveJobScheduleDetail()]);
 }

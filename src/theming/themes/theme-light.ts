@@ -7,7 +7,7 @@ const themeLight = getMuiTheme({
     color: "#ececec"
   },
   textField: {
-    floatingLabelColor: "#7144b7"
+    // floatingLabelColor: "#7144b7"
   },
   drawer: {
     width: 230,

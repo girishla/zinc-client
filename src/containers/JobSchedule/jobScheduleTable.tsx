@@ -5,7 +5,8 @@ import {
   DataTable,
   DataTableColumn,
   DataTableRowActions,
-  IconSettings
+  IconSettings,
+  DataTableCell
 } from "@salesforce/design-system-react";
 import { format, parse } from "date-fns";
 
@@ -14,6 +15,14 @@ import * as React from "react";
 import { IJobSchedule } from "./IJobSchedule";
 import { IJobScheduleTableRowAction } from "./IJobScheduleTableRowAction";
 import ZincMessage from "../../components/Message";
+import { Link } from "react-router-dom";
+
+const DrillToStepListViewCell: any = ({ children, ...props }: any) => (
+  <DataTableCell title={children} {...props}>
+    <Link to={`/schedule/${props.item.scheduleName}`}>{children}</Link>
+  </DataTableCell>
+);
+DrillToStepListViewCell.displayName = DataTableCell.displayName;
 
 interface IJobSchedulesTableProps {
   items: IJobSchedule[];
@@ -161,7 +170,10 @@ class JobSchedulesTable extends React.Component<
               property="scheduleName"
               sortable={true}
               sortDirection={this.state.sortColumnDirection.scheduleName}
-            />
+            >
+              <DrillToStepListViewCell title={""} />
+            </DataTableColumn>
+
             <DataTableColumn
               isSorted={false}
               label="Job Name"

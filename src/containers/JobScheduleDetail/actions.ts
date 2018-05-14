@@ -7,6 +7,12 @@ export const LOAD_JOBSCHEDULEDETAIL_SUCCESS =
   "zinc/JOBSCHEDULEDETAIL/LOAD_JOBSCHEDULEDETAIL_SUCCESS";
 export const LOAD_JOBSCHEDULEDETAIL_FAILURE =
   "zinc/JOBSCHEDULEDETAIL/LOAD_JOBSCHEDULEDETAIL_FAILURE";
+export const SAVE_JOBSCHEDULEDETAIL_START =
+  "zinc/JOBSCHEDULEDETAIL/SAVE_JOBSCHEDULEDETAIL_START";
+export const SAVE_JOBSCHEDULEDETAIL_SUCCESS =
+  "zinc/JOBSCHEDULEDETAIL/SAVE_JOBSCHEDULEDETAIL_SUCCESS";
+export const SAVE_JOBSCHEDULEDETAIL_FAILURE =
+  "zinc/JOBSCHEDULEDETAIL/SAVE_JOBSCHEDULEDETAIL_FAILURE";
 
 export const jobScheduleDetailActions = {
   loadJobScheduleDetail: createAction(
@@ -27,6 +33,27 @@ export const jobScheduleDetailActions = {
     LOAD_JOBSCHEDULEDETAIL_FAILURE,
     (errorStr: string) => ({
       type: LOAD_JOBSCHEDULEDETAIL_FAILURE,
+      errorStr
+    })
+  ),
+  saveJobScheduleDetail: createAction(
+    SAVE_JOBSCHEDULEDETAIL_START,
+    (scheduleDetail: IJobSchedule) => ({
+      type: SAVE_JOBSCHEDULEDETAIL_START,
+      scheduleDetail
+    })
+  ),
+  saveScheduleDetailSuccess: createAction(
+    SAVE_JOBSCHEDULEDETAIL_SUCCESS,
+    (jobScheduleDetail: IJobSchedule) => ({
+      type: SAVE_JOBSCHEDULEDETAIL_SUCCESS,
+      jobScheduleDetail
+    })
+  ),
+  saveScheduleDetailFailure: createAction(
+    SAVE_JOBSCHEDULEDETAIL_FAILURE,
+    (errorStr: string) => ({
+      type: SAVE_JOBSCHEDULEDETAIL_FAILURE,
       errorStr
     })
   )
