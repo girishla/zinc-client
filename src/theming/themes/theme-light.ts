@@ -1,32 +1,30 @@
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
-
+import getMuiTheme from "material-ui/styles/getMuiTheme";
 
 const themeLight = getMuiTheme({
-  palette: {
-
-  },
+  palette: {},
   appBar: {
     height: 57,
-    color: '#ececec',
+    color: "#ececec"
+  },
+  textField: {
+    floatingLabelColor: "#7144b7"
   },
   drawer: {
     width: 230,
-    color: '#f3f3f3',
+    color: "#f3f3f3"
   },
   raisedButton: {
-    primaryColor: '#7144b7',
+    primaryColor: "#7144b7"
   },
   tabs: {
-    backgroundColor: '#ececec',
-    textColor: '#717171',
-    selectedTextColor: '#717171',
+    backgroundColor: "#ececec",
+    textColor: "#717171",
+    selectedTextColor: "#717171"
   },
   inkBar: {
-    backgroundColor: '#7144b7',
-  },
+    backgroundColor: "#7144b7"
+  }
 });
-
 
 // let themeLight = getMuiTheme(darkBaseTheme);
 

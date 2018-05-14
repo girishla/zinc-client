@@ -18,6 +18,7 @@ import ZincJobs from "../Job";
 import ZincJobExecutions from "../JobExecution";
 import ZincJobStepExecutions from "../JobStepExecution";
 import ZincJobSchedules from "../JobSchedule";
+import ZincJobScheduleDetail from "../JobScheduleDetail";
 import Layout from "../Layout";
 import Login from "../Login";
 import "./App.css";
@@ -79,6 +80,11 @@ export class App extends React.Component<IAppProps> {
               exact={true}
               path="/schedule"
               component={ZincJobSchedules}
+            />
+            <RouteWithLayout
+              exact={true}
+              path="/schedule/:scheduleName"
+              component={ZincJobScheduleDetail}
             />
 
             {/* <Route path="*" component={PageNotFound} /> */}

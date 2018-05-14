@@ -215,7 +215,7 @@ class JobSchedulesTable extends React.Component<
             parse(item.nextFireTime, "YYYY-MM-DDTHH:mm", new Date()),
             "MM/DD/YY HH:mm"
           ),
-          status: item.active ? "Active" : "Paused",
+          status: item.active === true ? "Active" : "Paused",
 
           id: item.scheduleName
         };

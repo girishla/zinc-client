@@ -25,6 +25,7 @@
     "redux": "^3.7.2",
     "redux-auth-wrapper": "^2.0.2",
     "redux-form": "^7.3.0",
+    "redux-form-material-ui": "^4.3.4",
     "redux-saga": "^0.16.0",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",

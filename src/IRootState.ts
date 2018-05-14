@@ -4,6 +4,7 @@ import { IJobExecutionState } from "./containers/JobExecution/IJobExecutionsStat
 import { IMenu } from "./containers/Layout/menu";
 import { IJobStepExecutionState } from "./containers/JobStepExecution/IJobStepExecutionState";
 import { IJobScheduleState } from "./containers/JobSchedule/IJobScheduleState";
+import { IJobScheduleDetailState } from "./containers/JobScheduleDetail/IJobScheduleDetailState";
 
 export interface IRootState {
   layout: {
@@ -27,4 +28,5 @@ export interface IRootState {
   jobExecutions: IJobExecutionState;
   jobStepExecutions: IJobStepExecutionState;
   jobSchedules: IJobScheduleState;
+  jobScheduleDetail: IJobScheduleDetailState;
 }

@@ -136,7 +136,7 @@ class JobSchedulesListView extends React.Component<IJobSchedulesListViewProps> {
             info={
               this.props.jobSchedules &&
               this.props.jobSchedules.length +
-                " execution(s) sorted by execution Id"
+                " schedule(s) sorted by schedule Name"
             }
             label="Job Schedule"
             navRight={navRight}

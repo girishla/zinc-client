@@ -1,10 +1,10 @@
 import { HTTPStatusCodes } from "../../utils/httpstatus";
 
-const jobScheduleApi = {
-  async getJobScheduleApiCall(token: string) {
-    const jobScheduleEndpoint = `http://localhost:8090/zinc/schedule`;
+const jobScheduleDetailApi = {
+  async getJobScheduleDetailApiCall(token: string, scheduleName: string) {
+    const jobScheduleDetailEndpoint = `http://localhost:8090/zinc/schedule/${scheduleName}`;
 
-    return await fetch(jobScheduleEndpoint, {
+    return await fetch(jobScheduleDetailEndpoint, {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -12,15 +12,15 @@ const jobScheduleApi = {
       }
     });
   },
-  getJobSchedule(token: string) {
-    return jobScheduleApi
-      .getJobScheduleApiCall(token)
+  getJobScheduleDetail(token: string, scheduleName: string) {
+    return jobScheduleDetailApi
+      .getJobScheduleDetailApiCall(token, scheduleName)
       .then((response: Response) => {
         if (response.status === HTTPStatusCodes.OK) {
           return Promise.resolve(response.json());
         } else {
           return Promise.reject({
-            message: "Unable to get Job Schedule list at this time."
+            message: "Unable to get Job ScheduleDetail detail at this time."
           });
         }
       })
@@ -30,4 +30,4 @@ const jobScheduleApi = {
   }
 };
 
-export default jobScheduleApi;
+export default jobScheduleDetailApi;
