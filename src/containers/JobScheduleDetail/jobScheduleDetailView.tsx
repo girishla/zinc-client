@@ -5,6 +5,7 @@ import { Field, reduxForm, formValueSelector } from "redux-form";
 import { TextField, Checkbox } from "redux-form-material-ui";
 import { connect } from "react-redux";
 import RaisedButton from "material-ui/RaisedButton";
+import CronBuilder from "../../components/CronBuilder/CronBuilder";
 
 interface IJobScheduleDetailViewProps {
   mode: string;
@@ -50,6 +51,11 @@ class JobScheduleDetailView extends React.Component<
                 label="Active"
               />
             </div>
+            <CronBuilder
+              cronExpression="*/15 * * * *"
+              onChange={console.log}
+              showResult={true}
+            />
           </div>
           <div style={{ display: "flex" }}>
             <CardActions style={{ marginLeft: "auto" }}>

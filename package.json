@@ -3,11 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@salesforce-ux/design-system": "^2.5.2",
-    "@salesforce/design-system-react": "^0.8.14",
-    "@types/react-router-redux": "^5.0.13",
-    "@types/redux-form": "^7.2.4",
-    "@types/redux-saga": "^0.10.5",
+    "cronstrue": "^1.8.0",
     "date-fns": "^2.0.0-alpha.7",
     "hoist-non-react-statics": "^2.3.1",
     "invariant": "^2.2.4",
@@ -16,12 +12,15 @@
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-addons-css-transition-group": "^15.6.2",
+    "react-bem-helper": "^1.4.1",
     "react-dom": "^16.3.2",
+    "react-if": "^2.2.2",
     "react-redux": "^5.0.7",
     "react-router-breadcrumbs-hoc": "^2.1.0",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.9",
     "react-scripts-ts": "2.15.1",
+    "react-select": "^1.2.1",
     "redux": "^3.7.2",
     "redux-auth-wrapper": "^2.0.2",
     "redux-form": "^7.3.0",
@@ -37,9 +36,14 @@
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
+    "test:html":
+      "react-scripts-ts test --env=jsdom --testResultsProcessor ./node_modules/jest-html-reporter",
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
+    "@salesforce-ux/design-system": "^2.5.2",
+    "@salesforce/design-system-react": "^0.8.14",
+    "@types/enzyme": "^3.1.10",
     "@types/http-status-codes": "^1.2.0",
     "@types/immutable": "^3.8.7",
     "@types/invariant": "^2.2.29",
@@ -53,8 +57,14 @@
     "@types/react-dom": "^16.0.5",
     "@types/react-redux": "^5.0.18",
     "@types/react-router-dom": "^4.2.6",
+    "@types/react-router-redux": "^5.0.13",
     "@types/redux": "^3.6.0",
     "@types/redux-auth-wrapper": "^2.0.7",
+    "@types/redux-form": "^7.2.4",
+    "@types/redux-saga": "^0.10.5",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "jest-html-reporter": "^2.3.0",
     "typescript": "^2.8.3"
   }
 }
