@@ -1,7 +1,9 @@
 import * as React from "react";
-import { IconSettings } from "@salesforce/design-system-react";
-import { Modal } from "@salesforce/design-system-react";
-import utilitySprite from "@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg";
+// import { IconSettings } from "@salesforce/design-system-react";
+// import { Modal } from "@salesforce/design-system-react";
+// import utilitySprite from "@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg";
+import Dialog from "material-ui/Dialog";
+import RaisedButton from "material-ui/RaisedButton";
 
 interface IZincMessageProps {
   isOpen: boolean;
@@ -16,22 +18,24 @@ class ZincMessage extends React.Component<IZincMessageProps> {
   }
 
   public render() {
+    const actions = [
+      <RaisedButton
+        key={this.props.messageTitle}
+        label="OK"
+        primary={true}
+        onClick={this.props.onClose}
+      />
+    ];
     return (
-      <IconSettings utilitySprite={utilitySprite}>
-        <div>
-          <Modal
-            parentSelector={() => document.body}
-            isOpen={this.props.isOpen}
-            onRequestClose={this.props.onClose}
-            align={"center"}
-            title={this.props.messageTitle}
-          >
-            <section className="slds-p-around--medium">
-              <p>{this.props.messageText}</p>
-            </section>
-          </Modal>
-        </div>
-      </IconSettings>
+      <Dialog
+        title={this.props.messageTitle}
+        actions={actions}
+        modal={false}
+        open={this.props.isOpen}
+        onRequestClose={this.props.onClose}
+      >
+        {this.props.messageText}
+      </Dialog>
     );
   }
 }

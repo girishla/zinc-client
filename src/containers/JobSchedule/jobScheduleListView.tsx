@@ -3,8 +3,8 @@ import { IconSettings } from "@salesforce/design-system-react";
 import { PageHeader } from "@salesforce/design-system-react";
 import { Button } from "@salesforce/design-system-react";
 import { ButtonGroup } from "@salesforce/design-system-react";
-import { Dropdown } from "@salesforce/design-system-react";
-import { DropdownTrigger } from "@salesforce/design-system-react";
+// import { Dropdown } from "@salesforce/design-system-react";
+// import { DropdownTrigger } from "@salesforce/design-system-react";
 import utilitySprite from "@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg";
 import customSprite from "@salesforce-ux/design-system/assets/icons/custom-sprite/svg/symbols.svg";
 import standardSprite from "@salesforce-ux/design-system/assets/icons/standard-sprite/svg/symbols.svg";
@@ -21,31 +21,22 @@ interface IJobSchedulesListViewProps extends RouteComponentProps<any> {
 class JobSchedulesListView extends React.Component<IJobSchedulesListViewProps> {
   public jobSchedulesTableSelectionsChange() {}
 
+  public newSchedule = () => {
+    this.props.history.push("/schedule/new");
+  };
+
   public render() {
     const navRight = (
       <div>
         <ButtonGroup>
-          <Button label="Delete Selected" />
-          <Dropdown
-            align="right"
-            assistiveText="More Options"
-            iconName="down"
-            iconVariant="border-filled"
-            options={[
-              { label: "Menu Item One", value: "A0" },
-              { label: "Menu Item Two", value: "B0" },
-              { label: "Menu Item Three", value: "C0" },
-              { type: "divider" },
-              { label: "Menu Item Four", value: "D0" }
-            ]}
-          />
+          <Button label="New Schedule" onClick={this.newSchedule} />
         </ButtonGroup>
       </div>
     );
 
     const contentRight = (
       <div>
-        <Dropdown
+        {/* <Dropdown
           align="right"
           options={[
             { label: "Menu Item One", value: "A0" },
@@ -63,8 +54,8 @@ class JobSchedulesListView extends React.Component<IJobSchedulesListViewProps> {
               iconVariant="more"
             />
           </DropdownTrigger>
-        </Dropdown>
-        <Dropdown
+        </Dropdown> */}
+        {/* <Dropdown
           align="right"
           assistiveText="Change view"
           iconName="settings"
@@ -86,12 +77,13 @@ class JobSchedulesListView extends React.Component<IJobSchedulesListViewProps> {
               variant="icon"
             />
           </DropdownTrigger>
-        </Dropdown>
+        </Dropdown> */}
         <Button
           assistiveText="Edit List"
           iconName="edit"
           iconVariant="border"
           variant="icon"
+          disabled={true}
         />
         <Button
           assistiveText="Refresh"
@@ -106,12 +98,14 @@ class JobSchedulesListView extends React.Component<IJobSchedulesListViewProps> {
               iconName="chart"
               iconVariant="border"
               variant="icon"
+              disabled={true}
             />
             <Button
               assistiveText="Filters"
               iconName="filterList"
               iconVariant="border"
               variant="icon"
+              disabled={true}
             />
           </ButtonGroup>
         </div>
@@ -142,26 +136,7 @@ class JobSchedulesListView extends React.Component<IJobSchedulesListViewProps> {
             navRight={navRight}
             title={
               <h1 className="slds-page-header__title slds-p-right--x-small">
-                <Dropdown
-                  options={[
-                    { label: "Menu Item One", value: "A0" },
-                    { label: "Menu Item Two", value: "B0" },
-                    { label: "Menu Item Three", value: "C0" },
-                    { type: "divider" },
-                    { label: "Menu Item Four", value: "D0" }
-                  ]}
-                >
-                  <DropdownTrigger>
-                    <Button
-                      className="slds-button--reset slds-type-focus"
-                      iconName="down"
-                      iconPosition="right"
-                      label="All Job Schedule Items"
-                      responsive={true}
-                      variant="base"
-                    />
-                  </DropdownTrigger>
-                </Dropdown>
+                All Job Schedule Items
               </h1>
             }
             truncate={true}

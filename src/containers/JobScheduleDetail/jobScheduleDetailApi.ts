@@ -50,7 +50,7 @@ const jobScheduleDetailApi = {
     return jobScheduleDetailApi
       .postJobScheduleDetailApiCall(token, scheduleDetail)
       .then((response: Response) => {
-        if (response.status === HTTPStatusCodes.OK) {
+        if (response.status === HTTPStatusCodes.CREATED) {
           return Promise.resolve(response.json());
         } else {
           return Promise.reject({

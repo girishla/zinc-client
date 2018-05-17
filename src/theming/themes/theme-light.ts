@@ -7,7 +7,7 @@ const themeLight = getMuiTheme({
     color: "#ececec"
   },
   textField: {
-    // floatingLabelColor: "#7144b7"
+    focusColor: "#7144b7"
   },
   drawer: {
     width: 230,
@@ -15,6 +15,9 @@ const themeLight = getMuiTheme({
   },
   raisedButton: {
     primaryColor: "#7144b7"
+  },
+  checkbox: {
+    checkedColor: "#7144b7"
   },
   tabs: {
     backgroundColor: "#ececec",

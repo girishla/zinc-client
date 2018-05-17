@@ -9,4 +9,7 @@ export interface IPresetTabState {
   hoursMultiple: boolean;
   hoursFrom?: string;
   hoursTo?: string;
+  messageOpen: false;
+  messageText: string;
+  messageTitle: string;
 }

@@ -61,6 +61,7 @@ class ZincJobScheduleDetail extends React.Component<IJobScheduleDetailProps> {
 
   public onJobDetailSave = (values: any) => {
     this.props.jobScheduleDetailActions.saveJobScheduleDetail(values);
+    this.props.history.push("/schedule/" + values.scheduleName);
   };
 
   public render() {
@@ -81,7 +82,7 @@ class ZincJobScheduleDetail extends React.Component<IJobScheduleDetailProps> {
 
       return (
         <div>
-          {/* <pre>{JSON.stringify(this.state.currentTheme, null, 2)}</pre> */}
+          {/* <pre>{JSON.stringify(this.props, null, 2)}</pre> */}
           <JobScheduleDetailView
             onSubmit={this.onJobDetailSave}
             styles={currentStyles}

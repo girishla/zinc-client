@@ -1,15 +1,19 @@
 import * as React from "react";
 import * as BEMHelper from "react-bem-helper";
-import { If, Then } from "react-if";
+// import { If, Then } from "react-if";
 import { generateCronExpression, parseCronExpression } from "./utils";
-import cronsTrue from "cronstrue";
+// import cronsTrue from "cronstrue";
 import { noop } from "lodash";
 import Tab from "./components/Tab";
 import PeriodicallyTab from "./components/PeriodicallyTab";
 import PeriodicallyFrameTab from "./components/PeriodicallyFrameTab";
 import FixedTimeTab from "./components/FixedTimeTab";
+import cronsTrue from "cronstrue";
 
+import "react-select/dist/react-select.css";
 import "./cron-builder.css";
+import RaisedButton from "material-ui/RaisedButton";
+import ZincMessage from "../Message";
 
 const styleNameFactory = new BEMHelper("cron-builder");
 
@@ -23,6 +27,9 @@ export interface IState {
   activeIndex: number;
   Component: any;
   generatedExpression: string;
+  messageOpen: boolean;
+  messageText: string;
+  messageTitle: string;
 }
 
 const components = [PeriodicallyTab, PeriodicallyFrameTab, FixedTimeTab];
@@ -58,28 +65,52 @@ export default class CronBuilder extends React.PureComponent {
     this.state = {
       activeIndex,
       Component: components[activeIndex],
-      generatedExpression: ""
+      generatedExpression: "",
+      messageOpen: false,
+      messageText: "",
+      messageTitle: ""
     };
   }
+
   public generateExpression = () => {
-    let { onChange }: any = this.props;
-
-    onChange =
-      onChange ||
-      (() =>
-        console.warn(
-          "Cron builder - Using Default dummy OnChange function. Please pass a valud Onchange function"
-        ));
-
-    this.setState(
-      {
+    const { onChange }: any = this.props;
+    let newState = {};
+    try {
+      newState = {
         generatedExpression: generateCronExpression(
           this.presetComponent.getExpression()
         )
-      },
-      () => onChange(this.state.generatedExpression)
-    );
+      };
+    } catch (e) {
+      this.setState({
+        messageOpen: true,
+        messageText: "Invalid Schedule selections. Please review.",
+        messageTitle: "Error cannot save."
+      });
+    }
+
+    this.setState({ ...newState }, () => {
+      try {
+        cronsTrue.toString(this.state.generatedExpression);
+        onChange(this.state.generatedExpression);
+      } catch (e) {
+        this.setState({
+          messageOpen: true,
+          messageText: "Invalid Schedule selections. Please review.",
+          messageTitle: "Error cannot save."
+        });
+      }
+    });
   };
+
+  public componentDidCatch(error: any, info: any) {
+    this.setState({
+      messageOpen: true,
+      messageText:
+        "Most likely cause is Invalid Schedule selections. Please review.",
+      messageTitle: "An Error Occured"
+    });
+  }
 
   public selectTab = (activeIndex: number) => {
     return () => {
@@ -90,11 +121,23 @@ export default class CronBuilder extends React.PureComponent {
     };
   };
 
+  public onMessageClose = () => {
+    this.setState({
+      messageOpen: false
+    });
+  };
+
   public render() {
-    const { cronExpression, showResult } = this.props;
-    const { activeIndex, Component, generatedExpression } = this.state;
+    const { cronExpression } = this.props;
+    const { activeIndex, Component } = this.state;
     return (
       <div {...styleNameFactory()}>
+        <ZincMessage
+          messageText={this.state.messageText}
+          messageTitle={this.state.messageTitle}
+          onClose={this.onMessageClose}
+          isOpen={this.state.messageOpen}
+        />
         <fieldset {...styleNameFactory("fieldset")}>
           <legend {...styleNameFactory("legend")}>
             <Tab
@@ -126,33 +169,33 @@ export default class CronBuilder extends React.PureComponent {
           />
         </fieldset>
         <div style={{ textAlign: "center" }}>
-          <button
+          <RaisedButton
+            {...styleNameFactory("action")}
+            type={"submit"}
+            label="Save"
+            primary={true}
+            onClick={this.generateExpression}
+            data-action={true}
+          />
+
+          {/* <button
             {...styleNameFactory("action")}
             onClick={this.generateExpression}
             data-action={true}
           >
             Generate cron expression
-          </button>
+          </button> */}
         </div>
-        <If condition={!!generatedExpression && !!showResult}>
-          <Then>
-            <div data-result={true}>
-              <hr {...styleNameFactory("hr")} />
-              <PrettyExpression expression={generatedExpression} />
-              <div {...styleNameFactory("result")}>{generatedExpression}</div>
-            </div>
-          </Then>
-        </If>
       </div>
     );
   }
 }
 
-function PrettyExpression(props: any) {
-  const { expression } = props;
-  return (
-    <div {...styleNameFactory("pretty-expression")}>
-      {cronsTrue.toString(expression)}
-    </div>
-  );
-}
+// function PrettyExpression(props: any) {
+//   const { expression } = props;
+//   return (
+//     <div {...styleNameFactory("pretty-expression")}>
+//       {"Schedule: " + cronsTrue.toString(expression)}
+//     </div>
+//   );
+// }

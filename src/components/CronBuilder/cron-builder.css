@@ -1,6 +1,7 @@
 .cron-builder {
   display: inline-block;
   min-height: 200px;
+  min-width: 600px;
   background-color: white;
   margin-left: 30px;
   padding: 15px;
@@ -8,32 +9,33 @@
   font-size: 14px;
 }
 .cron-builder__fieldset {
-  border-color: darkBlue;
+  border-color: grey;
   border-style: solid;
 }
-.cron-builder__legend {
+/* .cron-builder__legend {
   padding: 0 5px;
-}
+} */
 .cron-builder__tab {
-  height: 36px;
-  font-weight: bold;
-  color: inherit;
-  border: none;
+  color: grey;
   margin: 0.5px;
-  background-image: linear-gradient(to bottom, white, lightGrey);
+  background-color: white;
   cursor: pointer;
+  border-color: #d3d3d3;
+  border-style: solid;
   padding: 5px 7px 5px 7px;
 }
 .cron-builder__tab:hover:not(.cron-builder__tab--active) {
-  background-image: linear-gradient(to bottom, white, grey);
+  background-image: linear-gradient(to bottom, white, #d3d3d3);
+  color: grey;
 }
 .cron-builder__tab--active {
+  color: white;
   background-color: grey;
   background-image: none;
   cursor: default;
 }
 .cron-builder__preset {
-  min-height: 100px;
+  min-height: 75px;
   display: flex;
   align-items: flex-end;
   margin-bottom: 40px;
@@ -75,10 +77,12 @@
   text-decoration: underline;
 }
 .cron-builder__action {
-  margin: 15px auto;
-  height: 40px;
+  /* margin: 15px auto; */
+  margin-top: 30px;
+  width: 200px;
+  /* height: 40px;
   background-color: grey;
-  border: none;
+  border: none; */
 }
 .cron-builder__result {
   background-color: black;
@@ -100,4 +104,15 @@
   font-weight: bold;
   font-size: 14px;
   max-width: 550px;
+}
+.Select--multi .Select-value {
+  color: white;
+  background-color: darkgray;
+  border: 1px solid gray;
+}
+.Select.has-value.is-clearable.Select--single > .Select-control .Select-value {
+  padding-right: 0;
+}
+.Select-value-label {
+  color: white;
 }

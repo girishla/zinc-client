@@ -45,9 +45,28 @@ export default class PresetTab extends React.PureComponent {
       minutesMultiple,
       hoursMultiple,
       minutes,
-      hours
+      hours,
+      messageOpen: false,
+      messageText: "",
+      messageTitle: ""
     };
   }
+
+  public componentDidCatch(error: any, info: any) {
+    this.setState({
+      messageOpen: true,
+      messageText:
+        "Most likely cause is Invalid Schedule selections. Please review.",
+      messageTitle: "An Error Occured"
+    });
+  }
+
+  public onMessageClose = () => {
+    this.setState({
+      messageOpen: false
+    });
+  };
+
   public selectMinutes = (value: string) => {
     this.setState({
       minutes: value

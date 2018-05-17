@@ -159,8 +159,8 @@ class JobSchedulesTable extends React.Component<
             id="JobSchedulesDataTable"
             onChange={this.handleChanged}
             onSort={this.handleSort}
-            selection={this.state.selection}
-            selectRows={true}
+            // selection={this.state.selection}
+            // selectRows={true}
           >
             <DataTableColumn
               isSorted={true}
