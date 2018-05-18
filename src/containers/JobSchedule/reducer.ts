@@ -19,6 +19,15 @@ function reducer(state = initialJobsState, action: any) {
     case getType(jobScheduleActions.loadSchedulesFailure): {
       return { ...state, loading: false, error: action.errorStr };
     }
+    case getType(jobScheduleActions.deleteJobSchedule): {
+      return { ...state, loading: true };
+    }
+    case getType(jobScheduleActions.deleteScheduleDetailSuccess): {
+      return { ...state, loading: false };
+    }
+    case getType(jobScheduleActions.deleteScheduleDetailFailure): {
+      return { ...state, loading: false, error: action.errorStr };
+    }
     default:
       return state;
   }

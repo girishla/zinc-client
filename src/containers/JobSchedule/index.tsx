@@ -39,6 +39,7 @@ class ZincJobSchedules extends React.Component<IJobSchedulesProps> {
     return (
       <JobSchedulesListView
         jobSchedules={this.props.jobSchedules && this.props.jobSchedules.data}
+        jobSchedulesActions={this.props.jobSchedulesActions}
       />
     );
   }

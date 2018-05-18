@@ -29,6 +29,35 @@ export function* getJobSchedules() {
   );
 }
 
+export function* deleteJobScheduleDetailTask(action: any) {
+  try {
+    yield call(
+      jobSchedulesApi.deleteJobSchedule,
+      window.localStorage.getItem("token"),
+      action.scheduleDetail.jobName,
+      action.scheduleDetail.scheduleName
+    );
+    yield put({
+      type: getType(jobScheduleActions.deleteScheduleDetailSuccess)
+    });
+    yield put({
+      type: getType(jobScheduleActions.loadJobSchedules)
+    });
+  } catch (e) {
+    yield put({
+      type: getType(jobScheduleActions.deleteScheduleDetailFailure),
+      errorStr: e.message
+    });
+  }
+}
+
+export function* deleteJobScheduleDetail() {
+  yield takeLatest(
+    getType(jobScheduleActions.deleteJobSchedule),
+    deleteJobScheduleDetailTask
+  );
+}
+
 export default function* rootSaga() {
-  yield all([getJobSchedules()]);
+  yield all([getJobSchedules(), deleteJobScheduleDetail()]);
 }

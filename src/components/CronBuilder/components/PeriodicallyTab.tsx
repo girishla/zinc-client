@@ -19,7 +19,7 @@ import PresetTab from "./PresetTab";
 import { IPresetTabState } from "./types/IPresetTabState";
 import { IPresetTabProps } from "./types/IPresetTabProps";
 
-const minutesOptions = toOptions(range(1, 60));
+const minutesOptions = toOptions(range(0, 60));
 const hoursOptions = toOptions(range(0, 24));
 
 const isMinutes = (activeTime: string) => activeTime === MINUTES;

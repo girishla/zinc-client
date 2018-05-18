@@ -27,6 +27,38 @@ const jobScheduleApi = {
       .catch((error: any) => {
         return Promise.reject(error);
       });
+  },
+
+  async deleteJobScheduleApiCall(
+    token: string,
+    jobName: string,
+    scheduleName: string
+  ) {
+    const jobScheduleEndpoint = `http://localhost:8090/zinc/jobs/${jobName}/schedule/${scheduleName}`;
+
+    return await fetch(jobScheduleEndpoint, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+        "X-Auth-Token": token
+      }
+    });
+  },
+  deleteJobSchedule(token: string, jobName: string, scheduleName: string) {
+    return jobScheduleApi
+      .deleteJobScheduleApiCall(token, jobName, scheduleName)
+      .then((response: Response) => {
+        if (response.status === HTTPStatusCodes.OK) {
+          return Promise.resolve({});
+        } else {
+          return Promise.reject({
+            message: "Unable to delete Job Schedule list at this time."
+          });
+        }
+      })
+      .catch((error: any) => {
+        return Promise.reject(error);
+      });
   }
 };
 

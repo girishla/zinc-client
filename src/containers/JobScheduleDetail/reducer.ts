@@ -4,7 +4,9 @@ import { jobScheduleDetailActions } from "./actions";
 export const initialJobsState: any = {
   loading: false,
   data: [],
-  error: ""
+  error: "",
+  snackBarOpen: false,
+  snackBarMessage: ""
 };
 
 function reducer(state = initialJobsState, action: any) {
@@ -22,7 +24,13 @@ function reducer(state = initialJobsState, action: any) {
       return { ...state, loading: true };
     }
     case getType(jobScheduleDetailActions.saveScheduleDetailSuccess): {
-      return { ...state, loading: false, data: action.jobScheduleDetail };
+      return {
+        ...state,
+        loading: false,
+        data: action.jobScheduleDetail,
+        snackBarOpen: true,
+        snackBarMessage: "Schedule Detail Saved Successfully"
+      };
     }
     case getType(jobScheduleDetailActions.saveScheduleDetailFailure): {
       return { ...state, loading: false, error: action.errorStr };

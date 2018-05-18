@@ -9,7 +9,7 @@ import {
   DataTableCell
 } from "@salesforce/design-system-react";
 import { format, parse } from "date-fns";
-
+import cronsTrue from "cronstrue";
 import * as React from "react";
 
 import { IJobSchedule } from "./IJobSchedule";
@@ -27,6 +27,7 @@ DrillToStepListViewCell.displayName = DataTableCell.displayName;
 interface IJobSchedulesTableProps {
   items: IJobSchedule[];
   onChange: (selection: any) => void;
+  onDelete: any;
 }
 
 interface IJobSchedulesTableState {
@@ -92,7 +93,7 @@ class JobSchedulesTable extends React.Component<
         }
         break;
       case "Delete":
-        // Submit Delete schedule request
+        this.props.onDelete(item);
         break;
       case "Edit":
         // go to Edit Route
@@ -184,7 +185,7 @@ class JobSchedulesTable extends React.Component<
             <DataTableColumn
               label="Description"
               width="8rem"
-              property="cronDescription"
+              property="cronDescriptionDisplay"
             />
             <DataTableColumn
               label="Next Run time"
@@ -197,12 +198,6 @@ class JobSchedulesTable extends React.Component<
               options={[
                 {
                   id: 0,
-                  label: "Pause",
-                  value: "Pause",
-                  disabled: "false"
-                },
-                {
-                  id: 1,
                   label: "Delete",
                   value: "Delete",
                   disabled: "false"
@@ -229,7 +224,8 @@ class JobSchedulesTable extends React.Component<
           ),
           status: item.active === true ? "Active" : "Paused",
 
-          id: item.scheduleName
+          id: item.scheduleName,
+          cronDescriptionDisplay: cronsTrue.toString(item.cronExpression)
         };
       });
 

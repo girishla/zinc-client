@@ -6,12 +6,17 @@ import { NavLink } from "react-router-dom";
 // const UserBreadcrumb = ({ match }:any) =>
 //   <span>{match.params.userId}</span>; // use match param userId to fetch/display user name
 
-// define some custom breadcrumbs for certain routes (optional)
 const routes = [
-  //   { path: '/users/:userId', breadcrumb: UserBreadcrumb },
+  // { path: '/users/:userId', breadcrumb: UserBreadcrumb },
   { path: "/jobs", breadcrumb: "Jobs List" },
   { path: "/jobs/executions", breadcrumb: "Job Executions" },
   { path: "/schedule", breadcrumb: "Schedule List" },
+  {
+    path: "/jobs/executions/:executionId",
+    breadcrumb: ({ match }: any) => (
+      <span>Execution {match.params.executionId}</span>
+    )
+  },
 
   {
     path: "/jobs/executions/:executionId/steps",
@@ -20,8 +25,7 @@ const routes = [
   { path: "/dashboard", breadcrumb: "Dashboard" }
 ];
 
-// map & render your breadcrumb components however you want.
-// each `breadcrumb` has the props `key`, `location`, and `match` included!
+// each `breadcrumb` has the props `key`, `location`, and `match` included
 const Breadcrumbs = ({ breadcrumbs }: any) => (
   <div>
     {breadcrumbs.map((breadcrumb: any, index: any) => (

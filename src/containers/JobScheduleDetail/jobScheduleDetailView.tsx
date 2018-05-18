@@ -1,12 +1,18 @@
 import * as React from "react";
 
 import { Card, CardHeader } from "material-ui/Card";
-import { Field, reduxForm, formValueSelector } from "redux-form";
-import { TextField, Checkbox } from "redux-form-material-ui";
+import {
+  Field,
+  reduxForm,
+  formValueSelector,
+  SubmissionError
+} from "redux-form";
+import { TextField, Checkbox, SelectField } from "redux-form-material-ui";
+import { MenuItem } from "material-ui";
 import { connect } from "react-redux";
 // import RaisedButton from "material-ui/RaisedButton";
 import CronBuilder from "../../components/CronBuilder/CronBuilder";
-import cronsTrue from "cronstrue";
+// import cronsTrue from "cronstrue";
 import ZincMessage from "../../components/Message";
 
 interface IJobScheduleDetailViewProps {
@@ -14,19 +20,20 @@ interface IJobScheduleDetailViewProps {
   jobName: string;
   scheduleName: string;
   cronExpression: string;
+  jobNames: string[];
   active: boolean;
   styles: any;
   handleSubmit: (values: any) => void;
   dispatch: any;
   change: any;
   initialValues: any;
+  reset: any;
 }
 
 interface IJobScheduleDetailState {
   messageOpen: boolean;
   messageText: string;
   messageTitle: string;
-  cronDescr: string;
 }
 
 class JobScheduleDetailView extends React.Component<
@@ -41,28 +48,17 @@ class JobScheduleDetailView extends React.Component<
     this.state = {
       messageOpen: false,
       messageText: "",
-      messageTitle: "",
-      cronDescr: ""
+      messageTitle: ""
     };
   }
 
-  public componentWillReceiveProps(newProps: IJobScheduleDetailViewProps) {
-    try {
-      this.setState({
-        cronDescr: cronsTrue.toString(
-          newProps.initialValues && newProps.initialValues.cronExpression
-        )
-      });
-    } catch (e) {
-      this.setState({
-        messageOpen: true,
-        messageText: "Error",
-        messageTitle: "Invalid Schedule selections. Please review."
-      });
+  public componentDidMount() {
+    if (this.props.mode === "new") {
+      this.props.change("cronExpression", "*/15 * * * *");
     }
   }
 
-  // dispatches action to change form field
+  // dispatches action to change form field as the cron builder component sits outside the scope of redux form
   public preProcessSubmit = (cronExpr: any) => {
     if (!cronExpr) {
       cronExpr =
@@ -82,8 +78,12 @@ class JobScheduleDetailView extends React.Component<
   public render() {
     const FormField: any = Field;
 
-    const cronExpr =
-      this.props.initialValues && this.props.initialValues.cronExpression;
+    // const cronExpr =
+    //   this.props.initialValues && this.props.initialValues.cronExpression;
+
+    const jobSelectionItems = this.props.jobNames.map((jobName: string) => {
+      return <MenuItem value={jobName} key={jobName} primaryText={jobName} />;
+    });
 
     return (
       <Card>
@@ -110,14 +110,16 @@ class JobScheduleDetailView extends React.Component<
               <FormField
                 style={this.props.styles.textField}
                 name="jobName"
-                component={TextField}
+                component={SelectField}
                 hintText="Job Name"
                 floatingLabelText="Job Name"
-                validate={this.validate}
+                // validate={this.validate}
                 disabled={this.props.mode === "edit"}
                 ref={(jobName: any) => jobName}
                 withRef={true}
-              />
+              >
+                {jobSelectionItems}
+              </FormField>
               <FormField
                 style={this.props.styles.textField}
                 name="scheduleName"
@@ -127,6 +129,16 @@ class JobScheduleDetailView extends React.Component<
                 validate={this.validate}
                 disabled={this.props.mode === "edit"}
                 ref={(scheduleName: any) => scheduleName}
+                withRef={true}
+              />
+              <FormField
+                style={{ ...this.props.styles.textField, display: "none" }}
+                name="cronExpression"
+                component={TextField}
+                hintText="cronExpression"
+                floatingLabelText="cronExpression"
+                disabled={true}
+                ref={(cronExpression: any) => cronExpression}
                 withRef={true}
               />
               <div>
@@ -142,22 +154,10 @@ class JobScheduleDetailView extends React.Component<
                 />
               </div>
             </div>
-            <div>
-              <TextField
-                style={{
-                  ...this.props.styles.textField,
-                  width: 580,
-                  marginTop: 20
-                }}
-                name="cronExpression"
-                disabled={true}
-                hintText={"Runs " + this.state.cronDescr}
-                floatingLabelText=""
-              />
-            </div>
+
             <div>
               <CronBuilder
-                cronExpression={cronExpr}
+                cronExpression={this.props.cronExpression}
                 onChange={this.preProcessSubmit}
                 showResult={true}
               />
@@ -175,6 +175,25 @@ class JobScheduleDetailView extends React.Component<
 
 const selector = formValueSelector("jobScheduleDetailForm");
 
+const validate = (values: any) => {
+  const errors: any = {};
+  if (!values.scheduleName) {
+    errors.scheduleName = "ScheduleName is required";
+  } else if (values.scheduleName.length > 30) {
+    errors.scheduleName = "ScheduleName too long.";
+  }
+  if (!values.jobName) {
+    errors.jobName = "Job Name is required";
+  }
+  if (!values.cronExpression) {
+    throw new SubmissionError({
+      cronExpression: "Invalid Schedule",
+      _error: "Please select a valid Schedule"
+    });
+  }
+  return errors;
+};
+
 const ConnectedJobScheduleDetailView: any = connect(state => ({
   scheduleName: selector(state, "scheduleName"),
   jobName: selector(state, "jobName"),
@@ -189,7 +208,8 @@ const ConnectedJobScheduleDetailFormView: any = reduxForm({
     jobName: "",
     active: true,
     cronExpression: ""
-  }
+  },
+  validate
 })(ConnectedJobScheduleDetailView);
 
 export default ConnectedJobScheduleDetailFormView;

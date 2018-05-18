@@ -9,7 +9,7 @@ const styles = (theme: ITheme) => ({
     flexWrap: "wrap"
   },
   textField: {
-    // marginLeft: 50,
+    marginLeft: 50,
     marginRight: 50,
     width: 200
   }

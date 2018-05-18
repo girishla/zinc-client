@@ -17,6 +17,10 @@ export const ensureEveryOn = (value: any, multiple: boolean) => {
       return replaceEvery(item);
     }
     if (!multiple && !item.includes("/")) {
+      if (item === "0") {
+        return item;
+      }
+
       return `*/${item}`;
     }
     return item;

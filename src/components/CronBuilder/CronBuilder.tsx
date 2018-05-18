@@ -2,13 +2,14 @@ import * as React from "react";
 import * as BEMHelper from "react-bem-helper";
 // import { If, Then } from "react-if";
 import { generateCronExpression, parseCronExpression } from "./utils";
-// import cronsTrue from "cronstrue";
+
 import { noop } from "lodash";
 import Tab from "./components/Tab";
 import PeriodicallyTab from "./components/PeriodicallyTab";
 import PeriodicallyFrameTab from "./components/PeriodicallyFrameTab";
 import FixedTimeTab from "./components/FixedTimeTab";
 import cronsTrue from "cronstrue";
+import { Textarea } from "@salesforce/design-system-react";
 
 import "react-select/dist/react-select.css";
 import "./cron-builder.css";
@@ -168,7 +169,7 @@ export default class CronBuilder extends React.PureComponent {
             expression={parseCronExpression(cronExpression || "")}
           />
         </fieldset>
-        <div style={{ textAlign: "center" }}>
+        <div style={{ textAlign: "center", width: "80%" }}>
           <RaisedButton
             {...styleNameFactory("action")}
             type={"submit"}
@@ -176,6 +177,18 @@ export default class CronBuilder extends React.PureComponent {
             primary={true}
             onClick={this.generateExpression}
             data-action={true}
+          />
+          <Textarea
+            name="cronExpressionTextArea"
+            label=""
+            disabled={true}
+            placeholder={
+              "Runs Every " +
+              cronsTrue.toString(cronExpression) +
+              " (" +
+              cronExpression +
+              ")"
+            }
           />
 
           {/* <button

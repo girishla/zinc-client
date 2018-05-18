@@ -12,10 +12,12 @@ import { blue300 } from "material-ui/styles/colors";
 import { IJobSchedule } from "./IJobSchedule";
 import JobSchedulesTable from "./jobScheduleTable";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import { jobScheduleActions } from "./actions";
 // import { Card, CardEmpty } from "@salesforce/design-system-react";
 
 interface IJobSchedulesListViewProps extends RouteComponentProps<any> {
   jobSchedules: IJobSchedule[];
+  jobSchedulesActions: typeof jobScheduleActions;
 }
 
 class JobSchedulesListView extends React.Component<IJobSchedulesListViewProps> {
@@ -36,48 +38,6 @@ class JobSchedulesListView extends React.Component<IJobSchedulesListViewProps> {
 
     const contentRight = (
       <div>
-        {/* <Dropdown
-          align="right"
-          options={[
-            { label: "Menu Item One", value: "A0" },
-            { label: "Menu Item Two", value: "B0" },
-            { label: "Menu Item Three", value: "C0" },
-            { type: "divider" },
-            { label: "Menu Item Four", value: "D0" }
-          ]}
-        >
-          <DropdownTrigger>
-            <Button
-              assistiveText="List View Controls"
-              className="slds-m-right--xx-small"
-              iconName="settings"
-              iconVariant="more"
-            />
-          </DropdownTrigger>
-        </Dropdown> */}
-        {/* <Dropdown
-          align="right"
-          assistiveText="Change view"
-          iconName="settings"
-          iconVariant="more"
-          options={[
-            { label: "Menu Item One", value: "A0" },
-            { label: "Menu Item Two", value: "B0" },
-            { label: "Menu Item Three", value: "C0" },
-            { type: "divider" },
-            { label: "Menu Item Four", value: "D0" }
-          ]}
-        >
-          <DropdownTrigger>
-            <Button
-              assistiveText="Change view"
-              className="slds-m-right--xx-small"
-              iconName="table"
-              iconVariant="more"
-              variant="icon"
-            />
-          </DropdownTrigger>
-        </Dropdown> */}
         <Button
           assistiveText="Edit List"
           iconName="edit"
@@ -90,6 +50,7 @@ class JobSchedulesListView extends React.Component<IJobSchedulesListViewProps> {
           iconName="refresh"
           iconVariant="border"
           variant="icon"
+          onClick={this.props.jobSchedulesActions.loadJobSchedules}
         />
         <div>
           <ButtonGroup>
@@ -145,6 +106,7 @@ class JobSchedulesListView extends React.Component<IJobSchedulesListViewProps> {
           <JobSchedulesTable
             items={this.props.jobSchedules}
             onChange={this.jobSchedulesTableSelectionsChange}
+            onDelete={this.props.jobSchedulesActions.deleteJobSchedule}
           />
         </IconSettings>
         {/* <pre>{JSON.stringify(this.props, null, 2)}</pre> */}
