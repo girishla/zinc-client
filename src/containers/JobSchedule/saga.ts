@@ -3,6 +3,7 @@ import { getType } from "typesafe-actions";
 import { jobScheduleActions } from "./actions";
 import { IJobSchedule } from "./IJobSchedule";
 import jobSchedulesApi from "./jobScheduleApi";
+import { layoutActions } from "../Layout/actions";
 
 export function* getJobSchedulesTask(action: any) {
   try {
@@ -39,6 +40,10 @@ export function* deleteJobScheduleDetailTask(action: any) {
     );
     yield put({
       type: getType(jobScheduleActions.deleteScheduleDetailSuccess)
+    });
+    yield put({
+      type: getType(layoutActions.showSnackBarMessage),
+      message: "Job Schedule Deleted Successfully!"
     });
     yield put({
       type: getType(jobScheduleActions.loadJobSchedules)

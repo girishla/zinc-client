@@ -3,8 +3,7 @@ import { IconSettings } from "@salesforce/design-system-react";
 import { PageHeader } from "@salesforce/design-system-react";
 import { Button } from "@salesforce/design-system-react";
 import { ButtonGroup } from "@salesforce/design-system-react";
-// import { Dropdown } from "@salesforce/design-system-react";
-// import { DropdownTrigger } from "@salesforce/design-system-react";
+
 import utilitySprite from "@salesforce-ux/design-system/assets/icons/utility-sprite/svg/symbols.svg";
 import customSprite from "@salesforce-ux/design-system/assets/icons/custom-sprite/svg/symbols.svg";
 import standardSprite from "@salesforce-ux/design-system/assets/icons/standard-sprite/svg/symbols.svg";
@@ -13,11 +12,13 @@ import { IJobSchedule } from "./IJobSchedule";
 import JobSchedulesTable from "./jobScheduleTable";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { jobScheduleActions } from "./actions";
-// import { Card, CardEmpty } from "@salesforce/design-system-react";
+import { If, Then, Else } from "react-if";
+import Loading from "../../components/Loading";
 
 interface IJobSchedulesListViewProps extends RouteComponentProps<any> {
   jobSchedules: IJobSchedule[];
   jobSchedulesActions: typeof jobScheduleActions;
+  loading: boolean;
 }
 
 class JobSchedulesListView extends React.Component<IJobSchedulesListViewProps> {
@@ -73,6 +74,21 @@ class JobSchedulesListView extends React.Component<IJobSchedulesListViewProps> {
       </div>
     );
 
+    const tableContent = (
+      <If condition={this.props.loading}>
+        <Then>
+          <Loading />
+        </Then>
+        <Else>
+          <JobSchedulesTable
+            items={this.props.jobSchedules}
+            onChange={this.jobSchedulesTableSelectionsChange}
+            onDelete={this.props.jobSchedulesActions.deleteJobSchedule}
+          />
+        </Else>
+      </If>
+    );
+
     return (
       <div style={{ flex: 1 }}>
         <section className="slds-clearfix" />
@@ -103,11 +119,7 @@ class JobSchedulesListView extends React.Component<IJobSchedulesListViewProps> {
             truncate={true}
             variant="objectHome"
           />
-          <JobSchedulesTable
-            items={this.props.jobSchedules}
-            onChange={this.jobSchedulesTableSelectionsChange}
-            onDelete={this.props.jobSchedulesActions.deleteJobSchedule}
-          />
+          {tableContent}
         </IconSettings>
         {/* <pre>{JSON.stringify(this.props, null, 2)}</pre> */}
       </div>

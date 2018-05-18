@@ -4,6 +4,7 @@ import { getType } from "typesafe-actions";
 import { IJobSchedule } from "../JobSchedule/IJobSchedule";
 import jobScheduleDetailApi from "./jobScheduleDetailApi";
 import { jobScheduleDetailActions } from "./actions";
+import { layoutActions } from "../Layout/actions";
 
 export function* getJobScheduleDetailTask(action: any) {
   try {
@@ -34,6 +35,10 @@ export function* saveJobScheduleDetailTask(action: any) {
     yield put({
       type: getType(jobScheduleDetailActions.saveScheduleDetailSuccess),
       jobScheduleDetail
+    });
+    yield put({
+      type: getType(layoutActions.showSnackBarMessage),
+      message: "Job Schedule Saved Successfully!"
     });
   } catch (e) {
     yield put({

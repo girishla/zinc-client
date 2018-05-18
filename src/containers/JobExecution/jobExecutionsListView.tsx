@@ -12,10 +12,12 @@ import { blue300 } from "material-ui/styles/colors";
 import { IJobExecutionInfoResource } from "./IJobExecutionCollection";
 import JobExecutionsTable from "./jobExecutionsTable";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-// import { Card, CardEmpty } from "@salesforce/design-system-react";
+import Loading from "../../components/Loading";
+import { If, Then, Else } from "react-if";
 
 interface IJobExecutionsListViewProps extends RouteComponentProps<any> {
   jobExecutions: IJobExecutionInfoResource[];
+  loading: boolean;
 }
 
 class JobExecutionsListView extends React.Component<
@@ -120,6 +122,20 @@ class JobExecutionsListView extends React.Component<
       </div>
     );
 
+    const tableContent = (
+      <If condition={this.props.loading}>
+        <Then>
+          <Loading />
+        </Then>
+        <Else>
+          <JobExecutionsTable
+            items={this.props.jobExecutions}
+            onChange={this.jobExecutionsTableSelectionsChange}
+          />
+        </Else>
+      </If>
+    );
+
     return (
       <div style={{ flex: 1 }}>
         <section className="slds-clearfix" />
@@ -169,10 +185,8 @@ class JobExecutionsListView extends React.Component<
             truncate={true}
             variant="objectHome"
           />
-          <JobExecutionsTable
-            items={this.props.jobExecutions}
-            onChange={this.jobExecutionsTableSelectionsChange}
-          />
+
+          {tableContent}
         </IconSettings>
         {/* <pre>{JSON.stringify(this.props, null, 2)}</pre> */}
       </div>

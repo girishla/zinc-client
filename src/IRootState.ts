@@ -19,6 +19,8 @@ export interface IRootState {
     showTabs: boolean;
     showOpenViews: boolean;
     isBoxedLayout: boolean;
+    snackBarOpen: boolean;
+    snackBarMessage: string;
   };
   route: any;
   form: FormStateMap;

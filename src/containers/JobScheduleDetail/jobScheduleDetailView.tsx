@@ -67,6 +67,12 @@ class JobScheduleDetailView extends React.Component<
 
     this.props.change("cronExpression", cronExpr);
     // setTimeout(this.props.dispatch(submit("jobScheduleDetailForm")));
+    // this.props.handleSubmit({
+    //   jobName: this.props.jobName,
+    //   scheduleName: this.props.scheduleName,
+    //   cronExpression: this.props.cronExpression,
+    //   active: this.props.active
+    // });
   };
 
   public onMessageClose = () => {
@@ -154,7 +160,6 @@ class JobScheduleDetailView extends React.Component<
                 />
               </div>
             </div>
-
             <div>
               <CronBuilder
                 cronExpression={this.props.cronExpression}
@@ -197,7 +202,8 @@ const validate = (values: any) => {
 const ConnectedJobScheduleDetailView: any = connect(state => ({
   scheduleName: selector(state, "scheduleName"),
   jobName: selector(state, "jobName"),
-  cronExpression: selector(state, "cronExpression")
+  cronExpression: selector(state, "cronExpression"),
+  active: selector(state, "active")
 }))(JobScheduleDetailView);
 
 const ConnectedJobScheduleDetailFormView: any = reduxForm({

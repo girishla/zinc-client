@@ -22,7 +22,7 @@ import {
 } from "../Job/IJobCollection";
 import { jobsActions } from "../Job/actions";
 import { get as deepGet } from "lodash";
-import Snackbar from "material-ui/Snackbar";
+import { layoutActions } from "../Layout/actions";
 
 interface IJobScheduleDetailProps extends RouteComponentProps<any> {
   jobScheduleDetail: { data: IJobSchedule };
@@ -33,6 +33,7 @@ interface IJobScheduleDetailProps extends RouteComponentProps<any> {
   dispatch: any;
   snackBarOpen: boolean;
   snackBarMessage: string;
+  layoutActions: typeof layoutActions;
 }
 
 interface IJobDetailState {
@@ -90,13 +91,12 @@ class ZincJobScheduleDetail extends React.Component<IJobScheduleDetailProps> {
     }
   }
 
-  public handleSnackBarClose = () => {
-    console.log("calling close");
-  };
-
   public onJobDetailSave = (values: any) => {
     this.props.jobScheduleDetailActions.saveJobScheduleDetail(values);
     this.props.history.push("/schedule/" + values.scheduleName);
+    // this.props.layoutActions.showSnackBarMessage(
+    //   "Job Schedule Saved Successfully!"
+    // );
   };
 
   public render() {
@@ -141,12 +141,6 @@ class ZincJobScheduleDetail extends React.Component<IJobScheduleDetailProps> {
                   }
             }
           />
-          <Snackbar
-            open={this.props.snackBarOpen || false}
-            message={this.props.snackBarMessage || ""}
-            autoHideDuration={4000}
-            onRequestClose={this.handleSnackBarClose}
-          />
         </div>
       );
     } else {
@@ -158,11 +152,7 @@ class ZincJobScheduleDetail extends React.Component<IJobScheduleDetailProps> {
 const mapStateToProps = createStructuredSelector({
   jobScheduleDetail: (store: IRootState) => store.jobScheduleDetail,
   currentTheme: (store: IRootState) => store.layout.currentTheme,
-  jobsList: (store: IRootState) => store.jobs,
-  snackBarOpen: (store: IRootState) =>
-    store.jobScheduleDetail && store.jobScheduleDetail.snackBarOpen,
-  snackBarMessage: (store: IRootState) =>
-    store.jobScheduleDetail && store.jobScheduleDetail.snackBarMessage
+  jobsList: (store: IRootState) => store.jobs
 });
 
 function mapDispatchToProps(dispatch: any) {
@@ -171,7 +161,8 @@ function mapDispatchToProps(dispatch: any) {
       jobScheduleDetailActions,
       dispatch
     ),
-    jobsActions: bindActionCreators(jobsActions, dispatch)
+    jobsActions: bindActionCreators(jobsActions, dispatch),
+    layoutActions: bindActionCreators(layoutActions, dispatch)
   };
 }
 

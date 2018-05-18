@@ -16,6 +16,7 @@ import { getCurrentTheme, updateContentDimensions } from "./layout-utils";
 import Styles from "./styles";
 
 import { authActions } from "../Login/actions";
+import Snackbar from "material-ui/Snackbar";
 
 const theme = new Theme();
 
@@ -27,6 +28,8 @@ export interface ILayoutProps extends RouteComponentProps<any> {
   actions: typeof layoutActions;
   authActions: typeof authActions;
   dispatch?: (action: any) => void;
+  snackBarOpen: boolean;
+  snackBarMessage: string;
 }
 
 interface ILayoutState {
@@ -100,6 +103,11 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
     });
   }
 
+  public handleSnackBarClose = () => {
+    console.log("calling close");
+    this.props.actions.hideSnackBarMessage();
+  };
+
   public renderPages() {
     const { width, navDrawerOpen } = this.state;
     const currentTheme = this.state.currentTheme;
@@ -138,6 +146,12 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
             {this.props.children}
           </ReactCSSTransitionGroup>
         </div>
+        <Snackbar
+          open={this.props.snackBarOpen || false}
+          message={this.props.snackBarMessage || ""}
+          autoHideDuration={4000}
+          onRequestClose={this.handleSnackBarClose}
+        />
       </div>
     );
   }
@@ -153,7 +167,9 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
 
 const mapStateToProps = createStructuredSelector({
   currentTheme: (state: IRootState) => state.layout.currentTheme,
-  isBoxedLayout: (state: IRootState) => state.layout.isBoxedLayout
+  isBoxedLayout: (state: IRootState) => state.layout.isBoxedLayout,
+  snackBarOpen: (state: IRootState) => state.layout.snackBarOpen,
+  snackBarMessage: (state: IRootState) => state.layout.snackBarMessage
 });
 
 function mapDispatchToProps(dispatch: any) {

@@ -16,6 +16,7 @@ import { withRouter, RouteComponentProps } from "react-router";
 interface IJobSchedulesProps extends RouteComponentProps<any> {
   jobSchedules: { data: IJobSchedule[] };
   jobSchedulesActions: typeof jobScheduleActions;
+  loading: boolean;
 }
 
 class ZincJobSchedules extends React.Component<IJobSchedulesProps> {
@@ -38,6 +39,7 @@ class ZincJobSchedules extends React.Component<IJobSchedulesProps> {
   public render() {
     return (
       <JobSchedulesListView
+        loading={this.props.loading || false}
         jobSchedules={this.props.jobSchedules && this.props.jobSchedules.data}
         jobSchedulesActions={this.props.jobSchedulesActions}
       />
@@ -46,7 +48,9 @@ class ZincJobSchedules extends React.Component<IJobSchedulesProps> {
 }
 
 const mapStateToProps = createStructuredSelector({
-  jobSchedules: (store: IRootState) => store.jobSchedules
+  jobSchedules: (store: IRootState) => store.jobSchedules,
+  loading: (store: IRootState) =>
+    store.jobSchedules && store.jobSchedules.loading
 });
 
 function mapDispatchToProps(dispatch: any) {

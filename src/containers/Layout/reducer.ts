@@ -10,34 +10,34 @@ export const initialState: any = {
   selectedMenuItem: null,
   selectedOpenedMenuIndex: 0,
   selectedOpenedMenuItem: null,
-  currentTheme: 'lightTheme', // darkTheme, lightTheme, blueTheme, grayTheme, darkBlueTheme
+  currentTheme: "lightTheme", // darkTheme, lightTheme, blueTheme, grayTheme, darkBlueTheme
   openSettingDrawer: false,
   showTabs: false,
   showOpenViews: false,
-  isBoxedLayout: false,
+  isBoxedLayout: false
 };
 
 function setBodyBackground(currentTheme: string) {
-  const body: HTMLBodyElement | null = document.querySelector('body');
+  const body: HTMLBodyElement | null = document.querySelector("body");
 
   switch (currentTheme) {
-    case 'darkTheme':
-      body!.style.backgroundColor = '#37474f';
+    case "darkTheme":
+      body!.style.backgroundColor = "#37474f";
       break;
-    case 'lightTheme':
-      body!.style.backgroundColor = '#eee';
+    case "lightTheme":
+      body!.style.backgroundColor = "#eee";
       break;
-    case 'blueTheme':
-      body!.style.backgroundColor = '#3e6e99';
+    case "blueTheme":
+      body!.style.backgroundColor = "#3e6e99";
       break;
-    case 'grayTheme':
-      body!.style.backgroundColor = '#575f6a';
+    case "grayTheme":
+      body!.style.backgroundColor = "#575f6a";
       break;
-    case 'darkBlueTheme':
-      body!.style.backgroundColor = '#303a47';
+    case "darkBlueTheme":
+      body!.style.backgroundColor = "#303a47";
       break;
     default:
-      body!.style.backgroundColor = 'white';
+      body!.style.backgroundColor = "white";
       break;
   }
 }
@@ -45,37 +45,47 @@ function setBodyBackground(currentTheme: string) {
 function appReducer(state = initialState, action: any) {
   switch (action.type) {
     case getType(layoutActions.changeLayout): {
-      const currentTheme = state.currentTheme
+      const currentTheme = state.currentTheme;
       setBodyBackground(currentTheme);
 
-      return Object.assign({}, state, { isBoxedLayout: action.isBoxedLayout })
+      return Object.assign({}, state, { isBoxedLayout: action.isBoxedLayout });
     }
     case getType(layoutActions.changeTheme): {
-      setBodyBackground((action).theme);
-      return Object.assign({}, state, { currentTheme: action.theme })
+      setBodyBackground(action.theme);
+      return Object.assign({}, state, { currentTheme: action.theme });
     }
     case getType(layoutActions.changeShowTabs):
-      return Object.assign({}, state, { showTabs: action.value })
+      return Object.assign({}, state, { showTabs: action.value });
 
     case getType(layoutActions.changeShowOpenViews):
-      return Object.assign({}, state, { showOpenViews: action.value })
+      return Object.assign({}, state, { showOpenViews: action.value });
 
-
+    case getType(layoutActions.showSnackBarMessage):
+      return Object.assign({}, state, {
+        snackBarOpen: true,
+        snackBarMessage: action.message
+      });
+    case getType(layoutActions.hideSnackBarMessage):
+      return Object.assign({}, state, {
+        snackBarOpen: false,
+        snackBarMessage: ""
+      });
     case getType(layoutActions.loadMenuSuccess): {
       const data = action.data;
 
-      return Object.assign({}, state,
-        { menus: data.menus, openViews: data.openViews, selectedMenuItem: data.selectedMenuItem, selectedOpenedMenuItem: data.selectedOpenedMenuItem })
-
-
+      return Object.assign({}, state, {
+        menus: data.menus,
+        openViews: data.openViews,
+        selectedMenuItem: data.selectedMenuItem,
+        selectedOpenedMenuItem: data.selectedOpenedMenuItem
+      });
     }
     case getType(layoutActions.openView): {
       const openViews = state.openViews;
 
       if (openViews.indexOf(action.menuItem) === -1) {
         openViews.push(action.menuItem);
-        return Object.assign({}, state, { openViews })
-
+        return Object.assign({}, state, { openViews });
       }
       return state;
     }
@@ -83,7 +93,9 @@ function appReducer(state = initialState, action: any) {
       const menus1: IMenu[] = state.menus;
       const openViews = Object.assign([], state.openViews);
 
-      let itemFound: IMenu | undefined = openViews.find((item: IMenu) => item.id === action.id);
+      let itemFound: IMenu | undefined = openViews.find(
+        (item: IMenu) => item.id === action.id
+      );
 
       const indexToBeRemoved = openViews.indexOf(itemFound!);
       let openedIndex = 0;
@@ -112,7 +124,6 @@ function appReducer(state = initialState, action: any) {
 
       openViews.splice(indexToBeRemoved, 1);
 
-
       return Object.assign({}, state, {
         openViews,
         selectedMenuIndex: menuIndex,
@@ -120,11 +131,8 @@ function appReducer(state = initialState, action: any) {
         selectedOpenedMenuIndex: openedIndex,
         selectedOpenedMenuItem: itemOpenedFound
       });
-
     }
     case getType(layoutActions.selectMenuItem): {
-
-
       const menusArr = state.menus;
       const openViews = state.openViews;
 
@@ -147,7 +155,9 @@ function appReducer(state = initialState, action: any) {
         }
       });
 
-      let itemOpenedFound = openViews.find((item: IMenu) => item && itemFound && (item.id === itemFound.id));
+      let itemOpenedFound = openViews.find(
+        (item: IMenu) => item && itemFound && item.id === itemFound.id
+      );
 
       let openedIndex = 0;
 
@@ -163,14 +173,12 @@ function appReducer(state = initialState, action: any) {
         selectedMenuItem: itemFound!,
         selectedOpenedMenuIndex: openedIndex,
         selectedOpenedMenuItem: itemOpenedFound
-      })
-
-
+      });
     }
     case getType(layoutActions.openSettingsDrawer):
-      return Object.assign({}, state, { openSettingDrawer: true })
+      return Object.assign({}, state, { openSettingDrawer: true });
     case getType(layoutActions.closeSettingsDrawer):
-      return Object.assign({}, state, { openSettingDrawer: false })
+      return Object.assign({}, state, { openSettingDrawer: false });
     case getType(layoutActions.animateMenus):
       let menus = state.menus;
 
@@ -179,7 +187,11 @@ function appReducer(state = initialState, action: any) {
 
         if (item.children && item.children.length > 0) {
           if (item.id === action.menuId) {
-            newItem = { ...item, animating: true, willCloseMenu: action.willCloseMenu };
+            newItem = {
+              ...item,
+              animating: true,
+              willCloseMenu: action.willCloseMenu
+            };
           } else {
             newItem = { ...item, animating: false };
           }
@@ -217,7 +229,6 @@ function appReducer(state = initialState, action: any) {
         return newItem;
       });
       return Object.assign({}, state, { menus });
-
     }
     case getType(layoutActions.animateRootMenus): {
       let menusArr = state[action.rootMenuName];
@@ -225,13 +236,16 @@ function appReducer(state = initialState, action: any) {
       menusArr = menusArr.map((item: IMenu) => {
         let newItem = item;
 
-        newItem = { ...item, animatingRootMenu: true, willCloseRootMenu: action.willCloseMenu };
+        newItem = {
+          ...item,
+          animatingRootMenu: true,
+          willCloseRootMenu: action.willCloseMenu
+        };
 
         return newItem;
       });
 
-      return Object.assign({}, state, {}[action.rootMenuName] = menus);
-
+      return Object.assign({}, state, ({}[action.rootMenuName] = menus));
     }
     case getType(layoutActions.toggleRootMenus): {
       let menusArr = state[action.rootMenuName];
@@ -243,7 +257,7 @@ function appReducer(state = initialState, action: any) {
 
         return newItem;
       });
-      return Object.assign({}, state, {}[action.rootMenuName] = menus);
+      return Object.assign({}, state, ({}[action.rootMenuName] = menus));
     }
     default:
       return state;

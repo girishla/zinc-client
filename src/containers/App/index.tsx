@@ -23,6 +23,7 @@ import Layout from "../Layout";
 import Login from "../Login";
 import "./App.css";
 import "./sldsOverrides.css";
+import PageNotFound from "../PageNotFound";
 
 interface IAppProps extends RouteComponentProps<any> {}
 
@@ -68,6 +69,16 @@ export class App extends React.Component<IAppProps> {
             />
             <RouteWithLayout
               exact={true}
+              path="/jobs/:jobName"
+              render={() => <Redirect to="/jobs" />}
+            />
+            <RouteWithLayout
+              exact={true}
+              path="/jobs/executions/:executionId"
+              render={() => <Redirect to="/jobs/executions" />}
+            />
+            <RouteWithLayout
+              exact={true}
               path="/jobs/:jobName/:jobInstanceId/executions"
               component={ZincJobExecutions}
             />
@@ -86,8 +97,7 @@ export class App extends React.Component<IAppProps> {
               path="/schedule/:scheduleName"
               component={ZincJobScheduleDetail}
             />
-
-            {/* <Route path="*" component={PageNotFound} /> */}
+            <Route path="*" component={PageNotFound} />
           </Switch>
         </div>
       </Router>
