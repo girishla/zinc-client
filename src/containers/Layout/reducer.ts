@@ -133,13 +133,13 @@ function appReducer(state = initialState, action: any) {
       });
     }
     case getType(layoutActions.selectMenuItem): {
-      const menusArr = state.menus;
+      const menusSelect = state.menus;
       const openViews = state.openViews;
 
       let itemFound: IMenu;
       let index: number;
 
-      menusArr.forEach((menu: IMenu) => {
+      menusSelect.forEach((menu: IMenu) => {
         if (action.id === menu.id) {
           itemFound = menu;
           index = menu.index;
@@ -180,9 +180,9 @@ function appReducer(state = initialState, action: any) {
     case getType(layoutActions.closeSettingsDrawer):
       return Object.assign({}, state, { openSettingDrawer: false });
     case getType(layoutActions.animateMenus):
-      let menus = state.menus;
+      let menusAnimate = state.menus;
 
-      menus = menus.map((item: IMenu) => {
+      menusAnimate = menusAnimate.map((item: IMenu) => {
         let newItem: IMenu = item;
 
         if (item.children && item.children.length > 0) {
@@ -210,12 +210,12 @@ function appReducer(state = initialState, action: any) {
         return newItem;
       });
 
-      return Object.assign({}, state, { menus });
+      return Object.assign({}, state, { menus: menusAnimate });
 
     case getType(layoutActions.toggleMenus): {
-      let menusArr = state.menus;
+      let menusToggle = state.menus;
 
-      menusArr = menusArr.map((item: IMenu) => {
+      menusToggle = menusToggle.map((item: IMenu) => {
         let newItem = item;
 
         if (item.children && item.children.length > 0) {
@@ -228,12 +228,12 @@ function appReducer(state = initialState, action: any) {
 
         return newItem;
       });
-      return Object.assign({}, state, { menus });
+      return Object.assign({}, state, { menus: menusToggle });
     }
     case getType(layoutActions.animateRootMenus): {
-      let menusArr = state[action.rootMenuName];
+      let menusAnimateRoot = state[action.rootMenuName];
 
-      menusArr = menusArr.map((item: IMenu) => {
+      menusAnimateRoot = menusAnimateRoot.map((item: IMenu) => {
         let newItem = item;
 
         newItem = {
@@ -245,19 +245,27 @@ function appReducer(state = initialState, action: any) {
         return newItem;
       });
 
-      return Object.assign({}, state, ({}[action.rootMenuName] = menus));
+      return Object.assign(
+        {},
+        state,
+        ({}[action.rootMenuName] = menusAnimateRoot)
+      );
     }
     case getType(layoutActions.toggleRootMenus): {
-      let menusArr = state[action.rootMenuName];
+      let menusToggleRoot = state[action.rootMenuName];
 
-      menusArr = menusArr.map((item: IMenu) => {
+      menusToggleRoot = menusToggleRoot.map((item: IMenu) => {
         let newItem = item;
 
         newItem = { ...item, animatingRootMenu: false };
 
         return newItem;
       });
-      return Object.assign({}, state, ({}[action.rootMenuName] = menus));
+      return Object.assign(
+        {},
+        state,
+        ({}[action.rootMenuName] = menusToggleRoot)
+      );
     }
     default:
       return state;

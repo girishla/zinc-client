@@ -1,8 +1,8 @@
 import FontIcon from "material-ui/FontIcon";
 import * as React from "react";
-import { IMenu } from "../../../containers/Layout/menu";
+// import { IMenu } from "../../../containers/Layout/menu";
 
-const data: { menus: IMenu[] } = {
+const data: any = {
   menus: [
     {
       animating: true,
@@ -60,13 +60,20 @@ const data: { menus: IMenu[] } = {
     {
       animating: true,
       animatingRootMenu: true,
-      children: [],
+      children: [
+        {
+          id: "salesforce-objects",
+          text: "Salesforce Objects",
+          url: "/config/sources/salesforce/sobjects",
+          index: 5
+        }
+      ],
       icon: <FontIcon className="material-icons"> settings </FontIcon>,
-      id: "settings",
-      index: 4,
+      id: "config",
+      // index: 4,
       open: false,
-      text: "Settings",
-      url: "/settings",
+      text: "Configuration",
+      // url: "/settings",
       willCloseMenu: false,
       willCloseRootMenu: false
     },
@@ -76,7 +83,7 @@ const data: { menus: IMenu[] } = {
       children: [],
       icon: <FontIcon className="material-icons"> account_circle </FontIcon>,
       id: "profile",
-      index: 5,
+      index: 4,
       open: false,
       text: "Profile",
       url: "/profile",

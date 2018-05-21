@@ -60,7 +60,7 @@ class ZincJobStepExecutions extends React.Component<IJobStepExecutionsProps> {
 const mapStateToProps = createStructuredSelector({
   jobStepExecutions: (store: IRootState) => store.jobStepExecutions,
   loading: (store: IRootState) =>
-    store.jobExecutions && store.jobStepExecutions.loading
+    store.jobStepExecutions && store.jobStepExecutions.loading
 });
 
 function mapDispatchToProps(dispatch: any) {

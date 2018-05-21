@@ -101,7 +101,7 @@ class JobsListView extends React.Component<IJobsListViewProps> {
     );
 
     const tableContent = (
-      <If condition={this.props.loading}>
+      <If condition={this.props.loading || false}>
         <Then>
           <Loading />
         </Then>
