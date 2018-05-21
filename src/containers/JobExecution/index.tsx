@@ -33,6 +33,10 @@ class ZincJobExecutions extends React.Component<IJobExecutionsProps> {
   }
 
   public componentDidMount() {
+    this.loadData();
+  }
+
+  public loadData = () => {
     if (
       this.props.match.params &&
       this.props.match.params.jobInstanceId &&
@@ -49,11 +53,12 @@ class ZincJobExecutions extends React.Component<IJobExecutionsProps> {
     } else {
       this.props.jobExecutionsActions.loadExecutions();
     }
-  }
+  };
 
   public render() {
     return (
       <JobExecutionsListView
+        refresh={this.loadData}
         loading={this.props.loading}
         jobExecutions={
           this.props.jobExecutions &&

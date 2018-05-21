@@ -142,8 +142,8 @@ class JobsTable extends React.Component<IJobsTableProps, IJobsTableState> {
             id="JobsDataTable"
             onChange={this.handleChanged}
             onSort={this.handleSort}
-            selection={this.state.selection}
-            selectRows={true}
+            // selection={this.state.selection}
+            // selectRows={true}
           >
             <DataTableColumn
               isSorted={this.state.sortColumn === "name"}
@@ -159,7 +159,7 @@ class JobsTable extends React.Component<IJobsTableProps, IJobsTableState> {
             <DataTableColumn
               label="Description"
               property="description"
-              width="20rem"
+              width="18rem"
             >
               <TableWrappedCell />
             </DataTableColumn>
@@ -173,17 +173,17 @@ class JobsTable extends React.Component<IJobsTableProps, IJobsTableState> {
 
             <DataTableColumn
               label="Last Job Start"
-              width="8rem"
+              width="6rem"
               property="startTimeDisplay"
             />
             <DataTableColumn
               label="Last Job End"
-              width="8rem"
+              width="6rem"
               property="endTimeDisplay"
             />
             <DataTableColumn
               label="Last Status"
-              width="8rem"
+              width="6rem"
               property="status"
             />
             <DataTableRowActions

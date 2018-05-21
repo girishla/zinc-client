@@ -12,10 +12,14 @@ import { blue300 } from "material-ui/styles/colors";
 import JobStepExecutionsTable from "./jobStepExecutionsTable";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { IStepExecution } from "../JobExecution/IJobExecutionCollection";
+import { If, Then, Else } from "react-if";
+import Loading from "../../components/Loading";
 // import { Card, CardEmpty } from "@salesforce/design-system-react";
 
 interface IJobStepExecutionsListViewProps extends RouteComponentProps<any> {
   jobStepExecutions: IStepExecution[];
+  loading: boolean;
+  refresh: any;
 }
 
 class JobStepExecutionsListView extends React.Component<
@@ -24,41 +28,20 @@ class JobStepExecutionsListView extends React.Component<
   public jobStepExecutionsTableSelectionsChange() {}
 
   public render() {
-    // const navRight = (
-    //   <div>
-    //     <ButtonGroup>
-    //       <Button label="Restart Selected" />
-    //       <Dropdown
-    //         align="right"
-    //         assistiveText="More Options"
-    //         iconName="down"
-    //         iconVariant="border-filled"
-    //         options={[
-    //           { label: "Menu Item One", value: "A0" },
-    //           { label: "Menu Item Two", value: "B0" },
-    //           { label: "Menu Item Three", value: "C0" },
-    //           { type: "divider" },
-    //           { label: "Menu Item Four", value: "D0" }
-    //         ]}
-    //       />
-    //     </ButtonGroup>
-    //   </div>
-    // );
+    const navRight = (
+      <div>
+        <ButtonGroup>
+          <Button label="Stop All Steps" disabled={true} />
+        </ButtonGroup>
+      </div>
+    );
 
     const contentRight = (
       <div>
-        <Dropdown
-          align="right"
-          options={[
-            { label: "Menu Item One", value: "A0" },
-            { label: "Menu Item Two", value: "B0" },
-            { label: "Menu Item Three", value: "C0" },
-            { type: "divider" },
-            { label: "Menu Item Four", value: "D0" }
-          ]}
-        >
+        <Dropdown align="right" options={[]}>
           <DropdownTrigger>
             <Button
+              disabled={true}
               assistiveText="List View Controls"
               className="slds-m-right--xx-small"
               iconName="settings"
@@ -71,16 +54,11 @@ class JobStepExecutionsListView extends React.Component<
           assistiveText="Change view"
           iconName="settings"
           iconVariant="more"
-          options={[
-            { label: "Menu Item One", value: "A0" },
-            { label: "Menu Item Two", value: "B0" },
-            { label: "Menu Item Three", value: "C0" },
-            { type: "divider" },
-            { label: "Menu Item Four", value: "D0" }
-          ]}
+          options={[]}
         >
           <DropdownTrigger>
             <Button
+              disabled={true}
               assistiveText="Change view"
               className="slds-m-right--xx-small"
               iconName="table"
@@ -90,6 +68,7 @@ class JobStepExecutionsListView extends React.Component<
           </DropdownTrigger>
         </Dropdown>
         <Button
+          disabled={true}
           assistiveText="Edit List"
           iconName="edit"
           iconVariant="border"
@@ -100,16 +79,19 @@ class JobStepExecutionsListView extends React.Component<
           iconName="refresh"
           iconVariant="border"
           variant="icon"
+          onClick={this.props.refresh}
         />
         <div>
           <ButtonGroup>
             <Button
+              disabled={true}
               assistiveText="Charts"
               iconName="chart"
               iconVariant="border"
               variant="icon"
             />
             <Button
+              disabled={true}
               assistiveText="Filters"
               iconName="filterList"
               iconVariant="border"
@@ -118,6 +100,20 @@ class JobStepExecutionsListView extends React.Component<
           </ButtonGroup>
         </div>
       </div>
+    );
+
+    const tableContent = (
+      <If condition={this.props.loading}>
+        <Then>
+          <Loading />
+        </Then>
+        <Else>
+          <JobStepExecutionsTable
+            items={this.props.jobStepExecutions}
+            onChange={this.jobStepExecutionsTableSelectionsChange}
+          />
+        </Else>
+      </If>
     );
 
     return (
@@ -140,38 +136,16 @@ class JobStepExecutionsListView extends React.Component<
               this.props.jobStepExecutions.length + " step(s) sorted by step Id"
             }
             label="Job StepExecutions"
-            // navRight={navRight}
+            navRight={navRight}
             title={
               <h1 className="slds-page-header__title slds-p-right--x-small">
-                <Dropdown
-                  options={[
-                    { label: "Menu Item One", value: "A0" },
-                    { label: "Menu Item Two", value: "B0" },
-                    { label: "Menu Item Three", value: "C0" },
-                    { type: "divider" },
-                    { label: "Menu Item Four", value: "D0" }
-                  ]}
-                >
-                  <DropdownTrigger>
-                    <Button
-                      className="slds-button--reset slds-type-focus"
-                      iconName="down"
-                      iconPosition="right"
-                      label="All Step Executions"
-                      responsive={true}
-                      variant="base"
-                    />
-                  </DropdownTrigger>
-                </Dropdown>
+                {"All Step Executions"}
               </h1>
             }
             truncate={true}
             variant="objectHome"
           />
-          <JobStepExecutionsTable
-            items={this.props.jobStepExecutions}
-            onChange={this.jobStepExecutionsTableSelectionsChange}
-          />
+          {tableContent}
         </IconSettings>
         {/* <pre>{JSON.stringify(this.props, null, 2)}</pre> */}
       </div>

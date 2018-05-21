@@ -17,6 +17,7 @@ import { IJobCollection } from "./IJobCollection";
 interface IJobsProps {
   jobs: { data: IJobCollection };
   jobsActions: typeof jobsActions;
+  loading: boolean;
 }
 
 class ZincJobs extends React.Component<IJobsProps> {
@@ -33,6 +34,8 @@ class ZincJobs extends React.Component<IJobsProps> {
   public render() {
     return (
       <JobsListView
+        jobsActions={this.props.jobsActions}
+        loading={this.props.loading}
         jobs={
           this.props.jobs &&
           this.props.jobs.data &&
@@ -45,7 +48,8 @@ class ZincJobs extends React.Component<IJobsProps> {
 }
 
 const mapStateToProps = createStructuredSelector({
-  jobs: (store: IRootState) => store.jobs
+  jobs: (store: IRootState) => store.jobs,
+  loading: (store: IRootState) => store.jobs && store.jobs.loading
 });
 
 function mapDispatchToProps(dispatch: any) {

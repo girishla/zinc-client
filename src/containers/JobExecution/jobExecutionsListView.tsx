@@ -17,6 +17,7 @@ import { If, Then, Else } from "react-if";
 
 interface IJobExecutionsListViewProps extends RouteComponentProps<any> {
   jobExecutions: IJobExecutionInfoResource[];
+  refresh: any;
   loading: boolean;
 }
 
@@ -29,38 +30,17 @@ class JobExecutionsListView extends React.Component<
     const navRight = (
       <div>
         <ButtonGroup>
-          <Button label="Restart Selected" />
-          <Dropdown
-            align="right"
-            assistiveText="More Options"
-            iconName="down"
-            iconVariant="border-filled"
-            options={[
-              { label: "Menu Item One", value: "A0" },
-              { label: "Menu Item Two", value: "B0" },
-              { label: "Menu Item Three", value: "C0" },
-              { type: "divider" },
-              { label: "Menu Item Four", value: "D0" }
-            ]}
-          />
+          <Button label="Restart Selected" disabled={true} />
         </ButtonGroup>
       </div>
     );
 
     const contentRight = (
       <div>
-        <Dropdown
-          align="right"
-          options={[
-            { label: "Menu Item One", value: "A0" },
-            { label: "Menu Item Two", value: "B0" },
-            { label: "Menu Item Three", value: "C0" },
-            { type: "divider" },
-            { label: "Menu Item Four", value: "D0" }
-          ]}
-        >
+        <Dropdown align="right" options={[]}>
           <DropdownTrigger>
             <Button
+              disabled={true}
               assistiveText="List View Controls"
               className="slds-m-right--xx-small"
               iconName="settings"
@@ -73,16 +53,11 @@ class JobExecutionsListView extends React.Component<
           assistiveText="Change view"
           iconName="settings"
           iconVariant="more"
-          options={[
-            { label: "Menu Item One", value: "A0" },
-            { label: "Menu Item Two", value: "B0" },
-            { label: "Menu Item Three", value: "C0" },
-            { type: "divider" },
-            { label: "Menu Item Four", value: "D0" }
-          ]}
+          options={[]}
         >
           <DropdownTrigger>
             <Button
+              disabled={true}
               assistiveText="Change view"
               className="slds-m-right--xx-small"
               iconName="table"
@@ -92,6 +67,7 @@ class JobExecutionsListView extends React.Component<
           </DropdownTrigger>
         </Dropdown>
         <Button
+          disabled={true}
           assistiveText="Edit List"
           iconName="edit"
           iconVariant="border"
@@ -102,16 +78,19 @@ class JobExecutionsListView extends React.Component<
           iconName="refresh"
           iconVariant="border"
           variant="icon"
+          onClick={this.props.refresh}
         />
         <div>
           <ButtonGroup>
             <Button
+              disabled={true}
               assistiveText="Charts"
               iconName="chart"
               iconVariant="border"
               variant="icon"
             />
             <Button
+              disabled={true}
               assistiveText="Filters"
               iconName="filterList"
               iconVariant="border"
@@ -160,26 +139,7 @@ class JobExecutionsListView extends React.Component<
             navRight={navRight}
             title={
               <h1 className="slds-page-header__title slds-p-right--x-small">
-                <Dropdown
-                  options={[
-                    { label: "Menu Item One", value: "A0" },
-                    { label: "Menu Item Two", value: "B0" },
-                    { label: "Menu Item Three", value: "C0" },
-                    { type: "divider" },
-                    { label: "Menu Item Four", value: "D0" }
-                  ]}
-                >
-                  <DropdownTrigger>
-                    <Button
-                      className="slds-button--reset slds-type-focus"
-                      iconName="down"
-                      iconPosition="right"
-                      label="All Job Executions"
-                      responsive={true}
-                      variant="base"
-                    />
-                  </DropdownTrigger>
-                </Dropdown>
+                {"All Job Executions"}
               </h1>
             }
             truncate={true}

@@ -16,6 +16,7 @@ import { withRouter, RouteComponentProps } from "react-router";
 interface IJobStepExecutionsProps extends RouteComponentProps<any> {
   jobStepExecutions: { data: IStepExecution[] };
   jobStepExecutionsActions: typeof jobExecutionActions;
+  loading: boolean;
 }
 
 class ZincJobStepExecutions extends React.Component<IJobStepExecutionsProps> {
@@ -32,16 +33,22 @@ class ZincJobStepExecutions extends React.Component<IJobStepExecutionsProps> {
   }
 
   public componentDidMount() {
+    this.loadData();
+  }
+
+  public loadData = () => {
     if (this.props.match.params && this.props.match.params.executionId) {
       this.props.jobStepExecutionsActions.loadJobStepExecutions(
         this.props.match.params.executionId
       );
     }
-  }
+  };
 
   public render() {
     return (
       <JobStepExecutionsListView
+        loading={this.props.loading}
+        refresh={this.loadData}
         jobStepExecutions={
           this.props.jobStepExecutions && this.props.jobStepExecutions.data
         }
@@ -51,7 +58,9 @@ class ZincJobStepExecutions extends React.Component<IJobStepExecutionsProps> {
 }
 
 const mapStateToProps = createStructuredSelector({
-  jobStepExecutions: (store: IRootState) => store.jobStepExecutions
+  jobStepExecutions: (store: IRootState) => store.jobStepExecutions,
+  loading: (store: IRootState) =>
+    store.jobExecutions && store.jobStepExecutions.loading
 });
 
 function mapDispatchToProps(dispatch: any) {

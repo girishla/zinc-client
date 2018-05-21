@@ -31,8 +31,6 @@ interface IJobScheduleDetailProps extends RouteComponentProps<any> {
   jobsActions: typeof jobsActions;
   currentTheme: any;
   dispatch: any;
-  snackBarOpen: boolean;
-  snackBarMessage: string;
   layoutActions: typeof layoutActions;
 }
 
