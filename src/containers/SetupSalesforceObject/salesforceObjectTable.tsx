@@ -15,12 +15,12 @@ import { ISalesforceObject } from "./ISalesforceObject";
 import { ISalesforceObjectTableRowAction } from "./ISalesforceObjectTableRowAction";
 import { Link } from "react-router-dom";
 
-const DrillToStepListViewCell: any = ({ children, ...props }: any) => (
+const DrillToDetailViewCell: any = ({ children, ...props }: any) => (
   <DataTableCell title={children} {...props}>
-    <Link to={`/schedule/${props.item.name}`}>{children}</Link>
+    <Link to={`/setup/sobjects/${props.item.name}`}>{children}</Link>
   </DataTableCell>
 );
-DrillToStepListViewCell.displayName = DataTableCell.displayName;
+DrillToDetailViewCell.displayName = DataTableCell.displayName;
 
 interface ISalesforceObjectsTableProps {
   items: ISalesforceObject[];
@@ -136,32 +136,42 @@ class SalesforceObjectsTable extends React.Component<
             <DataTableColumn
               isSorted={true}
               label="Name"
-              width="5rem"
+              width="7rem"
               primaryColumn={true}
               property="name"
               sortable={true}
               sortDirection={this.state.sortColumnDirection.name}
             >
-              <DrillToStepListViewCell title={""} />
+              {/* <DrillToDetailViewCell title={""} /> */}
             </DataTableColumn>
-
-            <DataTableColumn label="label" width="8rem" property="label" />
-            <DataTableColumn label="Custom" width="6rem" property="custom" />
+            {/* <DataTableColumn label="label" width="8rem" property="label" /> */}
+            <DataTableColumn label="Custom" width="4rem" property="custom" />
             <DataTableColumn
               label="Queryable"
-              width="5rem"
+              width="4rem"
               property="queryable"
             />
             <DataTableColumn
               label="Retrieveable"
-              width="5rem"
+              width="4rem"
               property="retrieveable"
             />
             <DataTableColumn
               label="Replicateable"
-              width="5rem"
+              width="4rem"
               property="replicateable"
             />
+            <DataTableColumn
+              label="Last Refreshed"
+              width="5rem"
+              property="lastRefreshDateDisplay"
+            />
+            <DataTableColumn
+              label="Last Updated"
+              width="5rem"
+              property="updatedDateDisplay"
+            />
+
             <DataTableRowActions
               options={[
                 {
@@ -186,10 +196,24 @@ class SalesforceObjectsTable extends React.Component<
       currentProps.items.map((item: ISalesforceObject) => {
         return {
           ...item,
-          lastRefreshDateDisplay: format(
-            parse(item.lastRefreshDate, "YYYY-MM-DDTHH:mm", new Date()),
-            "MM/DD/YY HH:mm"
-          )
+          lastRefreshDateDisplay:
+            item.lastRefreshDate === null
+              ? ""
+              : format(
+                  parse(item.lastRefreshDate, "YYYY-MM-DDTHH:mm", new Date()),
+                  "MM/DD/YY HH:mm"
+                ),
+          updatedDateDisplay:
+            item.updatedDate === null
+              ? ""
+              : format(
+                  parse(item.updatedDate, "YYYY-MM-DDTHH:mm", new Date()),
+                  "MM/DD/YY HH:mm"
+                ),
+          custom: item.custom ? "Y" : "N",
+          queryable: item.queryable ? "Y" : "N",
+          retrieveable: item.retrieveable ? "Y" : "N",
+          replicateable: item.replicateable ? "Y" : "N"
         };
       });
 

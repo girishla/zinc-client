@@ -44,7 +44,7 @@ const salesforceObjectApi = {
     return salesforceObjectApi
       .deleteSalesforceObjectApiCall(token, id)
       .then((response: Response) => {
-        if (response.status === HTTPStatusCodes.OK) {
+        if (response.status === HTTPStatusCodes.NO_CONTENT) {
           return Promise.resolve({});
         } else {
           return Promise.reject({

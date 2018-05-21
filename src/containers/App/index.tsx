@@ -24,6 +24,7 @@ import Login from "../Login";
 import "./App.css";
 import "./sldsOverrides.css";
 import PageNotFound from "../PageNotFound";
+import ZincSalesforceObjects from "../SetupSalesforceObject";
 
 interface IAppProps extends RouteComponentProps<any> {}
 
@@ -97,6 +98,12 @@ export class App extends React.Component<IAppProps> {
               path="/schedule/:scheduleName"
               component={ZincJobScheduleDetail}
             />
+            <RouteWithLayout
+              exact={true}
+              path="/setup/sobjects"
+              component={ZincSalesforceObjects}
+            />
+
             <Route path="*" component={PageNotFound} />
           </Switch>
         </div>

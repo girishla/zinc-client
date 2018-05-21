@@ -22,7 +22,8 @@ const routes = [
     path: "/jobs/executions/:executionId/steps",
     breadcrumb: "Steps List"
   },
-  { path: "/dashboard", breadcrumb: "Dashboard" }
+  { path: "/dashboard", breadcrumb: "Dashboard" },
+  { path: "/setup/sobjects", breadcrumb: "Salesforce Objects" }
 ];
 
 // each `breadcrumb` has the props `key`, `location`, and `match` included

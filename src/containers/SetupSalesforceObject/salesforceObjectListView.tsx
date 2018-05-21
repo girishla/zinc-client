@@ -27,7 +27,7 @@ class SalesforceObjectsListView extends React.Component<
   public salesforceObjectsTableSelectionsChange() {}
 
   public newSchedule = () => {
-    this.props.history.push("/setup/sobject/add");
+    this.props.history.push("/setup/sobjects/add");
   };
 
   public render() {
@@ -122,7 +122,7 @@ class SalesforceObjectsListView extends React.Component<
             navRight={navRight}
             title={
               <h1 className="slds-page-header__title slds-p-right--x-small">
-                All Salesforce Objects
+                Salesforce Objects Eligible for Replication
               </h1>
             }
             truncate={true}

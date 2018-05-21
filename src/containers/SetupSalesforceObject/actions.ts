@@ -33,9 +33,9 @@ export const salesforceObjectActions = {
   ),
   deleteSalesforceObject: createAction(
     DELETE_SALESFORCEOBJECT_START,
-    (scheduleDetail: ISalesforceObject) => ({
+    (salesforceObject: ISalesforceObject) => ({
       type: DELETE_SALESFORCEOBJECT_START,
-      scheduleDetail
+      salesforceObject
     })
   ),
   deleteScheduleDetailSuccess: createAction(

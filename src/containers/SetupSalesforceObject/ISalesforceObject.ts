@@ -92,8 +92,8 @@ export interface ISalesforceObject {
   triggerable: boolean;
   undeletable: boolean;
   updateable: boolean;
-  createdDate: Date;
-  updatedDate: Date;
+  createdDate: string;
+  updatedDate: string;
   fields: IField[];
   lastRefreshDate?: any;
   valueHash: string;
