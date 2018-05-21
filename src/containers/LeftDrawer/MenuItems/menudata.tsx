@@ -64,15 +64,15 @@ const data: any = {
         {
           id: "salesforce-objects",
           text: "Salesforce Objects",
-          url: "/config/sources/salesforce/sobjects",
+          url: "/setup/sobjects",
           index: 5
         }
       ],
       icon: <FontIcon className="material-icons"> settings </FontIcon>,
-      id: "config",
+      id: "setup",
       // index: 4,
       open: false,
-      text: "Configuration",
+      text: "Setup",
       // url: "/settings",
       willCloseMenu: false,
       willCloseRootMenu: false

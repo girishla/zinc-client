@@ -5,6 +5,7 @@ import { IMenu } from "./containers/Layout/menu";
 import { IJobStepExecutionState } from "./containers/JobStepExecution/IJobStepExecutionState";
 import { IJobScheduleState } from "./containers/JobSchedule/IJobScheduleState";
 import { IJobScheduleDetailState } from "./containers/JobScheduleDetail/IJobScheduleDetailState";
+import { ISalesforceObjectState } from "./containers/SetupSalesforceObject/ISalesforceObjectState";
 
 export interface IRootState {
   layout: {
@@ -31,4 +32,5 @@ export interface IRootState {
   jobStepExecutions: IJobStepExecutionState;
   jobSchedules: IJobScheduleState;
   jobScheduleDetail: IJobScheduleDetailState;
+  salesforceObjects: ISalesforceObjectState;
 }
