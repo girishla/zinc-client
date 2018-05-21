@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as BEMHelper from "react-bem-helper";
-// import { If, Then } from "react-if";
 import { generateCronExpression, parseCronExpression } from "./utils";
 
 import { noop } from "lodash";
@@ -180,15 +179,10 @@ export default class CronBuilder extends React.PureComponent {
           />
           <Textarea
             name="cronExpressionTextArea"
+            {...styleNameFactory("textarea")}
             label=""
             disabled={true}
-            placeholder={
-              "Runs Every " +
-              cronsTrue.toString(cronExpression) +
-              " (" +
-              cronExpression +
-              ")"
-            }
+            placeholder={"Runs " + cronsTrue.toString(cronExpression)}
           />
 
           {/* <button

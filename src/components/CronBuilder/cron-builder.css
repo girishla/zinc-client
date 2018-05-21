@@ -76,6 +76,9 @@
 .cron-builder__link:hover {
   text-decoration: underline;
 }
+.cron-builder__textarea {
+  height: 25px;
+}
 .cron-builder__action {
   margin-bottom: 30px;
   margin-top: 30px;
