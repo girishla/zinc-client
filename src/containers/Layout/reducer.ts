@@ -70,6 +70,26 @@ function appReducer(state = initialState, action: any) {
         snackBarOpen: false,
         snackBarMessage: ""
       });
+
+    case getType(layoutActions.showModalDialog):
+      return Object.assign({}, state, {
+        isModalOpen: true,
+        okActionName: action.okActionName,
+        onModalOk: action.onModalOk,
+        modalContent: action.modalContent,
+        modalTitle: action.modalTitle
+      });
+
+    case getType(layoutActions.modalDialogOk):
+      return Object.assign({}, state, {
+        isModalOpen: false
+      });
+
+    case getType(layoutActions.modalDialogCancel):
+      return Object.assign({}, state, {
+        isModalOpen: false
+      });
+
     case getType(layoutActions.loadMenuSuccess): {
       const data = action.data;
 

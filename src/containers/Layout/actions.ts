@@ -26,6 +26,11 @@ export const CHANGE_LAYOUT = "zinc/layout/CHANGE_LAYOUT";
 export const SHOW_SNACKBAR_MESSAGE = "zinc/layout/SHOW_SNACKBAR_MESSAGE";
 export const HIDE_SNACKBAR_MESSAGE = "zinc/layout/HIDE_SNACKBAR_MESSAGE";
 
+export const SHOW_MODAL_DIALOG = "zinc/layout/SHOW_MODAL_DIALOG";
+export const MODAL_DIALOG_CANCEL_ACTION =
+  "zinc/layout/MODAL_DIALOG_CANCEL_ACTION";
+export const MODAL_DIALOG_OK_ACTION = "zinc/layout/MODAL_DIALOG_OK_ACTION";
+
 export const layoutActions = {
   changeLayout: createAction(CHANGE_LAYOUT, (isBoxedLayout: boolean) => ({
     isBoxedLayout,
@@ -102,5 +107,22 @@ export const layoutActions = {
       message
     })
   ),
-  hideSnackBarMessage: createAction(HIDE_SNACKBAR_MESSAGE)
+  hideSnackBarMessage: createAction(HIDE_SNACKBAR_MESSAGE),
+  showModalDialog: createAction(
+    SHOW_MODAL_DIALOG,
+    (
+      okActionName: any,
+      onModalOk: any,
+      modalContent: any,
+      modalTitle: any
+    ) => ({
+      type: SHOW_MODAL_DIALOG,
+      okActionName,
+      onModalOk,
+      modalContent,
+      modalTitle
+    })
+  ),
+  modalDialogOk: createAction(MODAL_DIALOG_OK_ACTION),
+  modalDialogCancel: createAction(MODAL_DIALOG_CANCEL_ACTION)
 };

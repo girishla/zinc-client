@@ -12,10 +12,12 @@ import { salesforceObjectActions } from "./actions";
 import reducer from "./reducer";
 import saga from "./saga";
 import { withRouter, RouteComponentProps } from "react-router";
+import { layoutActions } from "../Layout/actions";
 
 interface ISalesforceObjectsProps extends RouteComponentProps<any> {
   salesforceObjects: { data: ISalesforceObjectCollection };
   salesforceObjectsActions: typeof salesforceObjectActions;
+  layoutActions: typeof layoutActions;
   loading: boolean;
 }
 
@@ -44,6 +46,7 @@ class ZincSalesforceObjects extends React.Component<ISalesforceObjectsProps> {
           this.props.salesforceObjects && this.props.salesforceObjects.data
         }
         salesforceObjectsActions={this.props.salesforceObjectsActions}
+        layoutActions={this.props.layoutActions}
       />
     );
   }
@@ -60,7 +63,8 @@ function mapDispatchToProps(dispatch: any) {
     salesforceObjectsActions: bindActionCreators(
       salesforceObjectActions,
       dispatch
-    )
+    ),
+    layoutActions: bindActionCreators(layoutActions, dispatch)
   };
 }
 

@@ -46,9 +46,9 @@ class SalesforceObjectsTable extends React.Component<
     super(props);
 
     this.state = {
-      sortColumn: "name",
+      sortColumn: "updatedDate",
       sortColumnDirection: {
-        name: "desc"
+        updatedDate: "desc"
       },
       items: [],
       selection: []
@@ -124,6 +124,7 @@ class SalesforceObjectsTable extends React.Component<
           customSprite={customSprite}
           standardSprite={standardSprite}
         >
+          <div />
           <DataTable
             fixedLayout={true}
             items={this.state.items || []}
@@ -134,13 +135,10 @@ class SalesforceObjectsTable extends React.Component<
             // selectRows={true}
           >
             <DataTableColumn
-              isSorted={true}
               label="Name"
               width="7rem"
               primaryColumn={true}
               property="name"
-              sortable={true}
-              sortDirection={this.state.sortColumnDirection.name}
             >
               {/* <DrillToDetailViewCell title={""} /> */}
             </DataTableColumn>
@@ -167,9 +165,12 @@ class SalesforceObjectsTable extends React.Component<
               property="lastRefreshDateDisplay"
             />
             <DataTableColumn
+              isSorted={true}
               label="Last Updated"
               width="5rem"
               property="updatedDateDisplay"
+              sortable={true}
+              sortDirection={this.state.sortColumnDirection.updatedDate}
             />
 
             <DataTableRowActions

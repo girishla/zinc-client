@@ -22,6 +22,12 @@ export interface IRootState {
     isBoxedLayout: boolean;
     snackBarOpen: boolean;
     snackBarMessage: string;
+    isModalOpen: boolean;
+    onModalOk: () => void;
+    onModalCancel: () => void;
+    okActionName: string;
+    modalTitle: string;
+    modalContent: (contentProps: any) => JSX.Element[] | JSX.Element;
   };
   route: any;
   form: FormStateMap;

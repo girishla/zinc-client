@@ -17,6 +17,7 @@ import Styles from "./styles";
 
 import { authActions } from "../Login/actions";
 import Snackbar from "material-ui/Snackbar";
+import ZincModalAction from "../../components/ModalAction";
 
 const theme = new Theme();
 
@@ -30,6 +31,12 @@ export interface ILayoutProps extends RouteComponentProps<any> {
   dispatch?: (action: any) => void;
   snackBarOpen: boolean;
   snackBarMessage: string;
+  isModalOpen: boolean;
+  onModalOk: () => void;
+  onModalCancel: () => void;
+  okActionName: string;
+  modalTitle: string;
+  modalContent: (contentProps: any) => JSX.Element[] | JSX.Element;
 }
 
 interface ILayoutState {
@@ -104,8 +111,11 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
   }
 
   public handleSnackBarClose = () => {
-    console.log("calling close");
     this.props.actions.hideSnackBarMessage();
+  };
+
+  public handleModalCancel = () => {
+    this.props.actions.modalDialogCancel();
   };
 
   public renderPages() {
@@ -152,6 +162,14 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
           autoHideDuration={4000}
           onRequestClose={this.handleSnackBarClose}
         />
+        <ZincModalAction
+          isModalOpen={this.props.isModalOpen}
+          modalContent={this.props.modalContent}
+          modalTitle={this.props.modalTitle}
+          okActionName={this.props.okActionName}
+          onModalCancel={this.handleModalCancel}
+          onModalOk={this.props.onModalOk}
+        />
       </div>
     );
   }
@@ -169,7 +187,13 @@ const mapStateToProps = createStructuredSelector({
   currentTheme: (state: IRootState) => state.layout.currentTheme,
   isBoxedLayout: (state: IRootState) => state.layout.isBoxedLayout,
   snackBarOpen: (state: IRootState) => state.layout.snackBarOpen,
-  snackBarMessage: (state: IRootState) => state.layout.snackBarMessage
+  snackBarMessage: (state: IRootState) => state.layout.snackBarMessage,
+  isModalOpen: (state: IRootState) => state.layout.isModalOpen,
+  onModalOk: (state: IRootState) => state.layout.onModalOk,
+  onModalCancel: (state: IRootState) => state.layout.onModalCancel,
+  okActionName: (state: IRootState) => state.layout.okActionName,
+  modalTitle: (state: IRootState) => state.layout.modalTitle,
+  modalContent: (state: IRootState) => state.layout.modalContent
 });
 
 function mapDispatchToProps(dispatch: any) {

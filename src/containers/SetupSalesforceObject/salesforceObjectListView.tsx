@@ -14,10 +14,13 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import { salesforceObjectActions } from "./actions";
 import { If, Then, Else } from "react-if";
 import Loading from "../../components/Loading";
+import { get as deepGet } from "lodash";
+import { layoutActions } from "../Layout/actions";
 
 interface ISalesforceObjectsListViewProps extends RouteComponentProps<any> {
   salesforceObjects: ISalesforceObjectCollection;
   salesforceObjectsActions: typeof salesforceObjectActions;
+  layoutActions: typeof layoutActions;
   loading: boolean;
 }
 
@@ -26,15 +29,24 @@ class SalesforceObjectsListView extends React.Component<
 > {
   public salesforceObjectsTableSelectionsChange() {}
 
-  public newSchedule = () => {
-    this.props.history.push("/setup/sobjects/add");
+  public onAddObjectsButtonClick = () => {
+    this.props.layoutActions.showModalDialog(
+      "Add",
+      this.saveAddedObjects,
+      () => <span>Test Content</span>,
+      "Select Salesforce Objects"
+    );
+  };
+
+  public saveAddedObjects = (data: any) => {
+    console.log("Saving...");
   };
 
   public render() {
     const navRight = (
       <div>
         <ButtonGroup>
-          <Button label="+ Add" onClick={this.newSchedule} />
+          <Button label="+ Add" onClick={this.onAddObjectsButtonClick} />
         </ButtonGroup>
       </div>
     );
@@ -83,11 +95,7 @@ class SalesforceObjectsListView extends React.Component<
         </Then>
         <Else>
           <SalesforceObjectsTable
-            items={
-              this.props.salesforceObjects &&
-              this.props.salesforceObjects._embedded &&
-              this.props.salesforceObjects._embedded.sobjects
-            }
+            items={deepGet(this.props, "salesforceObjects._embedded.sobjects")}
             onChange={this.salesforceObjectsTableSelectionsChange}
             onDelete={
               this.props.salesforceObjectsActions.deleteSalesforceObject
@@ -113,10 +121,14 @@ class SalesforceObjectsListView extends React.Component<
             iconStyle={{ fill: blue300 }}
             iconVariant="border-filled"
             info={
-              this.props.salesforceObjects &&
-              this.props.salesforceObjects.page &&
-              this.props.salesforceObjects.page.totalElements +
-                " object(s) sorted by Name"
+              "Showing " +
+              deepGet(
+                this.props,
+                "salesforceObjects._embedded.sobjects.length"
+              ) +
+              " of " +
+              deepGet(this.props, "salesforceObjects.page.totalElements") +
+              " objects sorted by Name"
             }
             label="Salesforce Objects"
             navRight={navRight}

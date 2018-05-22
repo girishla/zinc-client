@@ -2,7 +2,7 @@ import { HTTPStatusCodes } from "../../utils/httpstatus";
 
 const salesforceObjectApi = {
   async getSalesforceObjectApiCall(token: string) {
-    const salesforceObjectEndpoint = `http://localhost:8090/sobjects`;
+    const salesforceObjectEndpoint = `http://localhost:8090/sobjects?size=100&sort=updatedDate,desc`;
 
     return await fetch(salesforceObjectEndpoint, {
       method: "GET",
