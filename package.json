@@ -30,14 +30,14 @@
     "reselect": "^3.0.1",
     "sanitize.css": "^5.0.0",
     "styled-components": "^2.4.0",
-    "typesafe-actions": "^1.1.2"
+    "typesafe-actions": "^1.1.2",
+    "webpack-bundle-analyzer": "^2.13.0"
   },
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "test:html":
-      "react-scripts-ts test --env=jsdom --testResultsProcessor ./node_modules/jest-html-reporter",
+    "test:html": "react-scripts-ts test --env=jsdom --testResultsProcessor ./node_modules/jest-html-reporter",
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
