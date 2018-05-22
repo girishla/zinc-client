@@ -30,6 +30,41 @@ export function* getSalesforceObjects() {
   );
 }
 
+export function* addSalesforceObjectsTask(action: any) {
+  try {
+    yield call(
+      salesforceObjectsApi.addSalesforceObject,
+      window.localStorage.getItem("token"),
+      action.objectNames
+    );
+    yield put({
+      type: getType(salesforceObjectActions.addSalesforceObjectSuccess)
+    });
+
+    yield put({
+      type: getType(layoutActions.showSnackBarMessage),
+      message:
+        "Added objects " + (action.objectNames && action.objectNames.join(", "))
+    });
+
+    yield put({
+      type: getType(salesforceObjectActions.loadSalesforceObjects)
+    });
+  } catch (e) {
+    yield put({
+      type: getType(salesforceObjectActions.addSalesforceObjectFailure),
+      errorStr: e.message
+    });
+  }
+}
+
+export function* addSalesforceObjects() {
+  yield takeLatest(
+    getType(salesforceObjectActions.addSalesforceObject),
+    addSalesforceObjectsTask
+  );
+}
+
 export function* getSalesforceObjectNamesTask(action: any) {
   try {
     const salesforceObjectNames: string[] = yield call(
@@ -40,16 +75,6 @@ export function* getSalesforceObjectNamesTask(action: any) {
       type: getType(salesforceObjectActions.loadSalesforceObjectNamesSuccess),
       salesforceObjectNames
     });
-
-    console.log(action);
-    // yield put({
-    //   type: getType(layoutActions.showModalDialog),
-    //   okActionName: action.okActionName,
-    //   onModalOk: action.onModalOk,
-    //   modalContent: action.modalContent,
-    //   modalTitle: action.modalTitle,
-    //   modalData: action.modalData
-    // });
   } catch (e) {
     yield put({
       type: getType(salesforceObjectActions.loadSalesforceObjectNamesFailure),
@@ -73,7 +98,7 @@ export function* deleteSalesforceObjectTask(action: any) {
       action.salesforceObject.id
     );
     yield put({
-      type: getType(salesforceObjectActions.deleteScheduleDetailSuccess)
+      type: getType(salesforceObjectActions.deleteSalesforceObjectSuccess)
     });
     yield put({
       type: getType(layoutActions.showSnackBarMessage),
@@ -84,7 +109,7 @@ export function* deleteSalesforceObjectTask(action: any) {
     });
   } catch (e) {
     yield put({
-      type: getType(salesforceObjectActions.deleteScheduleDetailFailure),
+      type: getType(salesforceObjectActions.deleteSalesforceObjectFailure),
       errorStr: e.message
     });
   }
@@ -101,6 +126,7 @@ export default function* rootSaga() {
   yield all([
     getSalesforceObjects(),
     deleteSalesforceObject(),
-    getSalesforceObjectNames()
+    getSalesforceObjectNames(),
+    addSalesforceObjects()
   ]);
 }

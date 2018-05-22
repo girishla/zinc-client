@@ -36,10 +36,10 @@ function reducer(state = initialJobsState, action: any) {
     case getType(salesforceObjectActions.deleteSalesforceObject): {
       return { ...state, loading: true };
     }
-    case getType(salesforceObjectActions.deleteScheduleDetailSuccess): {
+    case getType(salesforceObjectActions.deleteSalesforceObjectSuccess): {
       return { ...state, loading: false };
     }
-    case getType(salesforceObjectActions.deleteScheduleDetailFailure): {
+    case getType(salesforceObjectActions.deleteSalesforceObjectFailure): {
       return { ...state, loading: false, error: action.errorStr };
     }
     default:

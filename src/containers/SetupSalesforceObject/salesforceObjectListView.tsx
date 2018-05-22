@@ -16,6 +16,8 @@ import { If, Then, Else } from "react-if";
 import Loading from "../../components/Loading";
 import { get as deepGet } from "lodash";
 import { layoutActions } from "../Layout/actions";
+import Select from "react-select";
+import "react-select/dist/react-select.css";
 
 interface ISalesforceObjectsListViewProps extends RouteComponentProps<any> {
   salesforceObjects: ISalesforceObjectCollection;
@@ -40,16 +42,36 @@ class SalesforceObjectsListView extends React.Component<
     );
   };
 
-  public saveAddedObjects = (data: any) => {
-    console.log("Saving...");
+  public saveAddedObjects = (data: string) => {
+    if (data) {
+      this.props.salesforceObjectsActions.addSalesforceObject(data.split(","));
+    }
   };
 
-  public renderObjectNames = (modalData: string[]) => {
+  public renderObjectNames = (
+    modalData: string[],
+    onDataChange: any,
+    selections: string[]
+  ) => {
     return (
-      <div>
-        <h2>hello</h2>
-        <pre>{JSON.stringify(modalData, null, 2)}</pre>
-        {}
+      <div style={{ minHeight: 200 }}>
+        <Select
+          closeOnSelect={false}
+          disabled={false}
+          multi={true}
+          onChange={onDataChange}
+          autoFocus={true}
+          openOnFocus={true}
+          autosize={true}
+          options={modalData.map((val: any) => {
+            return { label: val, value: val };
+          })}
+          placeholder="Select Objects"
+          removeSelected={true}
+          rtl={false}
+          simpleValue={true}
+          value={selections}
+        />
       </div>
     );
   };

@@ -1,6 +1,35 @@
 import { HTTPStatusCodes } from "../../utils/httpstatus";
 
 const salesforceObjectApi = {
+  async addSalesforceObjectApiCall(token: string, objectNames: string[]) {
+    const salesforceObjectEndpoint = `http://localhost:8090/zinc/setup/sobject/add`;
+
+    return await fetch(salesforceObjectEndpoint, {
+      method: "POST",
+      body: JSON.stringify(objectNames),
+      headers: {
+        "content-type": "application/json",
+        "X-Auth-Token": token
+      }
+    });
+  },
+  addSalesforceObject(token: string, objectNames: string[]) {
+    return salesforceObjectApi
+      .addSalesforceObjectApiCall(token, objectNames)
+      .then((response: Response) => {
+        if (response.status === HTTPStatusCodes.CREATED) {
+          return Promise.resolve(response.json());
+        } else {
+          return Promise.reject({
+            message: "Unable to Add objects at this time."
+          });
+        }
+      })
+      .catch((error: any) => {
+        return Promise.reject(error);
+      });
+  },
+
   async getSalesforceObjectNamesApiCall(token: string) {
     const salesforceObjectEndpoint = `http://localhost:8090/zinc/setup/sobject/list`;
 

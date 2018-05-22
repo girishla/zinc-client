@@ -14,6 +14,7 @@ import * as React from "react";
 import { ISalesforceObject } from "./ISalesforceObject";
 import { ISalesforceObjectTableRowAction } from "./ISalesforceObjectTableRowAction";
 import { Link } from "react-router-dom";
+import Card from "material-ui/Card";
 
 const DrillToDetailViewCell: any = ({ children, ...props }: any) => (
   <DataTableCell title={children} {...props}>
@@ -118,13 +119,17 @@ class SalesforceObjectsTable extends React.Component<
 
   public render() {
     return (
-      <div>
+      <Card
+        style={{
+          height: window.innerHeight - window.innerHeight / 2.5,
+          overflow: "auto"
+        }}
+      >
         <IconSettings
           utilitySprite={utilitySprite}
           customSprite={customSprite}
           standardSprite={standardSprite}
         >
-          <div />
           <DataTable
             fixedLayout={true}
             items={this.state.items || []}
@@ -187,7 +192,7 @@ class SalesforceObjectsTable extends React.Component<
           </DataTable>
         </IconSettings>
         {/* <pre>{JSON.stringify(this.props, null, 2)}</pre> */}
-      </div>
+      </Card>
     );
   }
 

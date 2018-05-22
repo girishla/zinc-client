@@ -86,6 +86,11 @@ function appReducer(state = initialState, action: any) {
         isModalOpen: false
       });
 
+    case getType(layoutActions.updateModalSelections):
+      return Object.assign({}, state, {
+        modalSelections: action.modalSelections
+      });
+
     case getType(layoutActions.modalDialogCancel):
       return Object.assign({}, state, {
         isModalOpen: false

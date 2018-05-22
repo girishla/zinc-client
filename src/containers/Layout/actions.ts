@@ -30,6 +30,7 @@ export const SHOW_MODAL_DIALOG = "zinc/layout/SHOW_MODAL_DIALOG";
 export const MODAL_DIALOG_CANCEL_ACTION =
   "zinc/layout/MODAL_DIALOG_CANCEL_ACTION";
 export const MODAL_DIALOG_OK_ACTION = "zinc/layout/MODAL_DIALOG_OK_ACTION";
+export const UPDATE_MODAL_SELECTIONS = "zinc/layout/UPDATE_MODAL_SELECTIONS";
 
 export const layoutActions = {
   changeLayout: createAction(CHANGE_LAYOUT, (isBoxedLayout: boolean) => ({
@@ -126,5 +127,12 @@ export const layoutActions = {
     })
   ),
   modalDialogOk: createAction(MODAL_DIALOG_OK_ACTION),
-  modalDialogCancel: createAction(MODAL_DIALOG_CANCEL_ACTION)
+  modalDialogCancel: createAction(MODAL_DIALOG_CANCEL_ACTION),
+  updateModalSelections: createAction(
+    UPDATE_MODAL_SELECTIONS,
+    (modalSelections: any) => ({
+      type: UPDATE_MODAL_SELECTIONS,
+      modalSelections
+    })
+  )
 };

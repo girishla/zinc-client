@@ -6,12 +6,18 @@ import { noop } from "lodash";
 
 interface IZincModalActionProps {
   isModalOpen: boolean;
-  onModalOk: () => void;
+  onModalOk: any;
   onModalCancel: () => void;
   okActionName: string;
   modalTitle: string;
-  modalContent: (modalData: any) => JSX.Element[] | JSX.Element;
+  modalContent: (
+    modalData: any,
+    onUpdateModalSelections: any,
+    modalSelections: any
+  ) => JSX.Element[] | JSX.Element;
   modalData: any;
+  modalSelections: any;
+  onUpdateModalSelections: any;
 }
 
 class ZincModalAction extends React.Component<IZincModalActionProps> {
@@ -29,6 +35,10 @@ class ZincModalAction extends React.Component<IZincModalActionProps> {
     super(props);
   }
 
+  public clickedOk = () => {
+    this.props.onModalOk(this.props.modalSelections);
+  };
+
   public render() {
     const actions = [
       <RaisedButton
@@ -41,7 +51,7 @@ class ZincModalAction extends React.Component<IZincModalActionProps> {
         key={this.props.okActionName}
         label={this.props.okActionName}
         primary={true}
-        onClick={this.props.onModalOk}
+        onClick={this.clickedOk}
       />
     ];
     return (
@@ -52,7 +62,11 @@ class ZincModalAction extends React.Component<IZincModalActionProps> {
         open={this.props.isModalOpen}
         onRequestClose={this.props.onModalCancel}
       >
-        {this.props.modalContent(this.props.modalData)}
+        {this.props.modalContent(
+          this.props.modalData,
+          this.props.onUpdateModalSelections,
+          this.props.modalSelections
+        )}
       </Dialog>
     );
   }

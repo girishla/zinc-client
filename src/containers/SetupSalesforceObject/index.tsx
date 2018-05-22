@@ -27,7 +27,7 @@ class ZincSalesforceObjects extends React.Component<ISalesforceObjectsProps> {
     salesforceObjects: {
       data: []
     },
-    salesforceObjectNames: ["heloo"]
+    salesforceObjectNames: []
   };
 
   public props: ISalesforceObjectsProps;

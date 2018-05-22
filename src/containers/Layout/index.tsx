@@ -32,12 +32,13 @@ export interface ILayoutProps extends RouteComponentProps<any> {
   snackBarOpen: boolean;
   snackBarMessage: string;
   isModalOpen: boolean;
-  onModalOk: () => void;
+  onModalOk: any;
   onModalCancel: () => void;
   okActionName: string;
   modalTitle: string;
   modalContent: (contentProps: any) => JSX.Element[] | JSX.Element;
   modalData: any;
+  modalSelections: any;
 }
 
 interface ILayoutState {
@@ -119,6 +120,10 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
     this.props.actions.modalDialogCancel();
   };
 
+  public updateModalSelections = (modalSelections: any) => {
+    this.props.actions.updateModalSelections(modalSelections);
+  };
+
   public renderPages() {
     const { width, navDrawerOpen } = this.state;
     const currentTheme = this.state.currentTheme;
@@ -155,15 +160,6 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
             transitionLeave={false}
           >
             {this.props.children}
-            <ZincModalAction
-              isModalOpen={this.props.isModalOpen}
-              modalContent={this.props.modalContent}
-              modalTitle={this.props.modalTitle}
-              okActionName={this.props.okActionName}
-              onModalCancel={this.handleModalCancel}
-              onModalOk={this.props.onModalOk}
-              modalData={this.props.modalData}
-            />
           </ReactCSSTransitionGroup>
         </div>
         <Snackbar
@@ -171,6 +167,21 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
           message={this.props.snackBarMessage || ""}
           autoHideDuration={4000}
           onRequestClose={this.handleSnackBarClose}
+        />
+        <ZincModalAction
+          isModalOpen={this.props.isModalOpen}
+          modalContent={this.props.modalContent}
+          modalTitle={this.props.modalTitle}
+          okActionName={this.props.okActionName}
+          onModalCancel={this.handleModalCancel}
+          onModalOk={(data: any) => {
+            this.props.onModalOk(data);
+            this.props.actions.modalDialogOk();
+            this.props.actions.updateModalSelections("");
+          }}
+          modalData={this.props.modalData}
+          modalSelections={this.props.modalSelections}
+          onUpdateModalSelections={this.updateModalSelections}
         />
       </div>
     );
@@ -196,7 +207,8 @@ const mapStateToProps = createStructuredSelector({
   okActionName: (state: IRootState) => state.layout.okActionName,
   modalTitle: (state: IRootState) => state.layout.modalTitle,
   modalContent: (state: IRootState) => state.layout.modalContent,
-  modalData: (state: IRootState) => state.layout.modalData
+  modalData: (state: IRootState) => state.layout.modalData,
+  modalSelections: (state: IRootState) => state.layout.modalSelections
 });
 
 function mapDispatchToProps(dispatch: any) {

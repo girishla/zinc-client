@@ -22,6 +22,13 @@ export const LOAD_SALESFORCEOBJECTNAMES_SUCCESS =
 export const LOAD_SALESFORCEOBJECTNAMES_FAILURE =
   "zinc/SALESFORCEOBJECTS/LOAD_SALESFORCEOBJECTNAMES_FAILURE";
 
+export const ADD_SALESFORCEOBJECT_START =
+  "zinc/SALESFORCEOBJECT/ADD_SALESFORCEOBJECT_START";
+export const ADD_SALESFORCEOBJECT_SUCCESS =
+  "zinc/SALESFORCEOBJECT/ADD_SALESFORCEOBJECT_SUCCESS";
+export const ADD_SALESFORCEOBJECT_FAILURE =
+  "zinc/SALESFORCEOBJECT/ADD_SALESFORCEOBJECT_FAILURE";
+
 export const salesforceObjectActions = {
   loadSalesforceObjects: createAction(LOAD_SALESFORCEOBJECTS_START),
   loadSalesforceObjectsSuccess: createAction(
@@ -60,17 +67,32 @@ export const salesforceObjectActions = {
       salesforceObject
     })
   ),
-  deleteScheduleDetailSuccess: createAction(
+  deleteSalesforceObjectSuccess: createAction(
     DELETE_SALESFORCEOBJECT_SUCCESS,
     (salesforceObject: ISalesforceObject) => ({
       type: DELETE_SALESFORCEOBJECT_SUCCESS,
       salesforceObject
     })
   ),
-  deleteScheduleDetailFailure: createAction(
+  deleteSalesforceObjectFailure: createAction(
     DELETE_SALESFORCEOBJECT_FAILURE,
     (errorStr: string) => ({
       type: DELETE_SALESFORCEOBJECT_FAILURE,
+      errorStr
+    })
+  ),
+  addSalesforceObject: createAction(
+    ADD_SALESFORCEOBJECT_START,
+    (objectNames: string[]) => ({
+      type: ADD_SALESFORCEOBJECT_START,
+      objectNames
+    })
+  ),
+  addSalesforceObjectSuccess: createAction(ADD_SALESFORCEOBJECT_SUCCESS),
+  addSalesforceObjectFailure: createAction(
+    ADD_SALESFORCEOBJECT_FAILURE,
+    (errorStr: string) => ({
+      type: ADD_SALESFORCEOBJECT_FAILURE,
       errorStr
     })
   )
