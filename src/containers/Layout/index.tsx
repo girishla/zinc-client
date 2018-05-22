@@ -37,6 +37,7 @@ export interface ILayoutProps extends RouteComponentProps<any> {
   okActionName: string;
   modalTitle: string;
   modalContent: (contentProps: any) => JSX.Element[] | JSX.Element;
+  modalData: any;
 }
 
 interface ILayoutState {
@@ -154,6 +155,15 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
             transitionLeave={false}
           >
             {this.props.children}
+            <ZincModalAction
+              isModalOpen={this.props.isModalOpen}
+              modalContent={this.props.modalContent}
+              modalTitle={this.props.modalTitle}
+              okActionName={this.props.okActionName}
+              onModalCancel={this.handleModalCancel}
+              onModalOk={this.props.onModalOk}
+              modalData={this.props.modalData}
+            />
           </ReactCSSTransitionGroup>
         </div>
         <Snackbar
@@ -161,14 +171,6 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
           message={this.props.snackBarMessage || ""}
           autoHideDuration={4000}
           onRequestClose={this.handleSnackBarClose}
-        />
-        <ZincModalAction
-          isModalOpen={this.props.isModalOpen}
-          modalContent={this.props.modalContent}
-          modalTitle={this.props.modalTitle}
-          okActionName={this.props.okActionName}
-          onModalCancel={this.handleModalCancel}
-          onModalOk={this.props.onModalOk}
         />
       </div>
     );
@@ -193,7 +195,8 @@ const mapStateToProps = createStructuredSelector({
   onModalCancel: (state: IRootState) => state.layout.onModalCancel,
   okActionName: (state: IRootState) => state.layout.okActionName,
   modalTitle: (state: IRootState) => state.layout.modalTitle,
-  modalContent: (state: IRootState) => state.layout.modalContent
+  modalContent: (state: IRootState) => state.layout.modalContent,
+  modalData: (state: IRootState) => state.layout.modalData
 });
 
 function mapDispatchToProps(dispatch: any) {

@@ -114,13 +114,15 @@ export const layoutActions = {
       okActionName: any,
       onModalOk: any,
       modalContent: any,
-      modalTitle: any
+      modalTitle: any,
+      modalData: any
     ) => ({
       type: SHOW_MODAL_DIALOG,
       okActionName,
       onModalOk,
       modalContent,
-      modalTitle
+      modalTitle,
+      modalData
     })
   ),
   modalDialogOk: createAction(MODAL_DIALOG_OK_ACTION),

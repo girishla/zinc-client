@@ -28,6 +28,7 @@ export interface IRootState {
     okActionName: string;
     modalTitle: string;
     modalContent: (contentProps: any) => JSX.Element[] | JSX.Element;
+    modalData: any;
   };
   route: any;
   form: FormStateMap;

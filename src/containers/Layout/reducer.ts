@@ -77,7 +77,8 @@ function appReducer(state = initialState, action: any) {
         okActionName: action.okActionName,
         onModalOk: action.onModalOk,
         modalContent: action.modalContent,
-        modalTitle: action.modalTitle
+        modalTitle: action.modalTitle,
+        modalData: action.modalData
       });
 
     case getType(layoutActions.modalDialogOk):

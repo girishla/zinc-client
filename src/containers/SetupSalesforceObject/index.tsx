@@ -19,13 +19,15 @@ interface ISalesforceObjectsProps extends RouteComponentProps<any> {
   salesforceObjectsActions: typeof salesforceObjectActions;
   layoutActions: typeof layoutActions;
   loading: boolean;
+  salesforceObjectNames: string[];
 }
 
 class ZincSalesforceObjects extends React.Component<ISalesforceObjectsProps> {
   public static defaultProps = {
     salesforceObjects: {
       data: []
-    }
+    },
+    salesforceObjectNames: ["heloo"]
   };
 
   public props: ISalesforceObjectsProps;
@@ -36,6 +38,7 @@ class ZincSalesforceObjects extends React.Component<ISalesforceObjectsProps> {
 
   public componentDidMount() {
     this.props.salesforceObjectsActions.loadSalesforceObjects();
+    this.props.salesforceObjectsActions.loadSalesforceObjectNames();
   }
 
   public render() {
@@ -47,6 +50,7 @@ class ZincSalesforceObjects extends React.Component<ISalesforceObjectsProps> {
         }
         salesforceObjectsActions={this.props.salesforceObjectsActions}
         layoutActions={this.props.layoutActions}
+        salesforceObjectNames={this.props.salesforceObjectNames}
       />
     );
   }
@@ -55,7 +59,9 @@ class ZincSalesforceObjects extends React.Component<ISalesforceObjectsProps> {
 const mapStateToProps = createStructuredSelector({
   salesforceObjects: (store: IRootState) => store.salesforceObjects,
   loading: (store: IRootState) =>
-    store.salesforceObjects && store.salesforceObjects.loading
+    store.salesforceObjects && store.salesforceObjects.loading,
+  salesforceObjectNames: (store: IRootState) =>
+    store.salesforceObjects && store.salesforceObjects.salesforceObjectNames
 });
 
 function mapDispatchToProps(dispatch: any) {

@@ -22,6 +22,7 @@ interface ISalesforceObjectsListViewProps extends RouteComponentProps<any> {
   salesforceObjectsActions: typeof salesforceObjectActions;
   layoutActions: typeof layoutActions;
   loading: boolean;
+  salesforceObjectNames: string[];
 }
 
 class SalesforceObjectsListView extends React.Component<
@@ -33,13 +34,24 @@ class SalesforceObjectsListView extends React.Component<
     this.props.layoutActions.showModalDialog(
       "Add",
       this.saveAddedObjects,
-      () => <span>Test Content</span>,
-      "Select Salesforce Objects"
+      this.renderObjectNames,
+      "Select Salesforce Objects",
+      this.props.salesforceObjectNames
     );
   };
 
   public saveAddedObjects = (data: any) => {
     console.log("Saving...");
+  };
+
+  public renderObjectNames = (modalData: string[]) => {
+    return (
+      <div>
+        <h2>hello</h2>
+        <pre>{JSON.stringify(modalData, null, 2)}</pre>
+        {}
+      </div>
+    );
   };
 
   public render() {
@@ -89,20 +101,19 @@ class SalesforceObjectsListView extends React.Component<
     );
 
     const tableContent = (
-      <If condition={this.props.loading}>
-        <Then>
-          <Loading />
-        </Then>
-        <Else>
-          <SalesforceObjectsTable
-            items={deepGet(this.props, "salesforceObjects._embedded.sobjects")}
-            onChange={this.salesforceObjectsTableSelectionsChange}
-            onDelete={
-              this.props.salesforceObjectsActions.deleteSalesforceObject
-            }
-          />
-        </Else>
-      </If>
+      <div>
+        <If condition={this.props.loading}>
+          <Then>
+            <Loading />
+          </Then>
+          <Else />
+        </If>
+        <SalesforceObjectsTable
+          items={deepGet(this.props, "salesforceObjects._embedded.sobjects")}
+          onChange={this.salesforceObjectsTableSelectionsChange}
+          onDelete={this.props.salesforceObjectsActions.deleteSalesforceObject}
+        />
+      </div>
     );
 
     return (

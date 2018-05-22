@@ -13,12 +13,26 @@ function reducer(state = initialJobsState, action: any) {
       return { ...state, loading: true };
     }
 
-    case getType(salesforceObjectActions.loadSchedulesSuccess): {
+    case getType(salesforceObjectActions.loadSalesforceObjectsSuccess): {
       return { ...state, loading: false, data: action.salesforceObjects };
     }
-    case getType(salesforceObjectActions.loadSchedulesFailure): {
+    case getType(salesforceObjectActions.loadSalesforceObjectsFailure): {
       return { ...state, loading: false, error: action.errorStr };
     }
+    case getType(salesforceObjectActions.loadSalesforceObjectNames): {
+      return { ...state, loading: true };
+    }
+    case getType(salesforceObjectActions.loadSalesforceObjectNamesSuccess): {
+      return {
+        ...state,
+        loading: false,
+        salesforceObjectNames: action.salesforceObjectNames
+      };
+    }
+    case getType(salesforceObjectActions.loadSalesforceObjectNamesFailure): {
+      return { ...state, loading: false, error: action.errorStr };
+    }
+
     case getType(salesforceObjectActions.deleteSalesforceObject): {
       return { ...state, loading: true };
     }

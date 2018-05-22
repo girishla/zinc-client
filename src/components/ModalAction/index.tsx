@@ -10,7 +10,8 @@ interface IZincModalActionProps {
   onModalCancel: () => void;
   okActionName: string;
   modalTitle: string;
-  modalContent: (contentProps: any) => JSX.Element[] | JSX.Element;
+  modalContent: (modalData: any) => JSX.Element[] | JSX.Element;
+  modalData: any;
 }
 
 class ZincModalAction extends React.Component<IZincModalActionProps> {
@@ -20,7 +21,8 @@ class ZincModalAction extends React.Component<IZincModalActionProps> {
     onModalCancel: noop,
     modalTitle: "",
     modalContent: noop,
-    isModalOpen: false
+    isModalOpen: false,
+    modalData: {}
   };
 
   constructor(props: IZincModalActionProps) {
@@ -50,7 +52,7 @@ class ZincModalAction extends React.Component<IZincModalActionProps> {
         open={this.props.isModalOpen}
         onRequestClose={this.props.onModalCancel}
       >
-        {this.props.modalContent && this.props.modalContent(this.state)}
+        {this.props.modalContent(this.props.modalData)}
       </Dialog>
     );
   }

@@ -12,12 +12,12 @@ export function* getSalesforceObjectsTask(action: any) {
       window.localStorage.getItem("token")
     );
     yield put({
-      type: getType(salesforceObjectActions.loadSchedulesSuccess),
+      type: getType(salesforceObjectActions.loadSalesforceObjectsSuccess),
       salesforceObjects
     });
   } catch (e) {
     yield put({
-      type: getType(salesforceObjectActions.loadSchedulesFailure),
+      type: getType(salesforceObjectActions.loadSalesforceObjectsFailure),
       errorStr: e.message
     });
   }
@@ -27,6 +27,41 @@ export function* getSalesforceObjects() {
   yield takeLatest(
     getType(salesforceObjectActions.loadSalesforceObjects),
     getSalesforceObjectsTask
+  );
+}
+
+export function* getSalesforceObjectNamesTask(action: any) {
+  try {
+    const salesforceObjectNames: string[] = yield call(
+      salesforceObjectsApi.getSalesforceObjectNames,
+      window.localStorage.getItem("token")
+    );
+    yield put({
+      type: getType(salesforceObjectActions.loadSalesforceObjectNamesSuccess),
+      salesforceObjectNames
+    });
+
+    console.log(action);
+    // yield put({
+    //   type: getType(layoutActions.showModalDialog),
+    //   okActionName: action.okActionName,
+    //   onModalOk: action.onModalOk,
+    //   modalContent: action.modalContent,
+    //   modalTitle: action.modalTitle,
+    //   modalData: action.modalData
+    // });
+  } catch (e) {
+    yield put({
+      type: getType(salesforceObjectActions.loadSalesforceObjectNamesFailure),
+      errorStr: e.message
+    });
+  }
+}
+
+export function* getSalesforceObjectNames() {
+  yield takeLatest(
+    getType(salesforceObjectActions.loadSalesforceObjectNames),
+    getSalesforceObjectNamesTask
   );
 }
 
@@ -63,5 +98,9 @@ export function* deleteSalesforceObject() {
 }
 
 export default function* rootSaga() {
-  yield all([getSalesforceObjects(), deleteSalesforceObject()]);
+  yield all([
+    getSalesforceObjects(),
+    deleteSalesforceObject(),
+    getSalesforceObjectNames()
+  ]);
 }
