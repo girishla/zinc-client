@@ -12,7 +12,7 @@ export default function Loading() {
           position: 'fixed',
           top: '50%',
           transform: 'translate(-50%, -50%)',
-
+          zIndex:999
         }}
         name="three-bounce"
         color="#7144b7"

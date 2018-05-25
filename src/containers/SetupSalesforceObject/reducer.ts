@@ -19,6 +19,15 @@ function reducer(state = initialJobsState, action: any) {
     case getType(salesforceObjectActions.loadSalesforceObjectsFailure): {
       return { ...state, loading: false, error: action.errorStr };
     }
+    case getType(salesforceObjectActions.addSalesforceObject): {
+      return { ...state, loading: true };
+    }
+    case getType(salesforceObjectActions.addSalesforceObjectSuccess): {
+      return { ...state, loading: false };
+    }
+    case getType(salesforceObjectActions.addSalesforceObjectFailure): {
+      return { ...state, loading: false, error: action.errorStr };
+    }
     case getType(salesforceObjectActions.loadSalesforceObjectNames): {
       return { ...state, loading: true };
     }

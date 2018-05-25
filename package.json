@@ -5,6 +5,7 @@
   "dependencies": {
     "cronstrue": "^1.8.0",
     "date-fns": "^2.0.0-alpha.7",
+    "flexboxgrid": "^6.3.1",
     "hoist-non-react-statics": "^2.3.1",
     "invariant": "^2.2.4",
     "lodash": "^4.17.10",
@@ -35,9 +36,10 @@
   },
   "scripts": {
     "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
+    "build": "cross-env PUBLIC_URL=/client/ react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "test:html": "react-scripts-ts test --env=jsdom --testResultsProcessor ./node_modules/jest-html-reporter",
+    "test:html":
+      "react-scripts-ts test --env=jsdom --testResultsProcessor ./node_modules/jest-html-reporter",
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
@@ -62,6 +64,7 @@
     "@types/redux-auth-wrapper": "^2.0.7",
     "@types/redux-form": "^7.2.4",
     "@types/redux-saga": "^0.10.5",
+    "cross-env": "^5.1.6",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "jest-html-reporter": "^2.3.0",

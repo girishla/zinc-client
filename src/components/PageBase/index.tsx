@@ -1,23 +1,21 @@
-import Divider from 'material-ui/Divider';
-import Paper from 'material-ui/Paper';
-import * as React from 'react';
-import styles from '../../styles';
-import Spinner from '../Spinner';
-import BreadCrumbs from '../BreadCrumbs';
-
+import Divider from "material-ui/Divider";
+import Paper from "material-ui/Paper";
+import * as React from "react";
+import styles from "../../styles";
+import Spinner from "../Spinner";
+import BreadCrumbs from "../BreadCrumbs";
 
 interface IPageBaseProps {
   // navigation: any;
   noWrapContent: any;
   loading: boolean;
   title?: any;
-  minHeight?: any
+  minHeight?: any;
   children?: any;
 }
 
 interface IPageBaseState {
   loading: boolean;
-
 }
 
 class PageBase extends React.Component<IPageBaseProps, IPageBaseState> {
@@ -39,21 +37,21 @@ class PageBase extends React.Component<IPageBaseProps, IPageBaseState> {
   }
 
   public render() {
-    const { title, noWrapContent, children } = this.props;
+    const { title, noWrapContent, children, minHeight } = this.props;
 
     const content = (
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div style={{ minHeight: minHeight || 500, height: "100%" }}>
         {this.props.loading ? (
-          <div style={{ textAlign: 'center' }}>
+          <div style={{ textAlign: "center" }}>
             <Spinner
-              style={{ display: 'inline-block' }}
+              style={{ display: "inline-block" }}
               name="double-bounce"
               color="rgb(30, 136, 229)"
             />
           </div>
         ) : (
-            <div style={{ flex: 1 }}>{children}</div>
-          )}
+          <div>{children}</div>
+        )}
       </div>
     );
 
@@ -63,21 +61,19 @@ class PageBase extends React.Component<IPageBaseProps, IPageBaseState> {
         {noWrapContent ? (
           <div>{content}</div>
         ) : (
-            <Paper style={styles.paper}>
-              <h3 style={styles.title}>{title}</h3>
+          <Paper style={styles.paper}>
+            <h3 style={styles.title}>{title}</h3>
 
-              <Divider />
+            <Divider />
 
-              {content}
+            {content}
 
-              <div style={styles.clear} />
-            </Paper>
-          )}
+            <div style={styles.clear} />
+          </Paper>
+        )}
       </div>
     );
   }
 }
-
-
 
 export default PageBase;

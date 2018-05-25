@@ -5,9 +5,9 @@ import {
   Redirect,
   Route,
   RouteComponentProps,
-  Router,
   Switch,
-  withRouter
+  withRouter,
+  BrowserRouter
 } from "react-router-dom";
 import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
@@ -23,6 +23,7 @@ import Layout from "../Layout";
 import Login from "../Login";
 import "./App.css";
 import "./sldsOverrides.css";
+import "flexboxgrid/css/flexboxgrid.css";
 import PageNotFound from "../PageNotFound";
 import ZincSalesforceObjects from "../SetupSalesforceObject";
 
@@ -41,7 +42,7 @@ const RouteWithLayout = ({ component, ...rest }: any) => {
 export class App extends React.Component<IAppProps> {
   public render() {
     return (
-      <Router {...this.props}>
+      <BrowserRouter {...this.props} basename={process.env.PUBLIC_URL}>
         <div>
           <Switch>
             <Route
@@ -107,7 +108,7 @@ export class App extends React.Component<IAppProps> {
             <Route path="*" component={PageNotFound} />
           </Switch>
         </div>
-      </Router>
+      </BrowserRouter>
     );
   }
 
