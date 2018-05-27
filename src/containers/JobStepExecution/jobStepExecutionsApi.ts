@@ -2,7 +2,8 @@ import { HTTPStatusCodes } from "../../utils/httpstatus";
 
 const jobStepExecutionsApi = {
   async getJobStepExecutionsApiCall(executionId: string, token: string) {
-    const stepStepExecutionsEndpoint = `http://localhost:8090/zinc/jobs/executions/${executionId}/steps`;
+    const stepStepExecutionsEndpoint = `${process.env.REACT_APP_API_HOST ||
+      ""}/zinc/jobs/executions/${executionId}/steps`;
 
     return await fetch(stepStepExecutionsEndpoint, {
       method: "GET",

@@ -8,11 +8,14 @@ const jobExecutionsApi = {
   ) {
     let executionsEndpoint = "";
     if (instanceId === "" && jobName === "") {
-      executionsEndpoint = "http://localhost:8090/zinc/jobs/executions";
+      executionsEndpoint = `${process.env.REACT_APP_API_HOST ||
+        ""}/zinc/jobs/executions`;
     } else if (instanceId === "" && jobName !== "") {
-      executionsEndpoint = `http://localhost:8090/zinc/jobs/${jobName}/executions`;
+      executionsEndpoint = `${process.env.REACT_APP_API_HOST ||
+        ""}/zinc/jobs/${jobName}/executions`;
     } else {
-      executionsEndpoint = `http://localhost:8090/zinc/jobs/${jobName}/${instanceId}/executions`;
+      executionsEndpoint = `${process.env.REACT_APP_API_HOST ||
+        ""}/zinc/jobs/${jobName}/${instanceId}/executions`;
     }
 
     return await fetch(executionsEndpoint, {

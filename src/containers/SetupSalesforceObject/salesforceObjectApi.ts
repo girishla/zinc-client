@@ -2,7 +2,8 @@ import { HTTPStatusCodes } from "../../utils/httpstatus";
 
 const salesforceObjectApi = {
   async addSalesforceObjectApiCall(token: string, objectNames: string[]) {
-    const salesforceObjectEndpoint = `http://localhost:8090/zinc/setup/sobject/add`;
+    const salesforceObjectEndpoint = `${process.env.REACT_APP_API_HOST ||
+      ""}/zinc/setup/sobject/add`;
 
     return await fetch(salesforceObjectEndpoint, {
       method: "POST",
@@ -31,7 +32,8 @@ const salesforceObjectApi = {
   },
 
   async getSalesforceObjectNamesApiCall(token: string) {
-    const salesforceObjectEndpoint = `http://localhost:8090/zinc/setup/sobject/list`;
+    const salesforceObjectEndpoint = `${process.env.REACT_APP_API_HOST ||
+      ""}/zinc/setup/sobject/list`;
 
     return await fetch(salesforceObjectEndpoint, {
       method: "GET",
@@ -59,7 +61,8 @@ const salesforceObjectApi = {
   },
 
   async getSalesforceObjectApiCall(token: string) {
-    const salesforceObjectEndpoint = `http://localhost:8090/sobjects?size=100&sort=updatedDate,desc`;
+    const salesforceObjectEndpoint = `${process.env.REACT_APP_API_HOST ||
+      ""}/sobjects?size=100&sort=updatedDate,desc`;
 
     return await fetch(salesforceObjectEndpoint, {
       method: "GET",
@@ -87,7 +90,8 @@ const salesforceObjectApi = {
   },
 
   async deleteSalesforceObjectApiCall(token: string, id: string) {
-    const salesforceObjectEndpoint = `http://localhost:8090/sobjects/${id}`;
+    const salesforceObjectEndpoint = `${process.env.REACT_APP_API_HOST ||
+      ""}/sobjects/${id}`;
 
     return await fetch(salesforceObjectEndpoint, {
       method: "DELETE",

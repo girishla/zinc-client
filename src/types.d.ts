@@ -5,3 +5,4 @@ declare module "cronstrue";
 declare module "react-bem-helper";
 declare module "react-select";
 declare module "enzyme-adapter-react-16";
+declare module "react-dimensions";

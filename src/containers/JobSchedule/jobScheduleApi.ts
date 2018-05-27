@@ -2,7 +2,8 @@ import { HTTPStatusCodes } from "../../utils/httpstatus";
 
 const jobScheduleApi = {
   async getJobScheduleApiCall(token: string) {
-    const jobScheduleEndpoint = `http://localhost:8090/zinc/schedule`;
+    const jobScheduleEndpoint = `${process.env.REACT_APP_API_HOST ||
+      ""}/zinc/schedule`;
 
     return await fetch(jobScheduleEndpoint, {
       method: "GET",
@@ -34,7 +35,8 @@ const jobScheduleApi = {
     jobName: string,
     scheduleName: string
   ) {
-    const jobScheduleEndpoint = `http://localhost:8090/zinc/jobs/${jobName}/schedule/${scheduleName}`;
+    const jobScheduleEndpoint = `${process.env.REACT_APP_API_HOST ||
+      ""}/zinc/jobs/${jobName}/schedule/${scheduleName}`;
 
     return await fetch(jobScheduleEndpoint, {
       method: "DELETE",

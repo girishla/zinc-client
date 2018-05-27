@@ -3,7 +3,8 @@ import { IJobSchedule } from "../JobSchedule/IJobSchedule";
 
 const jobScheduleDetailApi = {
   async getJobScheduleDetailApiCall(token: string, scheduleName: string) {
-    const jobScheduleDetailEndpoint = `http://localhost:8090/zinc/schedule/${scheduleName}`;
+    const jobScheduleDetailEndpoint = `${process.env.REACT_APP_API_HOST ||
+      ""}/zinc/schedule/${scheduleName}`;
 
     return await fetch(jobScheduleDetailEndpoint, {
       method: "GET",
@@ -19,7 +20,8 @@ const jobScheduleDetailApi = {
   ) {
     const { jobName } = scheduleDetail;
 
-    const jobScheduleDetailEndpoint = `http://localhost:8090/zinc/jobs/${jobName}/schedule`;
+    const jobScheduleDetailEndpoint = `${process.env.REACT_APP_API_HOST ||
+      ""}/zinc/jobs/${jobName}/schedule`;
 
     return await fetch(jobScheduleDetailEndpoint, {
       method: "POST",
