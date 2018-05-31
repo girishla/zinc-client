@@ -18,6 +18,7 @@ import Styles from "./styles";
 import { authActions } from "../Login/actions";
 import Snackbar from "material-ui/Snackbar";
 import ZincModalAction from "../../components/ModalAction";
+import ZincMessage from "src/components/Message";
 
 const theme = new Theme();
 
@@ -39,6 +40,10 @@ export interface ILayoutProps extends RouteComponentProps<any> {
   modalContent: (contentProps: any) => JSX.Element[] | JSX.Element;
   modalData: any;
   modalSelections: any;
+  alertMessageOpen: boolean;
+  alertMessage: string;
+  alertMessageTitle: string;
+  alertSeverity: string;
 }
 
 interface ILayoutState {
@@ -124,6 +129,10 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
     this.props.actions.updateModalSelections(modalSelections);
   };
 
+  public handleMessageClose = () => {
+    this.props.actions.hideAlertMessage();
+  };
+
   public renderPages() {
     const { width, navDrawerOpen } = this.state;
     const currentTheme = this.state.currentTheme;
@@ -183,6 +192,12 @@ class Layout extends React.Component<ILayoutProps, ILayoutState> {
           modalSelections={this.props.modalSelections}
           onUpdateModalSelections={this.updateModalSelections}
         />
+        <ZincMessage
+          messageText={this.props.alertMessage}
+          messageTitle={this.props.alertMessageTitle}
+          onClose={this.handleMessageClose}
+          isOpen={this.props.alertMessageOpen}
+        />
       </div>
     );
   }
@@ -208,7 +223,12 @@ const mapStateToProps = createStructuredSelector({
   modalTitle: (state: IRootState) => state.layout.modalTitle,
   modalContent: (state: IRootState) => state.layout.modalContent,
   modalData: (state: IRootState) => state.layout.modalData,
-  modalSelections: (state: IRootState) => state.layout.modalSelections
+  modalSelections: (state: IRootState) => state.layout.modalSelections,
+  alertMessageOpen: (state: IRootState) => state.layout.alertMessageOpen,
+  alertMessage: (state: IRootState) => state.layout.alertMessage,
+  alertMessageTitle: (state: IRootState) => state.layout.alertMessageTitle,
+
+  alertSeverity: (state: IRootState) => state.layout.alertSeverity
 });
 
 function mapDispatchToProps(dispatch: any) {

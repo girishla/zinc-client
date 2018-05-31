@@ -25,7 +25,8 @@ export const CHANGE_SHOW_OPEN_VIEWS = "zinc/layout/CHANGE_SHOW_OPEN_VIEWS";
 export const CHANGE_LAYOUT = "zinc/layout/CHANGE_LAYOUT";
 export const SHOW_SNACKBAR_MESSAGE = "zinc/layout/SHOW_SNACKBAR_MESSAGE";
 export const HIDE_SNACKBAR_MESSAGE = "zinc/layout/HIDE_SNACKBAR_MESSAGE";
-
+export const SHOW_ALERT_MESSAGE = "zinc/layout/SHOW_ALERT_MESSAGE";
+export const HIDE_ALERT_MESSAGE = "zinc/layout/HIDE_ALERT_MESSAGE";
 export const SHOW_MODAL_DIALOG = "zinc/layout/SHOW_MODAL_DIALOG";
 export const MODAL_DIALOG_CANCEL_ACTION =
   "zinc/layout/MODAL_DIALOG_CANCEL_ACTION";
@@ -109,6 +110,17 @@ export const layoutActions = {
     })
   ),
   hideSnackBarMessage: createAction(HIDE_SNACKBAR_MESSAGE),
+  showAlertMessage: createAction(
+    SHOW_ALERT_MESSAGE,
+    (message: string, messageTitle: string, severity: string) => ({
+      type: SHOW_ALERT_MESSAGE,
+      message,
+      messageTitle,
+      severity
+    })
+  ),
+  hideAlertMessage: createAction(HIDE_ALERT_MESSAGE),
+
   showModalDialog: createAction(
     SHOW_MODAL_DIALOG,
     (

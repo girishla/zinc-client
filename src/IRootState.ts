@@ -22,6 +22,10 @@ export interface IRootState {
     isBoxedLayout: boolean;
     snackBarOpen: boolean;
     snackBarMessage: string;
+    alertMessageOpen: boolean;
+    alertMessage: string;
+    alertMessageTitle: string;
+    alertSeverity: string;
     isModalOpen: boolean;
     onModalOk: () => void;
     onModalCancel: () => void;
