@@ -25,13 +25,21 @@ export function* getDashboardDataTask(action: any) {
       "SFDC_TABLE_COUNTS"
     );
 
+    const tableChangesMetrics: IMetricCollection = yield call(
+      dashboardApi.getDashboardData,
+      window.localStorage.getItem("token"),
+      "SFDC_TABLE_CHANGES"
+    );
+
     const dashboardData: IDashboardData = {
       apiMetrics,
       executionMetrics,
       tableCountMetrics,
+      tableChangesMetrics,
       perfTilesData: {},
       executionCountBarChartData: [],
-      tableCountBarChartData: []
+      tableCountBarChartData: [],
+      tableChangesLineChartData: []
     };
 
     yield put({

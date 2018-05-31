@@ -4,6 +4,8 @@ import * as React from "react";
 import { ILineChartData } from "./IDashboardData";
 import LineChart from "./LineChart";
 import { grey500, white } from "material-ui/styles/colors";
+import { compose } from "redux";
+import Dimensions from "react-dimensions";
 
 const styles: any = {
   root: {
@@ -21,7 +23,11 @@ const styles: any = {
   }
 };
 
-const LineChartGrid = (props: { lineChartData: ILineChartData[] }) => {
+const LineChartGrid = (props: {
+  lineChartData: ILineChartData[];
+  containerWidth: number;
+  containerHeight: number;
+}) => {
   const lineChartItems = props.lineChartData || [];
 
   return (
@@ -38,7 +44,7 @@ const LineChartGrid = (props: { lineChartData: ILineChartData[] }) => {
               titleBackground="none"
               titleStyle={{ color: grey500 }}
               style={{ background: white, margin: 5 }}
-              cols={8}
+              cols={props.containerWidth > 1500 ? 6 : 12}
               rows={1}
             >
               {/* <pre>{JSON.stringify(lineChartItem.tickValues, null, 2)}</pre> */}
@@ -54,4 +60,4 @@ const LineChartGrid = (props: { lineChartData: ILineChartData[] }) => {
   );
 };
 
-export default LineChartGrid;
+export default compose(Dimensions())(LineChartGrid);

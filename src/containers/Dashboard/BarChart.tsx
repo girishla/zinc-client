@@ -48,7 +48,14 @@ class Barchart extends React.PureComponent<IBarchartProps> {
         />
         <VictoryBar
           standalone={false}
-          style={{ data: { fill: "#c7b5e3", width: 30 } }}
+          style={{
+            data: {
+              fill: "#c7b5e3",
+              width: 30,
+              strokeLinejoin: "round",
+              strokeWidth: 6
+            }
+          }}
           data={this.props.bars}
         />
 

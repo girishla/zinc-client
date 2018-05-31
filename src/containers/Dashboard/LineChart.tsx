@@ -3,14 +3,23 @@ import {
   VictoryChart,
   VictoryLine,
   VictoryScatter,
-  VictoryContainer
+  VictoryContainer,
+  VictoryLabel
 } from "victory";
 import * as React from "react";
 import { IPoint } from "./IDashboardData";
-import { grey400, grey200 } from "material-ui/styles/colors";
+import {
+  grey400,
+  grey200,
+  red200,
+  grey500,
+  grey600
+} from "material-ui/styles/colors";
 import Theme from "../../theming/theme";
 import { compose } from "redux";
 import Dimensions from "react-dimensions";
+import { format, parse } from "date-fns";
+import * as Numeral from "numeral";
 
 export interface ILineChartProps {
   points: IPoint[];
@@ -28,52 +37,62 @@ class LineChart extends React.PureComponent<ILineChartProps> {
         height={this.props.containerHeight}
         containerComponent={<VictoryContainerResponsive responsive={false} />}
       >
-        <VictoryLine
-          data={this.props.points}
-          style={{
-            data: { stroke: Theme.defaultMainColor, strokeWidth: 4 }
-          }}
-        />
         <VictoryAxis
           // x
           tickValues={this.props.tickValues}
-          //   tickFormat={tick => {
-          //     if (data.length < 1) {
-          //       return tick;
-          //     }
-          //     const time = data[tick - 1].time.split(":");
-          //     return formatTime(time);
-          //   }}
+          tickLabelComponent={
+            <VictoryLabel angle={340} dy={-10} textAnchor={"end"} />
+          }
+          tickFormat={tick => {
+            return formatToDateString(tick);
+          }}
           style={{
             axis: { stroke: grey400 },
-            ticks: { stroke: grey400 },
-            tickLabels: { fontSize: 12, padding: 30, stroke: "#EAEDEF" }
+            ticks: { stroke: grey600 },
+            tickLabels: { fontSize: 10, stroke: grey600, strokeWidth: 0.1 }
           }}
         />
         <VictoryAxis
           // y
           dependentAxis={true}
-          tickValues={[0, 30, 60]}
+          tickFormat={value => Numeral(value).format("0 a")}
           style={{
             axis: { stroke: "none" },
-            grid: { stroke: grey400 },
-            tickLabels: { fontSize: 12, padding: 30, stroke: grey200 }
+            grid: { stroke: grey200 },
+            tickLabels: {
+              fontSize: 12,
+              padding: 30,
+              stroke: grey500,
+              strokeWidth: 0.1
+            }
+          }}
+        />
+        <VictoryLine
+          data={this.props.points}
+          style={{
+            data: { stroke: Theme.defaultMainColor, strokeWidth: 1 }
           }}
         />
         <VictoryScatter
           data={this.props.points}
+          labels={datum => Numeral(datum.y).format("0 a")}
           style={{
             data: {
-              stroke: grey200,
-              strokeWidth: 3,
-              fill: grey200
+              stroke: red200,
+              strokeWidth: 1,
+              fill: red200
             },
-            labels: { fontSize: 30 }
+
+            labels: { fontSize: 10 }
           }}
         />
       </VictoryChart>
     );
   }
+}
+
+function formatToDateString(tick: string) {
+  return format(parse(tick, "YYYYMMDD", new Date()), "MM/DD/YY");
 }
 
 export default compose(Dimensions())(LineChart);

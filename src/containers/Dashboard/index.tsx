@@ -18,6 +18,7 @@ import saga from "./saga";
 import { IDashboardState } from "./IDashboardState";
 import { get as deepGet } from "lodash";
 import BarChartGrid from "./BarChartGrid";
+import LineChartGrid from "./LineChartGrid";
 // import LineChartGrid from "./LineChartGrid";
 
 interface IDashboardProps {
@@ -50,6 +51,11 @@ export class Dashboard extends React.Component<IDashboardProps> {
     const tableCountBarChartData = deepGet(
       this.props,
       "dashboardState.data.tableCountBarChartData"
+    );
+
+    const tableChangesLineChartData = deepGet(
+      this.props,
+      "dashboardState.data.tableChangesLineChartData"
     );
 
     return (
@@ -118,8 +124,9 @@ export class Dashboard extends React.Component<IDashboardProps> {
         </div>
         <div className="row" style={{ justifyContent: "center" }}>
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-md m-b-15">
-            <BarChartGrid barChartData={executionCountBarChartData} />
             <BarChartGrid barChartData={tableCountBarChartData} />
+            <BarChartGrid barChartData={executionCountBarChartData} />
+            <LineChartGrid lineChartData={tableChangesLineChartData} />
           </div>
         </div>
       </div>

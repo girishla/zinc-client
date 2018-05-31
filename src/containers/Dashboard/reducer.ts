@@ -4,6 +4,7 @@ import { dashboardActions } from "./actions";
 import getPerfTiles from "./ChartDataReducers/perfTIlesReducer";
 import getExecutionMetricsBarChartData from "./ChartDataReducers/executionMetricsBarChartReducer";
 import getTableCountsBarChartData from "./ChartDataReducers/tableCountsBarChartReducer";
+import getTableChangesLineChartData from "./ChartDataReducers/tableChangesLineChartReducer";
 
 export const initialJobsState: any = {
   loading: false,
@@ -28,6 +29,9 @@ function reducer(state = initialJobsState, action: any) {
             "EXECUTION_COUNT"
           ),
           tableCountBarChartData: getTableCountsBarChartData(
+            action.dashboardData
+          ),
+          tableChangesLineChartData: getTableChangesLineChartData(
             action.dashboardData
           )
         }

@@ -57,7 +57,9 @@ export interface IDashboardData {
   apiMetrics: IMetricCollection;
   executionMetrics: IMetricCollection;
   tableCountMetrics: IMetricCollection;
+  tableChangesMetrics: IMetricCollection;
   perfTilesData: any;
   executionCountBarChartData: IBarChartData[];
   tableCountBarChartData: IBarChartData[];
+  tableChangesLineChartData: ILineChartData[];
 }
