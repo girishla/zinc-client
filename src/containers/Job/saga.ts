@@ -5,6 +5,7 @@ import { jobsActions } from "./actions";
 import { IJobCollection } from "./IJobCollection";
 import jobsApi from "./jobsApi";
 import { push } from "react-router-redux";
+import { layoutActions } from "../Layout/actions";
 
 export function* getJobsTask(action: Action) {
   try {
@@ -38,6 +39,12 @@ export function* executeJobTask(action: any) {
     yield put({
       type: getType(jobsActions.executeJobFailure),
       errorStr: e.message
+    });
+    yield put({
+      type: getType(layoutActions.showAlertMessage),
+      messageTitle: "Failed",
+      message: e.message,
+      severity: "ERROR"
     });
   }
 }

@@ -31,10 +31,13 @@ export default function getTableCountsBarChartData(
     tableLevelCountMetrics,
     ["metricValue"],
     ["desc"]
-  ).slice(0, 25);
+  ).slice(0, 20);
 
   tableCountsBarChartData.push(
-    getTableCountMetricsAsBarData("Table Counts", tableLevelCountMetrics)
+    getTableCountMetricsAsBarData(
+      "Table Counts(Top 20)",
+      tableLevelCountMetrics
+    )
   );
 
   return tableCountsBarChartData;

@@ -18,7 +18,7 @@ export interface IBarchartProps {
 
 class Barchart extends React.PureComponent<IBarchartProps> {
   public render() {
-    let chartwidth = this.props.bars.length * 50;
+    let chartwidth = this.props.bars.length * 60;
 
     if (chartwidth < 250) {
       chartwidth = 250;
@@ -62,7 +62,7 @@ class Barchart extends React.PureComponent<IBarchartProps> {
         <VictoryAxis
           standalone={false}
           crossAxis={true}
-          width={chartwidth - 50}
+          width={chartwidth}
           domain={[-1, this.props.tickValues.length]}
           tickValues={this.props.tickValues}
           tickLabelComponent={

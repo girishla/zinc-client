@@ -46,7 +46,7 @@ const jobsApi = {
     return jobsApi
       .executeJobApiCall(token, jobName)
       .then((response: Response) => {
-        if (response.status === HTTPStatusCodes.OK) {
+        if (response.status === HTTPStatusCodes.CREATED) {
           return Promise.resolve(response.json());
         } else {
           return Promise.reject({

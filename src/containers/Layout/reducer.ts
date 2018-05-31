@@ -72,14 +72,14 @@ function appReducer(state = initialState, action: any) {
       });
     case getType(layoutActions.showAlertMessage):
       return Object.assign({}, state, {
-        alertOpen: true,
+        alertMessageOpen: true,
         alertMessage: action.message,
         alertMessageTitle: action.messageTitle,
         alertSeverity: action.severity
       });
     case getType(layoutActions.hideAlertMessage):
       return Object.assign({}, state, {
-        alertOpen: false,
+        alertMessageOpen: false,
         alertMessage: "",
         alertSeverity: ""
       });

@@ -69,7 +69,7 @@ export class Dashboard extends React.Component<IDashboardProps> {
               Icon={"thumb_up"}
               color={white}
               iconColor={cyan500}
-              title="SOAP API USAGE"
+              title="SOAP API USAGE(24h)"
               value={deepGet(
                 this.props,
                 "dashboardState.data.perfTilesData.SFDC_SOAP_API_CALLS"
@@ -84,7 +84,7 @@ export class Dashboard extends React.Component<IDashboardProps> {
               Icon={"thumb_up"}
               color={white}
               iconColor={cyan500}
-              title="BULK API USAGE"
+              title="BULK API USAGE(24h)"
               value={deepGet(
                 this.props,
                 "dashboardState.data.perfTilesData.SFDC_BULK_API_CALLS"
@@ -99,7 +99,7 @@ export class Dashboard extends React.Component<IDashboardProps> {
               Icon={"thumb_up"}
               color={white}
               iconColor={cyan500}
-              title="REPLICATION API USAGE"
+              title="REPLICATION API USAGE(24h)"
               value={deepGet(
                 this.props,
                 "dashboardState.data.perfTilesData.SFDC_REPL_API_CALLS"
@@ -114,7 +114,7 @@ export class Dashboard extends React.Component<IDashboardProps> {
               Icon={"thumb_up"}
               color={white}
               iconColor={cyan500}
-              title="CONNECTION ERRORS"
+              title="CONNECTION ERRORS(24h)"
               value={deepGet(
                 this.props,
                 "dashboardState.data.perfTilesData.SFDC_CONNECTION_ERRORS"

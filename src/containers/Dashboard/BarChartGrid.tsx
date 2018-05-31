@@ -41,9 +41,9 @@ const BarChartGrid = (props: { barChartData: IBarChartData[] }) => {
             barChartItem.bars.length > 15 &&
             barChartItem.bars.length <= 20
           ) {
-            cols = 9;
-          } else if (barChartItem.bars.length > 20) {
             cols = 12;
+          } else if (barChartItem.bars.length > 20) {
+            cols = 15;
           }
 
           return (

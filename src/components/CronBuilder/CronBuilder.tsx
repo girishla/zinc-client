@@ -197,12 +197,3 @@ export default class CronBuilder extends React.PureComponent {
     );
   }
 }
-
-// function PrettyExpression(props: any) {
-//   const { expression } = props;
-//   return (
-//     <div {...styleNameFactory("pretty-expression")}>
-//       {"Schedule: " + cronsTrue.toString(expression)}
-//     </div>
-//   );
-// }
