@@ -25,6 +25,7 @@ DrillToExecutionListViewCell.displayName = DataTableCell.displayName;
 interface IJobsTableProps {
   items: IDetailedJobInfoResource[];
   onChange: (selection: any) => void;
+  executeJob: any;
 }
 
 interface IJobsTableState {
@@ -79,7 +80,7 @@ class JobsTable extends React.Component<IJobsTableProps, IJobsTableState> {
       });
       return;
     } else {
-      // launch and go to exectution detail view
+      this.props.executeJob(item.name);
     }
   };
 

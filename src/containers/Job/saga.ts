@@ -4,28 +4,48 @@ import { getType } from "typesafe-actions";
 import { jobsActions } from "./actions";
 import { IJobCollection } from "./IJobCollection";
 import jobsApi from "./jobsApi";
-
-
+import { push } from "react-router-redux";
 
 export function* getJobsTask(action: Action) {
-    try {
-        const jobs: IJobCollection = yield call(jobsApi.getJobs, window.localStorage.getItem('token'));
-        yield put({ type: getType(jobsActions.loadJobsSuccess), jobs });
-    } catch (e) {
-        yield put({ type: getType(jobsActions.loadJobsFailure), errorStr: e.message });
-    }
+  try {
+    const jobs: IJobCollection = yield call(
+      jobsApi.getJobs,
+      window.localStorage.getItem("token")
+    );
+    yield put({ type: getType(jobsActions.loadJobsSuccess), jobs });
+  } catch (e) {
+    yield put({
+      type: getType(jobsActions.loadJobsFailure),
+      errorStr: e.message
+    });
+  }
 }
 
-
 export function* getJobs() {
+  yield takeLatest(getType(jobsActions.loadJobs), getJobsTask);
+}
 
-    yield takeLatest(getType(jobsActions.loadJobs), getJobsTask)
+export function* executeJobTask(action: any) {
+  try {
+    yield call(
+      jobsApi.executeJob,
+      window.localStorage.getItem("token"),
+      action.jobName
+    );
+    yield put({ type: getType(jobsActions.executeJobSuccess) });
+    yield put(push(`/jobs/${action.jobName}/executions`));
+  } catch (e) {
+    yield put({
+      type: getType(jobsActions.executeJobFailure),
+      errorStr: e.message
+    });
+  }
+}
 
-
+export function* executeJob() {
+  yield takeLatest(getType(jobsActions.executeJob), executeJobTask);
 }
 
 export default function* rootSaga() {
-    yield all([
-        getJobs()
-    ])
+  yield all([getJobs(), executeJob()]);
 }

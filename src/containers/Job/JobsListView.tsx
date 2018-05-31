@@ -109,6 +109,7 @@ class JobsListView extends React.Component<IJobsListViewProps> {
           <JobsTable
             items={this.props.jobs}
             onChange={this.jobsTableSelectionsChange}
+            executeJob={this.props.jobsActions.executeJob}
           />
         </Else>
       </If>

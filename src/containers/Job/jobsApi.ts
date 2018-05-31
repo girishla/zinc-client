@@ -28,6 +28,35 @@ const jobsApi = {
       .catch((error: any) => {
         return Promise.reject(error);
       });
+  },
+
+  async executeJobApiCall(token: string, jobName: string) {
+    return await fetch(
+      `${process.env.REACT_APP_API_HOST || ""}/zinc/jobs/${jobName}/executions`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "X-Auth-Token": token
+        }
+      }
+    );
+  },
+  executeJob(token: string, jobName: string) {
+    return jobsApi
+      .executeJobApiCall(token, jobName)
+      .then((response: Response) => {
+        if (response.status === HTTPStatusCodes.OK) {
+          return Promise.resolve(response.json());
+        } else {
+          return Promise.reject({
+            message: "Unable to execute job."
+          });
+        }
+      })
+      .catch((error: any) => {
+        return Promise.reject(error);
+      });
   }
 };
 
