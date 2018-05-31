@@ -24,6 +24,15 @@ function reducer(state = initialJobsState, action: any) {
     case getType(jobExecutionActions.loadExecutionsFailure): {
       return { ...state, loading: false, error: action.errorStr };
     }
+    case getType(jobExecutionActions.stopJobExecution): {
+      return { ...state, loading: true };
+    }
+    case getType(jobExecutionActions.stopJobExecutionSuccess): {
+      return { ...state, loading: false };
+    }
+    case getType(jobExecutionActions.stopJobExecutionFailure): {
+      return { ...state, loading: false, error: action.errorStr };
+    }
     default:
       return state;
   }

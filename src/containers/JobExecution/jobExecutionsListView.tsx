@@ -14,11 +14,13 @@ import JobExecutionsTable from "./jobExecutionsTable";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import Loading from "../../components/Loading";
 import { If, Then, Else } from "react-if";
+import { jobExecutionActions } from "./actions";
 
 interface IJobExecutionsListViewProps extends RouteComponentProps<any> {
   jobExecutions: IJobExecutionInfoResource[];
   refresh: any;
   loading: boolean;
+  jobExecutionsActions: typeof jobExecutionActions;
 }
 
 class JobExecutionsListView extends React.Component<
@@ -110,6 +112,7 @@ class JobExecutionsListView extends React.Component<
           <JobExecutionsTable
             items={this.props.jobExecutions}
             onChange={this.jobExecutionsTableSelectionsChange}
+            stopJob={this.props.jobExecutionsActions.stopJobExecution}
           />
         </Else>
       </If>

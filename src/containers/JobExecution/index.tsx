@@ -59,6 +59,7 @@ class ZincJobExecutions extends React.Component<IJobExecutionsProps> {
     return (
       <JobExecutionsListView
         refresh={this.loadData}
+        jobExecutionsActions={this.props.jobExecutionsActions}
         loading={this.props.loading}
         jobExecutions={
           this.props.jobExecutions &&

@@ -7,6 +7,7 @@ import {
   IJobExecutionInfoResource
 } from "./IJobExecutionCollection";
 import jobExecutionsApi from "./jobExecutionsApi";
+import { layoutActions } from "../Layout/actions";
 
 export function* getExecutionsTask(action: Action) {
   try {
@@ -97,6 +98,46 @@ export function* getJobInstanceExecutions() {
   );
 }
 
+export function* stopExecutionTask(action: any) {
+  try {
+    yield call(
+      jobExecutionsApi.stopJob,
+      window.localStorage.getItem("token"),
+      action.jobId
+    );
+    yield put({
+      type: getType(jobExecutionActions.stopJobExecutionSuccess)
+    });
+    yield put({
+      type: getType(layoutActions.showSnackBarMessage),
+      message: "Stop Request Submitted. It might take a while to stop."
+    });
+  } catch (e) {
+    yield put({
+      type: getType(jobExecutionActions.stopJobExecutionFailure),
+      errorStr: e.message
+    });
+    yield put({
+      type: getType(layoutActions.showAlertMessage),
+      messageTitle: "Failed",
+      message: e.message,
+      severity: "ERROR"
+    });
+  }
+}
+
+export function* stopJobExecution() {
+  yield takeLatest(
+    getType(jobExecutionActions.stopJobExecution),
+    stopExecutionTask
+  );
+}
+
 export default function* rootSaga() {
-  yield all([getExecutions(), getJobExecutions(), getJobInstanceExecutions()]);
+  yield all([
+    getExecutions(),
+    getJobExecutions(),
+    getJobInstanceExecutions(),
+    stopJobExecution()
+  ]);
 }

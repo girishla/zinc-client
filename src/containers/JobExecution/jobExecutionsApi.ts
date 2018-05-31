@@ -73,6 +73,36 @@ const jobExecutionsApi = {
       .catch((error: any) => {
         return Promise.reject(error);
       });
+  },
+
+  async stopJobApiCall(token: string, jobExecutionId: string) {
+    return await fetch(
+      `${process.env.REACT_APP_API_HOST ||
+        ""}/zinc/jobs/executions/${jobExecutionId}?stop=true`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+          "X-Auth-Token": token
+        }
+      }
+    );
+  },
+  stopJob(token: string, jobExecutionId: string) {
+    return jobExecutionsApi
+      .stopJobApiCall(token, jobExecutionId)
+      .then((response: Response) => {
+        if (response.status === HTTPStatusCodes.OK) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject({
+            message: "Unable to stop job."
+          });
+        }
+      })
+      .catch((error: any) => {
+        return Promise.reject(error);
+      });
   }
 };
 

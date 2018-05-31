@@ -29,6 +29,7 @@ DrillToStepListViewCell.displayName = DataTableCell.displayName;
 interface IJobExecutionsTableProps {
   items: IJobExecutionInfoResource[];
   onChange: (selection: any) => void;
+  stopJob: any;
 }
 
 interface IJobExecutionsTableState {
@@ -104,7 +105,7 @@ class JobExecutionsTable extends React.Component<
           });
           return;
         } else {
-          // Submit Stop Job request
+          this.props.stopJob(item.jobId);
         }
         break;
     }
