@@ -1,23 +1,22 @@
-import createHistory from 'history/createBrowserHistory';
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import 'sanitize.css/sanitize.css';
-import configureStore from './configureStore';
-import App from './containers/App';
-import layoutSagas from './containers/Layout/sagas';
-import authSagas from './containers/Login/saga';
+import createHistory from "history/createBrowserHistory";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { ConnectedRouter } from "react-router-redux";
+import "sanitize.css/sanitize.css";
+import configureStore from "./configureStore";
+import App from "./containers/App";
+import layoutSagas from "./containers/Layout/sagas";
+import authSagas from "./containers/Login/saga";
 // Import CSS reset and Global Styles
-import './global-styles';
-import registerServiceWorker from './registerServiceWorker';
-
+import "./global-styles";
+import registerServiceWorker from "./registerServiceWorker";
 
 // Create redux store with history
 const initialState = {};
-const history = createHistory();
+const history = createHistory({ basename: process.env.PUBLIC_URL });
 const store = configureStore(initialState, history);
-const MOUNT_NODE = document.getElementById('root');
+const MOUNT_NODE = document.getElementById("root");
 
 // Inject sagas
 layoutSagas.map(store.runSaga);

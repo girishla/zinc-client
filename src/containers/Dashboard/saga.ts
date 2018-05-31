@@ -19,7 +19,20 @@ export function* getDashboardDataTask(action: any) {
       "JOB_EXEC_STATS"
     );
 
-    const dashboardData: IDashboardData = { apiMetrics, executionMetrics };
+    const tableCountMetrics: IMetricCollection = yield call(
+      dashboardApi.getDashboardData,
+      window.localStorage.getItem("token"),
+      "SFDC_TABLE_COUNTS"
+    );
+
+    const dashboardData: IDashboardData = {
+      apiMetrics,
+      executionMetrics,
+      tableCountMetrics,
+      perfTilesData: {},
+      executionCountBarChartData: [],
+      tableCountBarChartData: []
+    };
 
     yield put({
       type: getType(dashboardActions.loadDashboardSuccess),

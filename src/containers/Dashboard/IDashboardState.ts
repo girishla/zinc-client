@@ -1,6 +1,6 @@
 import { IDashboardData } from "./IDashboardData";
 
-export interface IJobsState {
+export interface IDashboardState {
   data: IDashboardData;
   loading: boolean;
 }

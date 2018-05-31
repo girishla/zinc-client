@@ -1,7 +1,7 @@
 import * as React from "react";
 // import Paper from "material-ui/Paper";
 // import FontIcon from "material-ui/FontIcon";
-import { white, grey200 } from "material-ui/styles/colors";
+import { grey500, grey600 } from "material-ui/styles/colors";
 import typography from "material-ui/styles/typography";
 // import Theme from "src/theming/theme";
 
@@ -36,12 +36,12 @@ class DashboardInfoBox extends React.Component<IDashboardInfoBox> {
         display: "block",
         fontWeight: (typography as any).fontWeight,
         fontSize: 20,
-        color: white
+        color: grey600
       },
       text: {
         fontSize: 13,
         fontWeight: typography.fontWeightLight,
-        color: grey200
+        color: grey500
       },
       iconSpan: {
         float: "left",

@@ -7,7 +7,7 @@ import {
   RouteComponentProps,
   Switch,
   withRouter,
-  BrowserRouter
+  Router
 } from "react-router-dom";
 import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
@@ -42,7 +42,7 @@ const RouteWithLayout = ({ component, ...rest }: any) => {
 export class App extends React.Component<IAppProps> {
   public render() {
     return (
-      <BrowserRouter {...this.props} basename={process.env.PUBLIC_URL}>
+      <Router {...this.props}>
         <div>
           <Switch>
             <Route
@@ -108,7 +108,7 @@ export class App extends React.Component<IAppProps> {
             <Route path="*" component={PageNotFound} />
           </Switch>
         </div>
-      </BrowserRouter>
+      </Router>
     );
   }
 

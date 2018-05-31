@@ -2,13 +2,9 @@ export interface ISelf {
   href: string;
 }
 
-export interface IZincMetric {
-  href: string;
-}
-
 export interface ILinks {
   self: ISelf;
-  zincMetric: IZincMetric;
+  zincMetric: ISelf;
 }
 
 export interface IZincmetric {
@@ -40,7 +36,28 @@ export interface IMetricCollection {
   _links: ILinks2;
 }
 
+export interface IPoint {
+  x: number;
+  y: number;
+}
+
+export interface IBarChartData {
+  name: string;
+  bars: IPoint[];
+  tickValues: string[];
+}
+
+export interface ILineChartData {
+  name: string;
+  points: IPoint[];
+  tickValues: string[];
+}
+
 export interface IDashboardData {
   apiMetrics: IMetricCollection;
   executionMetrics: IMetricCollection;
+  tableCountMetrics: IMetricCollection;
+  perfTilesData: any;
+  executionCountBarChartData: IBarChartData[];
+  tableCountBarChartData: IBarChartData[];
 }

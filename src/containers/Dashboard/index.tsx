@@ -5,20 +5,23 @@ import { IRootState } from "../../IRootState";
 import { bindActionCreators, compose } from "redux";
 import { connect } from "react-redux";
 import { dashboardActions } from "./actions";
-// import { withRouter } from 'react-router-dom';
 import { userIsNotAuthenticatedRedir } from "../Login/auth-routing";
 import { withRouter } from "react-router";
 import DashboardInfoBox from "src/components/DashboardInfoBox";
-import { cyan500, grey500 } from "material-ui/styles/colors";
-import { VictoryBar, VictoryTheme, VictoryAxis, VictoryChart } from "victory";
+import { cyan500, white } from "material-ui/styles/colors";
+
 import Dimensions from "react-dimensions";
 import injectReducer from "../../utils/injectReducer";
 import injectSaga from "../../utils/injectSaga";
 import reducer from "./reducer";
 import saga from "./saga";
+import { IDashboardState } from "./IDashboardState";
+import { get as deepGet } from "lodash";
+import BarChartGrid from "./BarChartGrid";
+// import LineChartGrid from "./LineChartGrid";
 
 interface IDashboardProps {
-  dashboardData: any;
+  dashboardState: IDashboardState;
   auth?: any;
   actions: typeof dashboardActions;
   containerWidth: number;
@@ -36,7 +39,19 @@ export class Dashboard extends React.Component<IDashboardProps> {
     );
   }
 
+  public componentWillReceiveProps() {}
+
   public render() {
+    const executionCountBarChartData = deepGet(
+      this.props,
+      "dashboardState.data.executionCountBarChartData"
+    );
+
+    const tableCountBarChartData = deepGet(
+      this.props,
+      "dashboardState.data.tableCountBarChartData"
+    );
+
     return (
       <div>
         <div className="row">
@@ -46,10 +61,13 @@ export class Dashboard extends React.Component<IDashboardProps> {
           >
             <DashboardInfoBox
               Icon={"thumb_up"}
-              color={grey500}
+              color={white}
               iconColor={cyan500}
               title="SOAP API USAGE"
-              value="7051"
+              value={deepGet(
+                this.props,
+                "dashboardState.data.perfTilesData.SFDC_SOAP_API_CALLS"
+              )}
             />
           </div>
           <div
@@ -58,10 +76,13 @@ export class Dashboard extends React.Component<IDashboardProps> {
           >
             <DashboardInfoBox
               Icon={"thumb_up"}
-              color={grey500}
+              color={white}
               iconColor={cyan500}
               title="BULK API USAGE"
-              value="100"
+              value={deepGet(
+                this.props,
+                "dashboardState.data.perfTilesData.SFDC_BULK_API_CALLS"
+              )}
             />
           </div>
           <div
@@ -70,10 +91,13 @@ export class Dashboard extends React.Component<IDashboardProps> {
           >
             <DashboardInfoBox
               Icon={"thumb_up"}
-              color={grey500}
+              color={white}
               iconColor={cyan500}
               title="REPLICATION API USAGE"
-              value="299"
+              value={deepGet(
+                this.props,
+                "dashboardState.data.perfTilesData.SFDC_REPL_API_CALLS"
+              )}
             />
           </div>
           <div
@@ -82,43 +106,21 @@ export class Dashboard extends React.Component<IDashboardProps> {
           >
             <DashboardInfoBox
               Icon={"thumb_up"}
-              color={grey500}
+              color={white}
               iconColor={cyan500}
               title="CONNECTION ERRORS"
-              value="0"
+              value={deepGet(
+                this.props,
+                "dashboardState.data.perfTilesData.SFDC_CONNECTION_ERRORS"
+              )}
             />
           </div>
         </div>
-        <div className="row">
+        <div className="row" style={{ justifyContent: "center" }}>
           <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-md m-b-15">
-            <VictoryChart width={this.props.containerWidth} height={200}>
-              <VictoryBar
-                standalone={false}
-                style={{ data: { fill: "#c7b5e3" } }}
-                data={[
-                  {
-                    x: 1,
-                    y: 20
-                  },
-                  { x: 2, y: 33 },
-                  { x: 3, y: 50 },
-                  { x: 4, y: 70 },
-                  { x: 5, y: 60 }
-                ]}
-              />
-              <VictoryAxis
-                standalone={false}
-                crossAxis={true}
-                width={this.props.containerWidth}
-                height={200}
-                domain={[0, 10]}
-                tickValues={["hello", "world", "super"]}
-                theme={VictoryTheme.material}
-                style={{ axis: { stroke: "none" } }}
-              />
-            </VictoryChart>
+            <BarChartGrid barChartData={executionCountBarChartData} />
+            <BarChartGrid barChartData={tableCountBarChartData} />
           </div>
-          <pre>{JSON.stringify(this.props.dashboardData, null, 2)}</pre>
         </div>
       </div>
     );
@@ -126,7 +128,7 @@ export class Dashboard extends React.Component<IDashboardProps> {
 }
 
 const mapStateToProps = createStructuredSelector({
-  dashboardData: (state: IRootState) => state.dashboard,
+  dashboardState: (state: IRootState) => state.dashboard,
   auth: (state: IRootState) => state.auth
 });
 
