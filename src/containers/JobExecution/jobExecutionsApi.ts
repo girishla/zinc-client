@@ -103,6 +103,35 @@ const jobExecutionsApi = {
       .catch((error: any) => {
         return Promise.reject(error);
       });
+  },
+  async restartJobApiCall(token: string, jobExecutionId: string) {
+    return await fetch(
+      `${process.env.REACT_APP_API_HOST ||
+        ""}/zinc/jobs/executions/${jobExecutionId}?restart=true`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+          "X-Auth-Token": token
+        }
+      }
+    );
+  },
+  restartJob(token: string, jobExecutionId: string) {
+    return jobExecutionsApi
+      .restartJobApiCall(token, jobExecutionId)
+      .then((response: Response) => {
+        if (response.status === HTTPStatusCodes.OK) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject({
+            message: "Unable to restart job."
+          });
+        }
+      })
+      .catch((error: any) => {
+        return Promise.reject(error);
+      });
   }
 };
 

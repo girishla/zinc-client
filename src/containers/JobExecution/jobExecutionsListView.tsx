@@ -113,6 +113,7 @@ class JobExecutionsListView extends React.Component<
             items={this.props.jobExecutions}
             onChange={this.jobExecutionsTableSelectionsChange}
             stopJob={this.props.jobExecutionsActions.stopJobExecution}
+            restartJob={this.props.jobExecutionsActions.restartJobExecution}
           />
         </Else>
       </If>

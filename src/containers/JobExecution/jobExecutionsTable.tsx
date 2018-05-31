@@ -30,6 +30,7 @@ interface IJobExecutionsTableProps {
   items: IJobExecutionInfoResource[];
   onChange: (selection: any) => void;
   stopJob: any;
+  restartJob: any;
 }
 
 interface IJobExecutionsTableState {
@@ -92,7 +93,7 @@ class JobExecutionsTable extends React.Component<
           });
           return;
         } else {
-          // Submit Restart Request
+          this.props.restartJob(item.jobId);
         }
         break;
       case "Stop":

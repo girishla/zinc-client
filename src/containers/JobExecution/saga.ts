@@ -133,11 +133,47 @@ export function* stopJobExecution() {
   );
 }
 
+export function* restartExecutionTask(action: any) {
+  try {
+    yield call(
+      jobExecutionsApi.restartJob,
+      window.localStorage.getItem("token"),
+      action.jobId
+    );
+    yield put({
+      type: getType(jobExecutionActions.restartJobExecutionSuccess)
+    });
+    yield put({
+      type: getType(layoutActions.showSnackBarMessage),
+      message: "Restart Request Submitted. It might take a while to restart."
+    });
+  } catch (e) {
+    yield put({
+      type: getType(jobExecutionActions.restartJobExecutionFailure),
+      errorStr: e.message
+    });
+    yield put({
+      type: getType(layoutActions.showAlertMessage),
+      messageTitle: "Failed",
+      message: e.message,
+      severity: "ERROR"
+    });
+  }
+}
+
+export function* restartJobExecution() {
+  yield takeLatest(
+    getType(jobExecutionActions.restartJobExecution),
+    restartExecutionTask
+  );
+}
+
 export default function* rootSaga() {
   yield all([
     getExecutions(),
     getJobExecutions(),
     getJobInstanceExecutions(),
-    stopJobExecution()
+    stopJobExecution(),
+    restartJobExecution()
   ]);
 }

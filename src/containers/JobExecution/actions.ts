@@ -17,7 +17,12 @@ export const STOP_JOBEXECUTION_SUCCESS =
   "zinc/JOBEXECUTIONS/STOP_EXECUTION_SUCCESS";
 export const STOP_JOBEXECUTION_FAILURE =
   "zinc/JOBEXECUTIONS/STOP_EXECUTION_FAILURE";
-
+export const RESTART_JOBEXECUTION_START =
+  "zinc/JOBEXECUTIONS/RESTART_JOBEXECUTION_START";
+export const RESTART_JOBEXECUTION_SUCCESS =
+  "zinc/JOBEXECUTIONS/RESTART_EXECUTION_SUCCESS";
+export const RESTART_JOBEXECUTION_FAILURE =
+  "zinc/JOBEXECUTIONS/RESTART_EXECUTION_FAILURE";
 export const jobExecutionActions = {
   loadExecutions: createAction(LOAD_EXECUTIONS_START),
   loadJobExecutions: createAction(
@@ -50,6 +55,21 @@ export const jobExecutionActions = {
     STOP_JOBEXECUTION_FAILURE,
     (errorStr: string) => ({
       type: STOP_JOBEXECUTION_FAILURE,
+      errorStr
+    })
+  ),
+  restartJobExecution: createAction(
+    RESTART_JOBEXECUTION_START,
+    (jobId: string) => ({
+      type: RESTART_JOBEXECUTION_START,
+      jobId
+    })
+  ),
+  restartJobExecutionSuccess: createAction(RESTART_JOBEXECUTION_SUCCESS),
+  restartJobExecutionFailure: createAction(
+    RESTART_JOBEXECUTION_FAILURE,
+    (errorStr: string) => ({
+      type: RESTART_JOBEXECUTION_FAILURE,
       errorStr
     })
   ),
