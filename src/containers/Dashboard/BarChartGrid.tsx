@@ -34,11 +34,11 @@ const BarChartGrid = (props: { barChartData: IBarChartData[] }) => {
             cols = 3;
           } else if (
             barChartItem.bars.length > 3 &&
-            barChartItem.bars.length <= 15
+            barChartItem.bars.length <= 10
           ) {
             cols = 6;
           } else if (
-            barChartItem.bars.length > 15 &&
+            barChartItem.bars.length > 10 &&
             barChartItem.bars.length <= 20
           ) {
             cols = 12;

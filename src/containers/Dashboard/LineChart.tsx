@@ -35,6 +35,7 @@ class LineChart extends React.PureComponent<ILineChartProps> {
       <VictoryChart
         width={this.props.containerWidth}
         height={this.props.containerHeight}
+        domainPadding={{ x: 30, y: 0 }}
         containerComponent={<VictoryContainerResponsive responsive={false} />}
       >
         <VictoryAxis
@@ -55,12 +56,12 @@ class LineChart extends React.PureComponent<ILineChartProps> {
         <VictoryAxis
           // y
           dependentAxis={true}
-          tickFormat={value => Numeral(value).format("0 a")}
+          tickFormat={value => Numeral(value).format("0a")}
           style={{
             axis: { stroke: "none" },
             grid: { stroke: grey200 },
             tickLabels: {
-              fontSize: 12,
+              fontSize: 8,
               padding: 30,
               stroke: grey500,
               strokeWidth: 0.1

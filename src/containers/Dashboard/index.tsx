@@ -19,6 +19,9 @@ import { IDashboardState } from "./IDashboardState";
 import { get as deepGet } from "lodash";
 import BarChartGrid from "./BarChartGrid";
 import LineChartGrid from "./LineChartGrid";
+import { If, Then, Else } from "react-if";
+import Loading from "../../components/Loading";
+
 // import LineChartGrid from "./LineChartGrid";
 
 interface IDashboardProps {
@@ -34,9 +37,9 @@ export class Dashboard extends React.Component<IDashboardProps> {
   }
 
   public componentDidMount() {
-    // 7 days
+    // 1 day
     this.props.actions.loadDashboard(
-      new Date().getTime() - 7 * 24 * 60 * 60 * 1000
+      new Date().getTime() - 1 * 24 * 60 * 60 * 1000
     );
   }
 
@@ -60,75 +63,82 @@ export class Dashboard extends React.Component<IDashboardProps> {
 
     return (
       <div>
-        <div className="row">
-          <div
-            style={{ paddingLeft: 5, paddingRight: 5 }}
-            className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 "
-          >
-            <DashboardInfoBox
-              Icon={"thumb_up"}
-              color={white}
-              iconColor={cyan500}
-              title="SOAP API USAGE(24h)"
-              value={deepGet(
-                this.props,
-                "dashboardState.data.perfTilesData.SFDC_SOAP_API_CALLS"
-              )}
-            />
-          </div>
-          <div
-            style={{ paddingLeft: 5, paddingRight: 5 }}
-            className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 "
-          >
-            <DashboardInfoBox
-              Icon={"thumb_up"}
-              color={white}
-              iconColor={cyan500}
-              title="BULK API USAGE(24h)"
-              value={deepGet(
-                this.props,
-                "dashboardState.data.perfTilesData.SFDC_BULK_API_CALLS"
-              )}
-            />
-          </div>
-          <div
-            style={{ paddingLeft: 5, paddingRight: 5 }}
-            className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 "
-          >
-            <DashboardInfoBox
-              Icon={"thumb_up"}
-              color={white}
-              iconColor={cyan500}
-              title="REPLICATION API USAGE(24h)"
-              value={deepGet(
-                this.props,
-                "dashboardState.data.perfTilesData.SFDC_REPL_API_CALLS"
-              )}
-            />
-          </div>
-          <div
-            style={{ paddingLeft: 5, paddingRight: 5 }}
-            className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 "
-          >
-            <DashboardInfoBox
-              Icon={"thumb_up"}
-              color={white}
-              iconColor={cyan500}
-              title="CONNECTION ERRORS(24h)"
-              value={deepGet(
-                this.props,
-                "dashboardState.data.perfTilesData.SFDC_CONNECTION_ERRORS"
-              )}
-            />
-          </div>
-        </div>
-        <div className="row" style={{ justifyContent: "center" }}>
-          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-md m-b-15">
-            <BarChartGrid barChartData={tableCountBarChartData} />
-            <BarChartGrid barChartData={executionCountBarChartData} />
-            <LineChartGrid lineChartData={tableChangesLineChartData} />
-          </div>
-        </div>
+        <If condition={this.props.dashboardState.loading}>
+          <Then>
+            <Loading />
+          </Then>
+          <Else>
+            <div className="row">
+              <div
+                style={{ paddingLeft: 5, paddingRight: 5 }}
+                className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 "
+              >
+                <DashboardInfoBox
+                  Icon={"thumb_up"}
+                  color={white}
+                  iconColor={cyan500}
+                  title="SOAP API USAGE(24h)"
+                  value={deepGet(
+                    this.props,
+                    "dashboardState.data.perfTilesData.SFDC_SOAP_API_CALLS"
+                  )}
+                />
+              </div>
+              <div
+                style={{ paddingLeft: 5, paddingRight: 5 }}
+                className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 "
+              >
+                <DashboardInfoBox
+                  Icon={"thumb_up"}
+                  color={white}
+                  iconColor={cyan500}
+                  title="BULK API USAGE(24h)"
+                  value={deepGet(
+                    this.props,
+                    "dashboardState.data.perfTilesData.SFDC_BULK_API_CALLS"
+                  )}
+                />
+              </div>
+              <div
+                style={{ paddingLeft: 5, paddingRight: 5 }}
+                className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 "
+              >
+                <DashboardInfoBox
+                  Icon={"thumb_up"}
+                  color={white}
+                  iconColor={cyan500}
+                  title="REPLICATION API USAGE(24h)"
+                  value={deepGet(
+                    this.props,
+                    "dashboardState.data.perfTilesData.SFDC_REPL_API_CALLS"
+                  )}
+                />
+              </div>
+              <div
+                style={{ paddingLeft: 5, paddingRight: 5 }}
+                className="col-xs-12 col-sm-6 col-md-3 col-lg-3 m-b-15 "
+              >
+                <DashboardInfoBox
+                  Icon={"thumb_up"}
+                  color={white}
+                  iconColor={cyan500}
+                  title="CONNECTION ERRORS(24h)"
+                  value={deepGet(
+                    this.props,
+                    "dashboardState.data.perfTilesData.SFDC_CONNECTION_ERRORS"
+                  )}
+                />
+              </div>
+            </div>
+            <div className="row" style={{ justifyContent: "center" }}>
+              <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-md m-b-15">
+                <BarChartGrid barChartData={tableCountBarChartData} />
+                <BarChartGrid barChartData={executionCountBarChartData} />
+                <LineChartGrid lineChartData={tableChangesLineChartData} />
+              </div>
+            </div>
+          </Else>
+        </If>
       </div>
     );
   }

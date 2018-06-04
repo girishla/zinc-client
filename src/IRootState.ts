@@ -6,6 +6,7 @@ import { IJobStepExecutionState } from "./containers/JobStepExecution/IJobStepEx
 import { IJobScheduleState } from "./containers/JobSchedule/IJobScheduleState";
 import { IJobScheduleDetailState } from "./containers/JobScheduleDetail/IJobScheduleDetailState";
 import { ISalesforceObjectState } from "./containers/SetupSalesforceObject/ISalesforceObjectState";
+import { IUserState } from "src/containers/SetupUsers/IUserState";
 
 export interface IRootState {
   layout: {
@@ -45,4 +46,5 @@ export interface IRootState {
   jobSchedules: IJobScheduleState;
   jobScheduleDetail: IJobScheduleDetailState;
   salesforceObjects: ISalesforceObjectState;
+  users: IUserState;
 }

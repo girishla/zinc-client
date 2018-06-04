@@ -66,6 +66,12 @@ const data: any = {
           text: "Salesforce Objects",
           url: "/setup/sobjects",
           index: 5
+        },
+        {
+          id: "users",
+          text: "Users",
+          url: "/setup/users",
+          index: 6
         }
       ],
       icon: <FontIcon className="material-icons"> settings </FontIcon>,
@@ -76,20 +82,21 @@ const data: any = {
       // url: "/settings",
       willCloseMenu: false,
       willCloseRootMenu: false
-    },
-    {
-      animating: true,
-      animatingRootMenu: true,
-      children: [],
-      icon: <FontIcon className="material-icons"> account_circle </FontIcon>,
-      id: "profile",
-      index: 4,
-      open: false,
-      text: "Profile",
-      url: "/profile",
-      willCloseMenu: false,
-      willCloseRootMenu: false
     }
+
+    // {
+    //   animating: true,
+    //   animatingRootMenu: true,
+    //   children: [],
+    //   icon: <FontIcon className="material-icons"> account_circle </FontIcon>,
+    //   id: "profile",
+    //   index: 4,
+    //   open: false,
+    //   text: "Profile",
+    //   url: "/profile",
+    //   willCloseMenu: false,
+    //   willCloseRootMenu: false
+    // }
   ]
 };
 

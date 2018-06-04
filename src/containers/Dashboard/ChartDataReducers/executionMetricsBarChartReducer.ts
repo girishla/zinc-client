@@ -46,7 +46,10 @@ export default function getExecutionMetricsBarChartData(
 
     // remove master steps
     stepLevelExecutionMetrics = stepLevelExecutionMetrics.filter(
-      metric => !metric.dimensionTwo.includes("MasterStep")
+      metric =>
+        !metric.dimensionTwo.includes("MasterStep") &&
+        !(metric.dimensionTwo.indexOf("Incr") > 0) &&
+        !(metric.dimensionTwo.indexOf("Delete") > 0)
     );
 
     stepLevelExecutionMetrics = orderBy(

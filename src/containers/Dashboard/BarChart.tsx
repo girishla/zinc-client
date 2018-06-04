@@ -18,11 +18,13 @@ export interface IBarchartProps {
 
 class Barchart extends React.PureComponent<IBarchartProps> {
   public render() {
-    let chartwidth = this.props.bars.length * 60;
+    let chartwidth = this.props.bars.length * 50;
 
+    // min chart width
     if (chartwidth < 250) {
       chartwidth = 250;
     }
+
     const VictoryContainerResponsive: any = VictoryContainer;
 
     return (
@@ -47,11 +49,12 @@ class Barchart extends React.PureComponent<IBarchartProps> {
           }}
         />
         <VictoryBar
+          animate={{ duration: 10 }}
           standalone={false}
           style={{
             data: {
               fill: "#c7b5e3",
-              width: 30,
+              width: 25,
               strokeLinejoin: "round",
               strokeWidth: 6
             }

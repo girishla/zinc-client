@@ -15,13 +15,16 @@ const server = {
    * @param  {string} username The username of the user
    * @param  {string} password The password of the user
    */
+
   async login(username: string, password: string) {
+    const authHeaders = new Headers();
+
+    authHeaders.append("content-type", "application/json");
+
     return await fetch(`${process.env.REACT_APP_API_HOST || ""}/auth`, {
       body: JSON.stringify({ username, password }),
       method: "POST",
-      headers: {
-        "content-type": "application/json"
-      }
+      headers: authHeaders
     });
   },
   /**

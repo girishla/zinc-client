@@ -26,6 +26,7 @@ import "./sldsOverrides.css";
 import "flexboxgrid/css/flexboxgrid.css";
 import PageNotFound from "../PageNotFound";
 import ZincSalesforceObjects from "../SetupSalesforceObject";
+import ZincUsers from "../SetupUsers";
 
 interface IAppProps extends RouteComponentProps<any> {}
 
@@ -103,6 +104,11 @@ export class App extends React.Component<IAppProps> {
               exact={true}
               path="/setup/sobjects"
               component={ZincSalesforceObjects}
+            />
+            <RouteWithLayout
+              exact={true}
+              path="/setup/users"
+              component={ZincUsers}
             />
 
             <Route path="*" component={PageNotFound} />
