@@ -22,7 +22,7 @@ pipeline {
         stage('Build') {
             steps{
                 buildReleaseUnit()
-                sh "rm -rf artifacts"
+                sh "rm -rf artifacts/*"
                 sh "npm install"
                 sh "npm run build"
                 sh "cp -R build/* artifacts/"
