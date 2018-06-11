@@ -6,7 +6,7 @@ pipeline {
         def ASSET_ID = "1979"
         def ASSET_NAME = "SalesForce"
         def ASSET_AREA_NAME = "zinc/client"
-        def PROJECT_PATH = "devOps"
+        def PROJECT_PATH = "."
     }
     tools {
         nodejs 'Node 10.x'
@@ -22,10 +22,9 @@ pipeline {
         stage('Build') {
             steps{
                 buildReleaseUnit()
-                //sh "rm -rf artifacts/*"
                 sh "npm install"
                 sh "npm run build"
-                sh "cp -R build/* artifacts"
+                sh "cp -R build/* artifacts/"
             }
         }
         stage('Bake') {
