@@ -29,10 +29,10 @@ pipeline {
         }
         stage('Bake') {
             steps{
-                withAwsAccount('123456789012'){
-                    sh "aws s3 ls"
-                    // sh "aws s3 cp s3://file ./temp/file"
-                }
+                // withAwsAccount('123456789012'){
+                //     sh "aws s3 ls"
+                //     sh "aws s3 cp s3://file ./temp/file"
+                // }
                 buildAmi(templateName: 'zinc-client',
                             base: 'amazon-linux')
             }
