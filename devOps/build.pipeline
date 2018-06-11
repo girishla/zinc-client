@@ -6,7 +6,7 @@ pipeline {
         def ASSET_ID = "1979"
         def ASSET_NAME = "SalesForce"
         def ASSET_AREA_NAME = "zinc/client"
-        def PROJECT_PATH = "."
+        def PROJECT_PATH = "devOps"
     }
     tools {
         nodejs 'Node 10.x'
