@@ -1,0 +1,40 @@
+{
+    "provisioners": [
+        {
+            "pause_before": "10s",
+            "type": "file",
+            "source": "./artifacts",
+            "destination": "~"
+        },
+        {
+            "pause_before": "10s",
+            "type": "shell",
+            "inline": [
+                "echo Configure nginx",
+                "sudo cp ~/datadog_nginx_conf.yaml /etc/datadog-agent/conf.d/nginx.d/conf.yaml"
+            ]
+        },
+        {
+            "pause_before": "10s",
+            "type": "shell",
+            "inline": [
+                "echo Install nginx",
+                "sudo yum install nginx -y"
+            ]
+        },
+        {
+            "pause_before": "10s",
+            "type": "file",
+            "source": "./Packer/nginx_master.conf",
+            "destination": "~/nginx_master.conf"
+        },
+        {
+            "pause_before": "10s",
+            "type": "shell",
+            "inline": [
+                "echo Configure nginx",
+                "sudo cp ~/nginx_master.conf /etc/nginx/nginx_master.conf"
+            ]
+        }
+    ]
+}
