@@ -6,6 +6,7 @@
             "source": "./artifacts",
             "destination": "~"
         },
+        
         {
             "pause_before": "10s",
             "type": "shell",
