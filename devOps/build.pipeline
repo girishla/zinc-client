@@ -33,4 +33,16 @@ pipeline {
             }
         }
     }
+
+     post { 
+        always { 
+            cleanWs()
+            script{
+                    build   job: JOB_NAME.replace('/zinc-client/', '/zinc-server/'),
+                            parameters: [],
+                            wait: false
+                
+            }
+        }
+    }	
 }
