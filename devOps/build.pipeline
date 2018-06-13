@@ -39,10 +39,9 @@ pipeline {
             cleanWs()
             script{
                     build   job: JOB_NAME.replace('/1979-zinc-client/', '/1979-zinc-server/'),
-                            parameters: [string(name: 'clientBuild', value: env.BUILD_NUMBER)],
+                            parameters: [string(name: 'clientBuild', value: '${BUILD_NUMBER}')],
                             wait: false
-                
-            }
+             }
         }
     }	
 }
