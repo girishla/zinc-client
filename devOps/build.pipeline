@@ -4,7 +4,7 @@ pipeline {
     agent any
     environment {
         def ASSET_ID = "1979"
-        def ASSET_NAME = "SalesForce"
+        def ASSET_NAME = "sfdc"
         def ASSET_AREA_NAME = "zinc/client"
         def PROJECT_PATH = "."
     }
@@ -39,7 +39,7 @@ pipeline {
             cleanWs()
             script{
                     build   job: JOB_NAME.replace('/1979-zinc-client/', '/1979-zinc-server/'),
-                            parameters: [],
+                            parameters: [string(name: 'clientBuild', value: env.BUILD_NUMBER)],
                             wait: false
                 
             }
